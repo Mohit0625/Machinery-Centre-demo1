@@ -1,0 +1,8 @@
+{
+  "name": "Remix: Machinery Centre",
+  "description": "One Stop Shop For Compressors and Pumps",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

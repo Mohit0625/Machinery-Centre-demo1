@@ -1,0 +1,61 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@theme {
+  --color-slate-50: #F5F5F0;
+  --color-slate-100: #EAEAE0;
+  --color-slate-200: #D4C5B0;
+  --color-slate-300: #C2B39E;
+  --color-slate-400: #A89F91;
+  --color-slate-500: #888075;
+  --color-slate-600: #5A5A40;
+  --color-slate-700: #4B4B36;
+  --color-slate-800: #3D3D34;
+  --color-slate-900: #2A2A2A;
+
+  --color-orange-50: #f4eae4;
+  --color-orange-100: #e8d0c4;
+  --color-orange-200: #dcb6a3;
+  --color-orange-300: #d09c83;
+  --color-orange-400: #c48262;
+  --color-orange-500: #C66B3D;
+  --color-orange-600: #B35C30;
+  --color-orange-700: #994E27;
+  --color-orange-800: #804020;
+  --color-orange-900: #663319;
+
+  --color-blue-50: #F0F0EB;
+  --color-blue-100: #DBDCCB;
+  --color-blue-500: #A89F91;
+  --color-blue-600: #5A5A40;
+  
+  --color-emerald-50: #F5F5F0;
+  --color-emerald-100: #D4C5B0;
+  --color-emerald-500: #A89F91;
+  --color-emerald-600: #5A5A40;
+
+  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-sm: 1.5rem;
+  --radius: 2rem;
+  --radius-md: 2.5rem;
+  --radius-lg: 3rem;
+
+  --font-weight-black: 500;
+  --font-weight-bold: 500;
+
+  --letter-spacing-tighter: 0em;
+  --letter-spacing-tight: 0em;
+}
+
+@layer base {
+  body {
+    @apply font-sans bg-slate-50;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif tracking-normal normal-case;
+  }
+  /* Force headings to not use uppercase utility if applied inline, but might be too aggressive */
+}
+

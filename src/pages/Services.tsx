@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Wrench, Package, Cpu, ArrowRight } from "lucide-react";
+import { Wrench, Package, Cpu, ArrowRight, Star } from "lucide-react";
 
 export function Services() {
   return (
@@ -97,6 +97,106 @@ export function Services() {
           </div>
         </section>
 
+      </div>
+
+      <div className="w-full h-px bg-slate-200" />
+
+      <div className="container mx-auto px-4 py-16">
+        {/* ═══════════════════════════════════════════════════════
+             SUCCESSFUL SERVICES SHOWCASE
+             ═══════════════════════════════════════════════════════ */}
+        <section>
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <span className="text-[11px] tracking-[0.3em] text-accent-500 mb-4 block uppercase font-bold">
+              Portfolio
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mb-6">
+              Successful Service Operations
+            </h2>
+            <p className="text-slate-600 text-lg">
+              A glimpse into our on-site deployments, critical repairs, and large-scale industrial installations.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Project 1 */}
+            <div className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col group">
+              <div className="relative h-48 bg-slate-200 overflow-hidden">
+                <img 
+                  src="/assets/images/industry-cement.png" 
+                  alt="Compressor Overhaul" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-6 flex-1 flex flex-col">
+                <div className="flex items-start justify-between gap-2 mb-3">
+                  <h4 className="text-slate-900 font-bold text-lg leading-tight">Compressor Overhaul</h4>
+                  <span className="bg-slate-100 text-slate-600 text-[10px] uppercase font-bold tracking-wider px-2 py-1 rounded whitespace-nowrap">Apex Cement</span>
+                </div>
+                <p className="text-slate-600 text-sm italic leading-relaxed mb-4">
+                  "The overhaul was completed in record time. Our downtime was minimized, and the compressor is running more efficiently than ever."
+                </p>
+                <div className="mt-auto flex items-center gap-1 text-accent-500">
+                  {[1,2,3,4,5].map(star => <Star key={star} className="w-3 h-3 fill-current" />)}
+                </div>
+              </div>
+            </div>
+
+            {/* Video Placeholder */}
+            <div className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col group">
+              <div className="relative h-48 bg-slate-900 flex items-center justify-center">
+                <div className="absolute inset-0 z-0">
+                  <img src="/assets/images/industry-textile.png" className="w-full h-full object-cover opacity-50 grayscale" alt="Video thumbnail" />
+                </div>
+                <div className="relative z-10 w-full h-full">
+                  <video 
+                    src="#" 
+                    className="w-full h-full object-cover"
+                    controls
+                  />
+                </div>
+                <div className="absolute top-3 left-3 z-20 bg-accent-600 text-white text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded shadow">
+                  Video
+                </div>
+              </div>
+              <div className="p-6 flex-1 flex flex-col">
+                <div className="flex items-start justify-between gap-2 mb-3">
+                  <h4 className="text-slate-900 font-bold text-lg leading-tight">Emergency Repair</h4>
+                  <span className="bg-slate-100 text-slate-600 text-[10px] uppercase font-bold tracking-wider px-2 py-1 rounded whitespace-nowrap">TexFab India</span>
+                </div>
+                <p className="text-slate-600 text-sm italic leading-relaxed mb-4">
+                  "Machinery Centre's rapid response team saved us from a massive production halt. Truly a reliable partner."
+                </p>
+                <div className="mt-auto flex items-center gap-1 text-accent-500">
+                  {[1,2,3,4,5].map(star => <Star key={star} className="w-3 h-3 fill-current" />)}
+                </div>
+              </div>
+            </div>
+
+            {/* Project 2 */}
+            <div className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col group">
+              <div className="relative h-48 bg-slate-200 overflow-hidden">
+                <img 
+                  src="/assets/images/industry-packaging.png" 
+                  alt="Pump Installation" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-6 flex-1 flex flex-col">
+                <div className="flex items-start justify-between gap-2 mb-3">
+                  <h4 className="text-slate-900 font-bold text-lg leading-tight">Pump Installation</h4>
+                  <span className="bg-slate-100 text-slate-600 text-[10px] uppercase font-bold tracking-wider px-2 py-1 rounded whitespace-nowrap">PackPro Ltd.</span>
+                </div>
+                <p className="text-slate-600 text-sm italic leading-relaxed mb-4">
+                  "The new water solutions network was installed flawlessly. We're seeing great improvements in our operational scale."
+                </p>
+                <div className="mt-auto flex items-center gap-1 text-accent-500">
+                  {[1,2,3,4,5].map(star => <Star key={star} className="w-3 h-3 fill-current" />)}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );

@@ -10,10 +10,12 @@ import {
   Send,
   CheckCircle2,
   Cpu,
-  Factory
+  Factory,
+  Star
 } from "lucide-react";
 import { isValidIndianPhone } from "../utils/validation";
 import { useSEO } from "../utils/useSEO";
+import { getBrandLogo } from "../utils/logos";
 
 // ── Intersection Observer Hook ────────────────────────────────
 function useInView(threshold = 0.15) {
@@ -374,11 +376,20 @@ export function Home() {
                   } leading-none tracking-tighter`}>
                     {product.num}
                   </span>
-                  <h3 className="mb-4 flex flex-col gap-1">
+                  <h3 className="mb-4 flex flex-col gap-1 items-start">
                     {product.brand && (
-                      <span className={`${isTrendi ? 'text-3xl text-accent-600' : 'text-xl text-slate-800'} font-black uppercase tracking-tight`}>
-                        {product.brand}
-                      </span>
+                      <div className="flex items-center gap-3 mb-1">
+                        {getBrandLogo(product.brand) && (
+                          <img 
+                            src={getBrandLogo(product.brand)} 
+                            alt={`${product.brand} Logo`} 
+                            className="h-8 w-auto object-contain"
+                          />
+                        )}
+                        <span className="text-lg text-slate-800 font-black uppercase tracking-tight">
+                          {product.brand}
+                        </span>
+                      </div>
                     )}
                     <span className={`${isTrendi ? 'text-base' : 'text-sm'} font-semibold ${product.brand ? 'text-slate-600' : 'text-slate-800'} uppercase tracking-wide leading-snug`}>
                       {product.title}
@@ -409,9 +420,18 @@ export function Home() {
             
             {/* Left Column */}
             <div>
-              <span className="text-[11px] tracking-[0.3em] text-accent-500 mb-4 block font-bold uppercase">
-                In-House Excellence
-              </span>
+              <div className="flex items-center gap-4 mb-4">
+                {getBrandLogo("Trendi") && (
+                  <img 
+                    src={getBrandLogo("Trendi")} 
+                    alt="Trendi Logo" 
+                    className="h-8 sm:h-10 w-auto object-contain bg-white/5 px-2 py-1 rounded" 
+                  />
+                )}
+                <span className="text-[11px] tracking-[0.3em] text-accent-500 block font-bold uppercase">
+                  In-House Excellence
+                </span>
+              </div>
               <h2 className="text-4xl sm:text-5xl text-white mb-6 font-black tracking-tight leading-tight">
                 The Trendi Product Range
               </h2>
@@ -702,8 +722,12 @@ export function Home() {
       <section ref={trustSection.ref} className="py-20 sm:py-28 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className={`max-w-4xl mx-auto bg-white rounded-3xl p-10 sm:p-16 shadow-xl shadow-slate-200/50 text-center transition-all duration-700 ${trustSection.visible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-            <div className="w-16 h-16 bg-accent-50 rounded-2xl flex items-center justify-center mx-auto mb-8">
-              <ShieldCheck className="w-8 h-8 text-accent-500" />
+            <div className="flex items-center justify-center mx-auto mb-8">
+              <img 
+                src="https://res.cloudinary.com/dt3m8h52i/image/upload/v1780925600/Copy_of_MC_LOGO_RED-Photoroom_ur93js.png" 
+                alt="Machinery Centre Logo" 
+                className="h-16 sm:h-20 w-auto object-contain drop-shadow-sm"
+              />
             </div>
             <h2 className="text-4xl sm:text-5xl text-slate-900 mb-6 leading-tight">
               Trusted by Indian Industry<br />
@@ -714,6 +738,99 @@ export function Home() {
               Cement, we have the precise Air and Water solutions tailored
               for your scale of operations.
             </h3>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════
+           8.5 CUSTOMER SUCCESS & TESTIMONIALS
+           ═══════════════════════════════════════════════════════ */}
+      <section className="py-20 sm:py-28 bg-white border-t border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <span className="text-[11px] tracking-[0.3em] text-accent-500 mb-4 block uppercase font-bold">
+              Customer Success
+            </span>
+            <h2 className="text-4xl sm:text-5xl text-slate-900 mb-6 leading-tight">
+              What Our Clients Say
+            </h2>
+            <p className="text-slate-500 text-lg">
+              Trusted by leading businesses across India to deliver reliable, efficient, and robust industrial solutions.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Testimonial 1 */}
+            <div className="bg-slate-50 rounded-2xl p-8 border border-slate-100 relative group hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+              <div className="absolute top-8 right-8 text-slate-200 group-hover:text-accent-100 transition-colors">
+                <svg className="w-12 h-12" fill="currentColor" viewBox="0 0 32 32">
+                  <path d="M10 8c-3.3 0-6 2.7-6 6v10h10V14H8c0-1.1.9-2 2-2h2V8h-2zm14 0c-3.3 0-6 2.7-6 6v10h10V14h-6c0-1.1.9-2 2-2h2V8h-2z"/>
+                </svg>
+              </div>
+              <div className="flex gap-1 text-accent-500 mb-6">
+                {[1,2,3,4,5].map(star => <Star key={star} className="w-4 h-4 fill-current" />)}
+              </div>
+              <p className="text-slate-700 italic leading-relaxed mb-8 relative z-10">
+                "Machinery Centre has been our trusted partner for over a decade. Their prompt service and high-quality compressors have significantly improved our factory's operational efficiency."
+              </p>
+              <div className="flex items-center gap-4 mt-auto">
+                <div className="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center text-slate-500 font-bold text-lg">
+                  R
+                </div>
+                <div>
+                  <h4 className="text-slate-900 font-bold">Rajesh Kumar</h4>
+                  <p className="text-slate-500 text-sm">Plant Head, Manufacturing Solutions</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 2 */}
+            <div className="bg-slate-50 rounded-2xl p-8 border border-slate-100 relative group hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col">
+              <div className="absolute top-8 right-8 text-slate-200 group-hover:text-accent-100 transition-colors">
+                <svg className="w-12 h-12" fill="currentColor" viewBox="0 0 32 32">
+                  <path d="M10 8c-3.3 0-6 2.7-6 6v10h10V14H8c0-1.1.9-2 2-2h2V8h-2zm14 0c-3.3 0-6 2.7-6 6v10h10V14h-6c0-1.1.9-2 2-2h2V8h-2z"/>
+                </svg>
+              </div>
+              <div className="flex gap-1 text-accent-500 mb-6">
+                {[1,2,3,4,5].map(star => <Star key={star} className="w-4 h-4 fill-current" />)}
+              </div>
+              <p className="text-slate-700 italic leading-relaxed mb-8 relative z-10">
+                "We were facing frequent downtime with our old pneumatic systems. The team at Machinery Centre recommended the perfect Trendi models, and we haven't looked back since."
+              </p>
+              <div className="flex items-center gap-4 mt-auto">
+                <div className="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center text-slate-500 font-bold text-lg">
+                  S
+                </div>
+                <div>
+                  <h4 className="text-slate-900 font-bold">Sneha Sharma</h4>
+                  <p className="text-slate-500 text-sm">Operations Director, TexFab India</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Testimonial 3 */}
+            <div className="bg-slate-50 rounded-2xl p-8 border border-slate-100 relative group hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col">
+              <div className="absolute top-8 right-8 text-slate-200 group-hover:text-accent-100 transition-colors">
+                <svg className="w-12 h-12" fill="currentColor" viewBox="0 0 32 32">
+                  <path d="M10 8c-3.3 0-6 2.7-6 6v10h10V14H8c0-1.1.9-2 2-2h2V8h-2zm14 0c-3.3 0-6 2.7-6 6v10h10V14h-6c0-1.1.9-2 2-2h2V8h-2z"/>
+                </svg>
+              </div>
+              <div className="flex gap-1 text-accent-500 mb-6">
+                {[1,2,3,4,5].map(star => <Star key={star} className="w-4 h-4 fill-current" />)}
+              </div>
+              <p className="text-slate-700 italic leading-relaxed mb-8 relative z-10">
+                "Exceptional after-sales support! Whenever we need OEM spares or routine maintenance, they deliver immediately. Truly a reliable B2B partner for any scale of operation."
+              </p>
+              <div className="flex items-center gap-4 mt-auto">
+                <div className="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center text-slate-500 font-bold text-lg">
+                  A
+                </div>
+                <div>
+                  <h4 className="text-slate-900 font-bold">Amit Patel</h4>
+                  <p className="text-slate-500 text-sm">Procurement Manager, BuildTech</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -731,15 +848,30 @@ export function Home() {
             <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10" />
             <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10" />
 
-            <div className="flex items-center gap-12 sm:gap-16 logo-scroll-track w-max">
-              {[...partners, ...partners].map((name, i) => (
-                <div
-                  key={`${name}-${i}`}
-                  className="text-xl sm:text-2xl tracking-wider text-slate-300 hover:text-slate-600 transition-colors duration-300 whitespace-nowrap select-none cursor-default shrink-0"
-                >
-                  {name}
-                </div>
-              ))}
+            <div className="flex items-center gap-12 sm:gap-16 logo-scroll-track w-max py-4">
+              {[...partners, ...partners].map((name, i) => {
+                const logoUrl = getBrandLogo(name);
+                return (
+                  <div key={`${name}-${i}`} className="flex flex-col items-center justify-center gap-3 shrink-0 group">
+                    {logoUrl ? (
+                      <img
+                        src={logoUrl}
+                        alt={name}
+                        className="h-10 sm:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="h-10 sm:h-12 w-auto flex items-center justify-center">
+                        <div className="text-xl sm:text-2xl font-bold tracking-wider text-slate-300 group-hover:text-slate-500 transition-colors duration-300">
+                          {/* Fallback if no logo */}
+                        </div>
+                      </div>
+                    )}
+                    <div className="text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-slate-400 group-hover:text-slate-600 transition-colors duration-300 whitespace-nowrap select-none cursor-default">
+                      {name}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

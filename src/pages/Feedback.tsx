@@ -44,7 +44,7 @@ export function Feedback() {
     <div className="flex-1 bg-slate-50 flex flex-col items-center py-12">
       <div className="container mx-auto px-4 max-w-2xl">
         <div className="text-center mb-10">
-          <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-16 h-16 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mx-auto mb-6">
              <MessageSquare className="w-8 h-8" />
           </div>
           <h1 className="text-4xl font-black text-slate-900 mb-4">Feedback &amp; Grievance</h1>
@@ -76,19 +76,19 @@ export function Feedback() {
               
               <div className="space-y-2">
                 <label className="text-sm text-slate-700">Your Name <span className="text-orange-500">*</span></label>
-                <input name="name" value={formData.name} onChange={handleChange} type="text" className={`w-full bg-slate-50 border ${errors.name ? 'border-red-400' : 'border-slate-200'} rounded px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors`} />
+                <input name="name" value={formData.name} onChange={handleChange} type="text" className={`w-full bg-slate-50 border ${errors.name ? 'border-red-400' : 'border-slate-200'} rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`} />
                 {errors.name && <p className="text-red-500 text-xs">{errors.name}</p>}
               </div>
 
               <div className="space-y-2">
                 <label className="text-sm text-slate-700">Your Email <span className="text-orange-500">*</span></label>
-                <input name="email" value={formData.email} onChange={handleChange} type="email" className={`w-full bg-slate-50 border ${errors.email ? 'border-red-400' : 'border-slate-200'} rounded px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors`} />
+                <input name="email" value={formData.email} onChange={handleChange} type="email" className={`w-full bg-slate-50 border ${errors.email ? 'border-red-400' : 'border-slate-200'} rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`} />
                 {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
               </div>
 
               <div className="space-y-2">
                 <label className="text-sm text-slate-700">How did you hear about us?</label>
-                <select name="source" value={formData.source} onChange={handleChange} className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors">
+                <select name="source" value={formData.source} onChange={handleChange} className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors">
                   <option value="">Select an option</option>
                   <option value="Friend">Friend</option>
                   <option value="TV">TV</option>
@@ -106,10 +106,10 @@ export function Feedback() {
                     <label className="text-sm text-slate-700 block mb-2">Have you experienced our services? <span className="text-orange-500">*</span></label>
                     <div className="flex gap-4">
                       <label className="flex items-center gap-2 cursor-pointer text-slate-700">
-                        <input type="radio" name="experienced" value="Yes" checked={formData.experienced === 'Yes'} onChange={handleChange} className="text-blue-600 focus:ring-blue-500" /> Yes
+                        <input type="radio" name="experienced" value="Yes" checked={formData.experienced === 'Yes'} onChange={handleChange} className="text-orange-600 focus:ring-orange-500" /> Yes
                       </label>
                       <label className="flex items-center gap-2 cursor-pointer text-slate-700">
-                        <input type="radio" name="experienced" value="No" checked={formData.experienced === 'No'} onChange={handleChange} className="text-blue-600 focus:ring-blue-500" /> No
+                        <input type="radio" name="experienced" value="No" checked={formData.experienced === 'No'} onChange={handleChange} className="text-orange-600 focus:ring-orange-500" /> No
                       </label>
                     </div>
                     {errors.experienced && <p className="text-red-500 text-xs mt-1">{errors.experienced}</p>}
@@ -132,11 +132,11 @@ export function Feedback() {
 
               <div className="space-y-2 pt-2">
                 <label className="text-sm text-slate-700">Message / Comments</label>
-                <textarea name="message" value={formData.message} onChange={handleChange} rows={4} className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" placeholder="Please share your thoughts or details about any grievance..." />
+                <textarea name="message" value={formData.message} onChange={handleChange} rows={4} className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" placeholder="Please share your thoughts or details about any grievance..." />
               </div>
 
               <div className="pt-4">
-                <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white tracking-wider text-sm py-4 rounded-sm transition-colors shadow-lg shadow-blue-500/20">
+                <button type="submit" className="w-full bg-orange-500 hover:bg-orange-600 text-white tracking-widest text-[10px] py-4 rounded-full flex items-center justify-center gap-2 transition-colors uppercase">
                   Submit Feedback
                 </button>
               </div>

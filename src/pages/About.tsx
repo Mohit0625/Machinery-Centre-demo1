@@ -1,4 +1,4 @@
-import { Building2, History, Target } from "lucide-react";
+import { Building2, History, Target, Users } from "lucide-react";
 import { useSEO } from "../utils/useSEO";
 
 export function About() {
@@ -62,6 +62,56 @@ export function About() {
                   <p className="text-slate-600 text-sm leading-relaxed">
                     At Machinery Centre, we cater to industrial needs of Packaging, Paint, Cement, Garage Equipments, Textile, Shoe Making, and Laundry Industries.
                   </p>
+                </div>
+              </div>
+            </section>
+
+            <div className="w-full h-px bg-slate-200 mt-12 mb-12" />
+
+            <section>
+              <div className="flex items-center gap-3 mb-6">
+                <Users className="w-8 h-8 text-orange-500" />
+                <h2 className="text-2xl font-black text-slate-900">Leadership & Management</h2>
+              </div>
+              <p className="text-slate-600 text-lg mb-8 leading-relaxed">
+                Behind Machinery Centre's decades of success is a dedicated team of partners and management professionals who ensure operational excellence and unparalleled service delivery.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* Team Member 1 */}
+                <div className="group rounded-lg overflow-hidden border border-slate-200 bg-white hover:shadow-lg transition-all duration-300">
+                  <div className="h-64 overflow-hidden bg-slate-100 flex items-center justify-center">
+                    <img 
+                      src="/assets/images/industry-cement.png" 
+                      alt="Partner" 
+                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
+                    />
+                  </div>
+                  <div className="p-6 text-center">
+                    <h3 className="text-xl font-bold text-slate-900 mb-1">[Partner Name]</h3>
+                    <p className="text-accent-600 text-sm font-semibold tracking-wider uppercase mb-3">Managing Partner</p>
+                    <p className="text-slate-500 text-sm leading-relaxed">
+                      With over 35 years of experience in industrial machinery, leading the strategic vision and growth of the company.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Team Member 2 */}
+                <div className="group rounded-lg overflow-hidden border border-slate-200 bg-white hover:shadow-lg transition-all duration-300">
+                  <div className="h-64 overflow-hidden bg-slate-100 flex items-center justify-center">
+                    <img 
+                      src="/assets/images/industry-textile.png" 
+                      alt="Management" 
+                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
+                    />
+                  </div>
+                  <div className="p-6 text-center">
+                    <h3 className="text-xl font-bold text-slate-900 mb-1">[Manager Name]</h3>
+                    <p className="text-accent-600 text-sm font-semibold tracking-wider uppercase mb-3">Operations Head</p>
+                    <p className="text-slate-500 text-sm leading-relaxed">
+                      Overseeing daily operations, supply chain logistics, and ensuring that our nationwide network runs smoothly.
+                    </p>
+                  </div>
                 </div>
               </div>
             </section>

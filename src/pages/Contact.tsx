@@ -125,7 +125,7 @@ export function Contact() {
                 </p>
                 <button 
                   onClick={() => setSubmitted(false)}
-                  className="bg-slate-900 hover:bg-slate-800 text-white px-6 py-3 rounded-sm text-sm"
+                  className="bg-slate-900 hover:bg-slate-800 text-white px-8 py-3 rounded-full text-[10px] tracking-widest uppercase"
                 >
                   Send Another Message
                 </button>
@@ -175,7 +175,7 @@ export function Contact() {
                     </div>
                   </div>
 
-                  <button type="submit" className="bg-slate-900 hover:bg-slate-800 text-white tracking-wider text-sm px-8 py-4 rounded-sm flex items-center justify-center gap-2 transition-colors w-full sm:w-auto">
+                  <button type="submit" className="bg-orange-500 hover:bg-orange-600 text-white tracking-widest text-[10px] px-8 py-4 rounded-full flex items-center justify-center gap-2 transition-colors w-full sm:w-auto uppercase">
                     Submit Message <Send className="w-4 h-4" />
                   </button>
                 </form>

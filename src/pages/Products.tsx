@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Wind, Droplets, Filter, CheckCircle2, Factory, Cpu, Download, X } from "lucide-react";
 import { isValidEmail, isValidIndianPhone } from "../utils/validation";
 import { useSEO } from "../utils/useSEO";
+import { getBrandLogo } from "../utils/logos";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -483,16 +484,28 @@ export function Products() {
 function ProductCard({ product, onDownloadRequest }: { product: any, onDownloadRequest: () => void }) {
   return (
     <div className="bg-white border border-slate-200 rounded-sm p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full">
-      <h3 className="text-xl text-slate-900 mb-2">{product.title}</h3>
       {product.brands && (
-        <div className="flex flex-wrap gap-2 mb-4">
-          {product.brands.map((b: string) => (
-            <span key={b} className="text-[10px] tracking-wider bg-slate-100 text-slate-600 px-2 py-1 rounded">
-              {b}
-            </span>
-          ))}
+        <div className="flex flex-wrap gap-4 mb-4 items-center">
+          {product.brands.map((b: string) => {
+            const logoUrl = getBrandLogo(b);
+            return (
+              <div key={b} className="flex items-center gap-2">
+                {logoUrl && (
+                  <img 
+                    src={logoUrl} 
+                    alt={b} 
+                    className="h-8 sm:h-10 w-auto object-contain"
+                  />
+                )}
+                <span className="text-xs font-bold tracking-wider text-slate-500 uppercase">
+                  {b}
+                </span>
+              </div>
+            );
+          })}
         </div>
       )}
+      <h3 className="text-xl text-slate-900 mb-4 font-bold leading-snug">{product.title}</h3>
       <p className="text-slate-600 text-sm leading-relaxed mb-6">{product.desc}</p>
       
       {product.features && product.features.length > 0 && (
@@ -512,7 +525,7 @@ function ProductCard({ product, onDownloadRequest }: { product: any, onDownloadR
         </Link>
         <button 
           onClick={onDownloadRequest}
-          className="flex items-center gap-1.5 text-xs font-semibold tracking-wider bg-orange-600 text-white px-4 py-2 rounded shadow hover:bg-orange-700 hover:shadow-md hover:-translate-y-0.5 transition-all"
+          className="flex items-center gap-1.5 text-[10px] font-bold tracking-widest uppercase bg-orange-500 text-white px-5 py-2.5 rounded-full shadow hover:bg-orange-600 hover:shadow-md hover:-translate-y-0.5 transition-all"
         >
           <Download className="w-3.5 h-3.5" />
           Catalog
@@ -616,7 +629,7 @@ function CatalogDownloadModal({ productTitle, catalogLink, onClose }: { productT
                   type="text" 
                   value={formData.name}
                   onChange={handleChange}
-                  className={`w-full px-4 py-2 bg-slate-50 border ${errors.name ? 'border-red-400' : 'border-slate-200'} rounded-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`}
+                  className={`w-full px-4 py-3 bg-slate-50 border ${errors.name ? 'border-red-400' : 'border-slate-200'} rounded focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`}
                   placeholder="John Doe"
                 />
                 {errors.name && <p className="text-red-500 text-[10px] mt-1">{errors.name}</p>}
@@ -628,7 +641,7 @@ function CatalogDownloadModal({ productTitle, catalogLink, onClose }: { productT
                   type="email" 
                   value={formData.email}
                   onChange={handleChange}
-                  className={`w-full px-4 py-2 bg-slate-50 border ${errors.email ? 'border-red-400' : 'border-slate-200'} rounded-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`}
+                  className={`w-full px-4 py-3 bg-slate-50 border ${errors.email ? 'border-red-400' : 'border-slate-200'} rounded focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`}
                   placeholder="john@company.com"
                 />
                 {errors.email && <p className="text-red-500 text-[10px] mt-1">{errors.email}</p>}
@@ -641,7 +654,7 @@ function CatalogDownloadModal({ productTitle, catalogLink, onClose }: { productT
                     type="tel" 
                     value={formData.phone}
                     onChange={handleChange}
-                    className={`w-full px-4 py-2 bg-slate-50 border ${errors.phone ? 'border-red-400' : 'border-slate-200'} rounded-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`}
+                    className={`w-full px-4 py-3 bg-slate-50 border ${errors.phone ? 'border-red-400' : 'border-slate-200'} rounded focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`}
                     placeholder="+91 9800000000"
                   />
                   {errors.phone && <p className="text-red-500 text-[10px] mt-1">{errors.phone}</p>}
@@ -653,7 +666,7 @@ function CatalogDownloadModal({ productTitle, catalogLink, onClose }: { productT
                     type="text" 
                     value={formData.company}
                     onChange={handleChange}
-                    className={`w-full px-4 py-2 bg-slate-50 border ${errors.company ? 'border-red-400' : 'border-slate-200'} rounded-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`}
+                    className={`w-full px-4 py-3 bg-slate-50 border ${errors.company ? 'border-red-400' : 'border-slate-200'} rounded focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`}
                     placeholder="Acme Inc."
                   />
                   {errors.company && <p className="text-red-500 text-[10px] mt-1">{errors.company}</p>}
@@ -663,7 +676,7 @@ function CatalogDownloadModal({ productTitle, catalogLink, onClose }: { productT
                 <button 
                   type="submit" 
                   disabled={isSubmitting}
-                  className="w-full bg-orange-600 hover:bg-orange-700 text-white tracking-wider text-sm py-3 px-6 rounded-sm transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="w-full bg-orange-500 hover:bg-orange-600 text-white tracking-widest text-[10px] uppercase py-4 px-6 rounded-full transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? "Processing..." : "Get Catalog"}
                 </button>

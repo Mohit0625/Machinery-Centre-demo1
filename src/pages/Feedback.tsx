@@ -47,7 +47,7 @@ export function Feedback() {
           <div className="w-16 h-16 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mx-auto mb-6">
              <MessageSquare className="w-8 h-8" />
           </div>
-          <h1 className="text-4xl font-black text-slate-900 mb-4">Feedback &amp; Grievance</h1>
+          <h1 className="text-4xl font-black text-slate-900 mb-4">Feedback</h1>
           <p className="text-slate-600 text-lg">
             Your feedback helps us modernize our services and enables a better system of trust and reliability.
           </p>
@@ -88,7 +88,7 @@ export function Feedback() {
 
               <div className="space-y-2">
                 <label className="text-sm text-slate-700">How did you hear about us?</label>
-                <select name="source" value={formData.source} onChange={handleChange} className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors">
+                <select name="source" value={formData.source} onChange={handleChange} className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors custom-select">
                   <option value="">Select an option</option>
                   <option value="Friend">Friend</option>
                   <option value="TV">TV</option>

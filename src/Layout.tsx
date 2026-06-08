@@ -6,9 +6,9 @@ const navLinks = [
   { name: "Home", path: "/" },
   { name: "Products", path: "/products" },
   { name: "Services", path: "/services" },
-  { name: "About Us", path: "/about" },
+  { name: "About", path: "/about" },
   { name: "Quote", path: "/quote" },
-  { name: "Contact Us", path: "/contact" },
+  { name: "Contact", path: "/contact" },
   { name: "Feedback", path: "/feedback" },
 ];
 
@@ -32,45 +32,49 @@ export function Layout() {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
-  const textColor = scrolled || !isHome ? "text-slate-600" : "text-white/80";
-  const activeColor = scrolled || !isHome ? "text-slate-900" : "text-white";
-  const logoColor = scrolled || !isHome ? "text-slate-900" : "text-white";
-  const taglineColor = scrolled || !isHome ? "text-slate-500" : "text-white/60";
+  const isHeaderSolid = scrolled || !isHome || mobileMenuOpen;
+  const textColor = isHeaderSolid ? "text-slate-600" : "text-white/80";
+  const activeColor = isHeaderSolid ? "text-slate-900" : "text-white";
+  const logoColor = isHeaderSolid ? "text-slate-900" : "text-white";
+  const taglineColor = isHeaderSolid ? "text-slate-500" : "text-white/60";
 
   return (
-    <div className="min-h-screen flex flex-col font-sans">
+    <div className="min-h-screen flex flex-col font-sans overflow-x-hidden">
       
       {/* ── Header Container ───────────────────────── */}
-      <div className={`w-full z-50 transition-all duration-300 ${isHome ? 'fixed top-0 left-0 right-0' : 'sticky top-0 bg-white shadow-sm'}`}>
+      <div className={`w-full z-50 transition-all duration-300 pt-[env(safe-area-inset-top)] ${isHome ? 'fixed top-0 left-0 right-0' : 'sticky top-0 bg-white shadow-sm'}`}>
         
         {/* Top Contact Strip */}
-        <div className={`transition-all duration-300 overflow-hidden ${scrolled ? 'h-0 opacity-0' : 'h-[36px] opacity-100'} ${isHome ? 'bg-slate-900/40 backdrop-blur-sm' : 'bg-slate-900'} border-b border-white/5`}>
-          <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-1.5 text-xs font-medium text-slate-300">
-            <div className="flex items-center gap-5">
+        <div className={`hidden sm:block transition-all duration-300 overflow-hidden w-full ${scrolled ? 'h-0 opacity-0' : 'h-[36px] opacity-100'} ${isHome ? 'bg-slate-900/40 backdrop-blur-sm' : 'bg-slate-900'} border-b border-white/5`}>
+          <div className="max-w-7xl mx-auto h-full px-2 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-1.5 text-[11px] sm:text-xs font-medium text-slate-300">
+            <div className="flex items-center gap-3 sm:gap-5 w-full sm:w-auto justify-center sm:justify-start">
               <a href="tel:01141440012" className="flex items-center gap-1.5 hover:text-white transition-colors">
-                <PhoneCall className="w-3 h-3" /> 011-41440012, 9810054137
+                <PhoneCall className="w-3 h-3 shrink-0" /> 
+                <span className="truncate">011-41440012, 9810054137</span>
               </a>
-              <a href="mailto:machinerycentre@yahoo.com" className="flex items-center gap-1.5 hover:text-white transition-colors">
-                <Mail className="w-3 h-3" /> machinerycentre@yahoo.com
+              <a href="mailto:machinerycentre@yahoo.com" className="hidden sm:flex items-center gap-1.5 hover:text-white transition-colors overflow-hidden">
+                <Mail className="w-3 h-3 shrink-0" /> <span className="truncate">machinerycentre@yahoo.com</span>
               </a>
             </div>
             <div className="hidden sm:flex items-center gap-1.5 text-slate-400">
               <MapPin className="w-3 h-3 text-accent-400" />
-              3858, Shah Ganj, G.B. Road, Delhi-6
+              <a href="https://www.google.com/maps/search/?api=1&query=3858,+Shah+Ganj,+G.B.+Road,+Delhi-6" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:underline transition-colors cursor-pointer">
+                3858, Shah Ganj, G.B. Road, Delhi-6
+              </a>
             </div>
           </div>
         </div>
 
         {/* Main Navigation */}
-        <header className={`transition-all duration-300 ${scrolled && isHome ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200 py-3' : 'py-4'}`}>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        <header className={`transition-all duration-300 ${(scrolled || mobileMenuOpen) && isHome ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200 py-3' : 'py-4'}`}>
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
             {/* Brand */}
-            <Link to="/" className="flex items-center shrink-0">
-              <div className="flex items-center gap-3 pr-4 border-r border-slate-300/30">
+            <Link to="/" className="flex items-center shrink-0 gap-2 md:gap-4">
+              <div className="flex items-center gap-2 md:gap-3">
                 <img 
                   src="https://res.cloudinary.com/dt3m8h52i/image/upload/v1780925600/Copy_of_MC_LOGO_RED-Photoroom_ur93js.png" 
                   alt="Machinery Centre Logo" 
-                  className="h-10 sm:h-12 w-auto object-contain"
+                  className="h-6 md:h-8 w-auto object-contain"
                 />
                 <div className="hidden sm:block">
                   <h1 className={`text-2xl font-sans font-bold ${logoColor} uppercase  leading-none`}>
@@ -81,11 +85,12 @@ export function Layout() {
                   </p>
                 </div>
               </div>
-              <div className="pl-4">
+              <div className="h-4 md:h-6 w-px bg-slate-300/30"></div>
+              <div>
                 <img 
                   src="https://res.cloudinary.com/dt3m8h52i/image/upload/v1780925599/Copy_of_TRENDI-LOGO-Photoroom_cnispn.png" 
                   alt="Trendi Logo" 
-                  className="h-7 sm:h-9 w-auto object-contain"
+                  className="h-6 md:h-8 w-auto object-contain"
                 />
               </div>
             </Link>
@@ -128,7 +133,7 @@ export function Layout() {
 
             {/* Mobile Toggle */}
             <button
-              className={`lg:hidden p-2 rounded-lg ${logoColor} hover:bg-slate-500/10 transition-colors`}
+              className={`block lg:hidden ml-auto mr-4 sm:mr-0 p-2 rounded-lg ${logoColor} hover:bg-slate-500/10 transition-colors shrink-0`}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle menu"
             >
@@ -139,28 +144,28 @@ export function Layout() {
 
         {/* Mobile Nav */}
         <div
-          className={`lg:hidden overflow-hidden transition-all duration-300 absolute w-full left-0 top-full bg-white shadow-lg ${
-            mobileMenuOpen ? 'max-h-[500px] opacity-100 border-t border-slate-100' : 'max-h-0 opacity-0'
+          className={`lg:hidden transition-all duration-300 absolute w-full left-0 top-full bg-white shadow-lg ${
+            mobileMenuOpen ? 'max-h-[85vh] overflow-y-auto opacity-100 border-t border-slate-100' : 'max-h-0 overflow-hidden opacity-0'
           }`}
         >
-          <nav className="px-4 pb-6 pt-2 space-y-1">
+          <nav className="px-5 sm:px-6 pb-5 pt-1 flex flex-col">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 to={link.path}
-                className={`flex items-center justify-between p-3 rounded-xl text-sm font-bold tracking-wide transition-all ${
+                className={`flex items-center justify-between py-3 border-b border-slate-100 text-[13px] font-bold tracking-wide transition-all ${
                   location.pathname === link.path
-                    ? "bg-accent-50 text-accent-600"
-                    : "text-slate-700 hover:bg-slate-50"
+                    ? "text-accent-600"
+                    : "text-slate-700 hover:text-accent-500"
                 }`}
               >
                 {link.name}
-                <ChevronRight className="w-4 h-4 opacity-40" />
+                <ChevronRight className={`w-4 h-4 ${location.pathname === link.path ? "opacity-100 text-accent-500" : "opacity-40"}`} />
               </Link>
             ))}
             <Link
               to="/quote"
-              className="btn-pill btn-accent w-full mt-4 text-[12px] py-3"
+              className="btn-pill btn-accent w-full mt-4 text-[11px] py-3 shadow-md shadow-accent-500/20"
             >
               Request a Quote
             </Link>
@@ -174,22 +179,24 @@ export function Layout() {
       </main>
 
       {/* ── Pre-Footer Banner ───────────────────────── */}
-      <section className="bg-accent-500 py-12 sm:py-16 mt-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
-          <div>
-            <h2 className="text-2xl sm:text-3xl text-white mb-2">Critical Repairs</h2>
-            <p className="text-white/80 text-sm sm:text-base max-w-xl">
-              Repair queries are dealt with utmost urgency and concern. Our team prioritizes getting your machinery back up and running.
-            </p>
+      {location.pathname !== '/contact' && (
+        <section className="bg-accent-500 py-12 sm:py-16 mt-auto">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+            <div>
+              <h2 className="text-2xl sm:text-3xl text-white mb-2">Critical Repairs</h2>
+              <p className="text-white/80 text-sm sm:text-base max-w-xl">
+                Repair queries are dealt with utmost urgency and concern. Our team prioritizes getting your machinery back up and running.
+              </p>
+            </div>
+            <Link
+              to="/contact?type=repair"
+              className="btn-pill btn-white shrink-0 text-[11px]"
+            >
+              Request Urgent Repair
+            </Link>
           </div>
-          <Link
-            to="/contact?type=repair"
-            className="btn-pill btn-white shrink-0 text-[11px]"
-          >
-            Request Urgent Repair
-          </Link>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ── Footer ──────────────────────────────────── */}
       <footer className="bg-slate-900 text-slate-400 pt-16 pb-8">
@@ -234,8 +241,8 @@ export function Layout() {
             <div className="md:col-span-3">
               <h3 className="text-white tracking-wider mb-6 text-xs">Quick Links</h3>
               <ul className="space-y-3">
-                {["Home", "Products", "Services", "About Us", "Feedback & Grievance"].map((name) => {
-                  const path = name === "Feedback & Grievance" ? "/feedback" : name === "About Us" ? "/about" : `/${name.toLowerCase()}`;
+                {["Home", "Products", "Services", "About", "Feedback"].map((name) => {
+                  const path = `/${name.toLowerCase()}`;
                   return (
                     <li key={name}>
                       <Link
@@ -256,7 +263,9 @@ export function Layout() {
               <ul className="space-y-4 text-sm">
                 <li className="flex items-start gap-3">
                   <MapPin className="w-4 h-4 text-accent-500 mt-0.5 shrink-0" />
-                  <span>3858, Shah Ganj, G.B. Road,<br />Delhi-6</span>
+                  <a href="https://www.google.com/maps/search/?api=1&query=3858,+Shah+Ganj,+G.B.+Road,+Delhi-6" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:underline transition-colors cursor-pointer">
+                    3858, Shah Ganj, G.B. Road,<br />Delhi-6
+                  </a>
                 </li>
                 <li className="flex items-start gap-3">
                   <PhoneCall className="w-4 h-4 text-accent-500 mt-0.5 shrink-0" />

@@ -64,11 +64,11 @@ function Counter({ end, suffix = "", label }: { end: number; suffix?: string; la
   }, [started, end]);
 
   return (
-    <div ref={ref} className="text-center">
-      <div className="text-4xl sm:text-5xl text-accent-500 font-sans">
+    <div ref={ref} className="text-center flex flex-col items-center">
+      <div className="text-3xl sm:text-4xl lg:text-5xl text-accent-500 font-sans tracking-tight whitespace-nowrap">
         {count}{suffix}
       </div>
-      <div className="text-slate-500 text-sm mt-1">{label}</div>
+      <div className="text-slate-500 text-xs sm:text-sm mt-1 max-w-[100px] sm:max-w-none mx-auto leading-tight sm:leading-normal">{label}</div>
     </div>
   );
 }
@@ -228,7 +228,10 @@ export function Home() {
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/90 animate-subtle-bounce">
+        <div 
+          onClick={() => document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' })}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/90 animate-subtle-bounce cursor-pointer"
+        >
           <span className="text-[11px] tracking-[0.2em] uppercase font-semibold">Scroll</span>
           <ArrowDown className="w-5 h-5 opacity-70" />
         </div>
@@ -237,7 +240,7 @@ export function Home() {
       {/* ═══════════════════════════════════════════════════════
            2. ASYMMETRICAL FEATURE BLOCK
            ═══════════════════════════════════════════════════════ */}
-      <section ref={feature.ref} className="py-20 sm:py-28 bg-white">
+      <section ref={feature.ref} id="products-section" className="py-20 sm:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             {/* Left — Visual */}
@@ -275,10 +278,10 @@ export function Home() {
               </p>
 
               {/* Stats */}
-              <div className="grid grid-cols-3 gap-6 py-8 border-y border-slate-100">
+              <div className="grid grid-cols-3 gap-2 sm:gap-6 py-8 border-y border-slate-100">
                 <Counter end={new Date().getFullYear() - 1987} suffix="+" label="Years Experience" />
                 <Counter end={10} suffix="+" label="Brand Partners" />
-                <Counter end={500} suffix="+" label="Clients Served" />
+                <Counter end={15000} suffix="+" label="Clients Served" />
               </div>
 
               <div className="mt-8">
@@ -323,16 +326,18 @@ export function Home() {
             {expertiseCards.map((card, i) => (
               <div
                 key={card.title}
-                className={`glass-card p-8 group hover:bg-white/15 transition-all duration-500 hover:-translate-y-2 cursor-pointer ${
+                className={`transition-all duration-700 ${
                   expertise.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}
                 style={{ transitionDelay: `${i * 120 + 200}ms` }}
               >
-                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${card.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                  <card.icon className="w-7 h-7 text-white" />
+                <div className="glass-card p-8 group hover:bg-white/15 transition-all duration-300 hover:-translate-y-2 cursor-default h-full">
+                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${card.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                    <card.icon className="w-7 h-7 text-white" />
+                  </div>
+                  <h3 className="text-lg text-white mb-3">{card.title}</h3>
+                  <p className="text-slate-300 text-sm leading-relaxed">{card.desc}</p>
                 </div>
-                <h3 className="text-lg text-white mb-3">{card.title}</h3>
-                <p className="text-slate-300 text-sm leading-relaxed">{card.desc}</p>
               </div>
             ))}
           </div>
@@ -362,15 +367,16 @@ export function Home() {
               return (
                 <div
                   key={product.num}
-                  className={`rounded-2xl border transition-all duration-500 group ${
+                  className={`transition-all duration-700 ${
                     productGrid.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                  } ${
-                    isTrendi
-                      ? 'lg:col-span-2 p-8 sm:p-10 bg-gradient-to-br from-white to-accent-50/50 shadow-md border-accent-200 hover:shadow-2xl hover:-translate-y-1 hover:border-accent-400'
-                      : 'lg:col-span-1 p-6 bg-white shadow-sm border-slate-100 hover:shadow-xl hover:-translate-y-1 hover:border-accent-200'
-                  }`}
+                  } ${isTrendi ? 'lg:col-span-2' : 'lg:col-span-1'}`}
                   style={{ transitionDelay: `${i * 75}ms` }}
                 >
+                  <div className={`rounded-2xl border transition-all duration-300 group h-full ${
+                    isTrendi
+                      ? 'p-8 sm:p-10 bg-gradient-to-br from-white to-accent-50/50 shadow-md border-accent-200 hover:shadow-2xl hover:-translate-y-1 hover:border-accent-400'
+                      : 'p-6 bg-white shadow-sm border-slate-100 hover:shadow-xl hover:-translate-y-1 hover:border-accent-200'
+                  }`}>
                   <span className={`block mb-2 font-black transition-colors ${
                     isTrendi ? 'text-7xl text-accent-500/30 group-hover:text-accent-500' : 'text-5xl text-accent-500/20 group-hover:text-accent-500/70'
                   } leading-none tracking-tighter`}>
@@ -398,6 +404,7 @@ export function Home() {
                   <p className={`${isTrendi ? 'text-slate-600 text-base' : 'text-slate-500 text-xs'} leading-relaxed`}>
                     {product.desc}
                   </p>
+                  </div>
                 </div>
               );
             })}
@@ -477,61 +484,61 @@ export function Home() {
             {/* Right Column */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Card 01 */}
-              <div className="bg-white rounded-2xl p-6 sm:p-8 flex flex-col hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group">
+              <Link to="/products" className="bg-white rounded-2xl p-6 sm:p-8 flex flex-col hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group cursor-pointer block">
                 <span className="text-[10px] tracking-widest text-accent-500 font-bold uppercase mb-2">Advanced Screw Airend</span>
                 <h3 className="text-slate-900 text-xl font-black leading-tight mb-3">Screw Air Compressors</h3>
                 <p className="text-slate-500 text-sm leading-relaxed mb-6 flex-1">
                   Highlighting Energy Efficient & Base-Mounted Direct Drive Screw models.
                 </p>
-                <Link to="/products" className="text-accent-600 text-xs font-bold flex items-center gap-1 group-hover:text-accent-700 transition-colors">
+                <span className="text-accent-600 text-xs font-bold flex items-center gap-1 group-hover:text-accent-700 transition-colors">
                   Explore Models <ArrowRight className="w-3 h-3" />
-                </Link>
-              </div>
+                </span>
+              </Link>
 
               {/* Card 02 */}
-              <div className="bg-white rounded-2xl p-6 sm:p-8 flex flex-col hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group">
+              <Link to="/products" className="bg-white rounded-2xl p-6 sm:p-8 flex flex-col hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group cursor-pointer block">
                 <span className="text-[10px] tracking-widest text-accent-500 font-bold uppercase mb-2">Continuous Duty</span>
                 <h3 className="text-slate-900 text-xl font-black leading-tight mb-3">Reciprocating Compressors</h3>
                 <p className="text-slate-500 text-sm leading-relaxed mb-6 flex-1">
                   Motor-Driven Two-Stage Air Compressors with durable cast iron construction and 360° cooling.
                 </p>
-                <Link to="/products" className="text-accent-600 text-xs font-bold flex items-center gap-1 group-hover:text-accent-700 transition-colors">
+                <span className="text-accent-600 text-xs font-bold flex items-center gap-1 group-hover:text-accent-700 transition-colors">
                   Explore Models <ArrowRight className="w-3 h-3" />
-                </Link>
-              </div>
+                </span>
+              </Link>
 
               {/* Card 03 */}
-              <div className="bg-white rounded-2xl p-6 sm:p-8 flex flex-col hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group">
+              <Link to="/products" className="bg-white rounded-2xl p-6 sm:p-8 flex flex-col hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group cursor-pointer block">
                 <span className="text-[10px] tracking-widest text-accent-500 font-bold uppercase mb-2">Low Pressure Drop</span>
                 <h3 className="text-slate-900 text-xl font-black leading-tight mb-3">Desiccant Air Dryers</h3>
                 <p className="text-slate-500 text-sm leading-relaxed mb-6 flex-1">
                   Dryspell Series, Core, and Plus heatless compressed air dryers with purge economizers.
                 </p>
-                <Link to="/products" className="text-accent-600 text-xs font-bold flex items-center gap-1 group-hover:text-accent-700 transition-colors">
+                <span className="text-accent-600 text-xs font-bold flex items-center gap-1 group-hover:text-accent-700 transition-colors">
                   Explore Dryers <ArrowRight className="w-3 h-3" />
-                </Link>
-              </div>
+                </span>
+              </Link>
 
               {/* Card 04 */}
-              <div className="bg-white rounded-2xl p-6 sm:p-8 flex flex-col hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group">
+              <Link to="/products" className="bg-white rounded-2xl p-6 sm:p-8 flex flex-col hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group cursor-pointer block">
                 <span className="text-[10px] tracking-widest text-accent-500 font-bold uppercase mb-2">Total Cleaning Solutions</span>
                 <h3 className="text-slate-900 text-xl font-black leading-tight mb-3">Specialized Air Treatment</h3>
                 <p className="text-slate-500 text-sm leading-relaxed mb-6 flex-1">
                   Coldspell refrigeration dryers, automatic drain valves, and Nitrogen/Vortex filtration systems.
                 </p>
-                <Link to="/products" className="text-accent-600 text-xs font-bold flex items-center gap-1 group-hover:text-accent-700 transition-colors">
+                <span className="text-accent-600 text-xs font-bold flex items-center gap-1 group-hover:text-accent-700 transition-colors">
                   Explore Filtration <ArrowRight className="w-3 h-3" />
-                </Link>
-              </div>
+                </span>
+              </Link>
             </div>
             
           </div>
           
           {/* Section Footer */}
           <div className="text-center mt-16 sm:mt-24">
-            <Link to="/products" className="inline-block bg-orange-600 text-white hover:bg-orange-700 px-8 py-4 rounded-full text-[11px] font-bold tracking-widest uppercase transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1">
+            <a href="/assets/trendi-catalog.pdf" download className="inline-block bg-orange-600 text-white hover:bg-orange-700 px-8 py-4 rounded-full text-[11px] font-bold tracking-widest uppercase transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1">
               Download Complete Trendi Catalog
-            </Link>
+            </a>
           </div>
         </div>
       </section>
@@ -609,7 +616,7 @@ export function Home() {
                           setQuoteForm({ ...quoteForm, firstName: e.target.value });
                           if (quoteErrors.firstName) setQuoteErrors({ ...quoteErrors, firstName: "" });
                         }}
-                        className={`w-full bg-white/10 border ${quoteErrors.firstName ? 'border-red-400' : 'border-white/20'} rounded-xl px-4 py-3 text-white text-sm placeholder-white/30 focus:outline-none focus:border-accent-500 focus:ring-1 focus:ring-accent-500 transition-colors`}
+                        className={`w-full bg-white/10 border ${quoteErrors.firstName ? 'border-red-400' : 'border-white/20'} rounded-md px-4 py-3 text-white text-sm placeholder-white/30 focus:outline-none focus:border-accent-500 focus:ring-1 focus:ring-accent-500 transition-colors`}
                         placeholder="Your name"
                       />
                       {quoteErrors.firstName && <p className="text-red-400 text-[10px] mt-1.5">{quoteErrors.firstName}</p>}
@@ -625,7 +632,7 @@ export function Home() {
                           setQuoteForm({ ...quoteForm, phone: e.target.value });
                           if (quoteErrors.phone) setQuoteErrors({ ...quoteErrors, phone: "" });
                         }}
-                        className={`w-full bg-white/10 border ${quoteErrors.phone ? 'border-red-400' : 'border-white/20'} rounded-xl px-4 py-3 text-white text-sm placeholder-white/30 focus:outline-none focus:border-accent-500 focus:ring-1 focus:ring-accent-500 transition-colors`}
+                        className={`w-full bg-white/10 border ${quoteErrors.phone ? 'border-red-400' : 'border-white/20'} rounded-md px-4 py-3 text-white text-sm placeholder-white/30 focus:outline-none focus:border-accent-500 focus:ring-1 focus:ring-accent-500 transition-colors`}
                         placeholder="Your phone"
                       />
                       {quoteErrors.phone && <p className="text-red-400 text-[10px] mt-1.5">{quoteErrors.phone}</p>}
@@ -643,7 +650,7 @@ export function Home() {
                           setQuoteForm({ ...quoteForm, item: e.target.value });
                           if (quoteErrors.item) setQuoteErrors({ ...quoteErrors, item: "" });
                         }}
-                        className={`w-full bg-white/10 border ${quoteErrors.item ? 'border-red-400' : 'border-white/20'} rounded-xl px-4 py-3 text-white text-sm placeholder-white/30 focus:outline-none focus:border-accent-500 focus:ring-1 focus:ring-accent-500 transition-colors`}
+                        className={`w-full bg-white/10 border ${quoteErrors.item ? 'border-red-400' : 'border-white/20'} rounded-md px-4 py-3 text-white text-sm placeholder-white/30 focus:outline-none focus:border-accent-500 focus:ring-1 focus:ring-accent-500 transition-colors`}
                         placeholder="Product name or model"
                       />
                       {quoteErrors.item && <p className="text-red-400 text-[10px] mt-1.5">{quoteErrors.item}</p>}
@@ -660,7 +667,7 @@ export function Home() {
                           setQuoteForm({ ...quoteForm, quantity: e.target.value });
                           if (quoteErrors.quantity) setQuoteErrors({ ...quoteErrors, quantity: "" });
                         }}
-                        className={`w-full bg-white/10 border ${quoteErrors.quantity ? 'border-red-400' : 'border-white/20'} rounded-xl px-4 py-3 text-white text-sm placeholder-white/30 focus:outline-none focus:border-accent-500 focus:ring-1 focus:ring-accent-500 transition-colors`}
+                        className={`w-full bg-white/10 border ${quoteErrors.quantity ? 'border-red-400' : 'border-white/20'} rounded-md px-4 py-3 text-white text-sm placeholder-white/30 focus:outline-none focus:border-accent-500 focus:ring-1 focus:ring-accent-500 transition-colors`}
                         placeholder="Qty"
                       />
                       {quoteErrors.quantity && <p className="text-red-400 text-[10px] mt-1.5">{quoteErrors.quantity}</p>}
@@ -699,16 +706,18 @@ export function Home() {
             {industries.map((industry, i) => (
               <div
                 key={industry.name}
-                className={`industry-card transition-all duration-700 ${
+                className={`transition-all duration-700 ${
                   industrySection.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
                 }`}
                 style={{ transitionDelay: `${i * 100 + 200}ms` }}
               >
-                <img src={industry.img} alt={industry.name} />
-                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 z-10">
-                  <h3 className="text-white text-sm sm:text-base tracking-wide">
-                    {industry.name}
-                  </h3>
+                <div className="industry-card h-full cursor-default">
+                  <img src={industry.img} alt={industry.name} />
+                  <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 z-10">
+                    <h3 className="text-white text-sm sm:text-base tracking-wide">
+                      {industry.name}
+                    </h3>
+                  </div>
                 </div>
               </div>
             ))}
@@ -848,30 +857,34 @@ export function Home() {
             <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10" />
             <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10" />
 
-            <div className="flex items-center gap-12 sm:gap-16 logo-scroll-track w-max py-4">
-              {[...partners, ...partners].map((name, i) => {
-                const logoUrl = getBrandLogo(name);
-                return (
-                  <div key={`${name}-${i}`} className="flex flex-col items-center justify-center gap-3 shrink-0 group">
-                    {logoUrl ? (
-                      <img
-                        src={logoUrl}
-                        alt={name}
-                        className="h-10 sm:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="h-10 sm:h-12 w-auto flex items-center justify-center">
-                        <div className="text-xl sm:text-2xl font-bold tracking-wider text-slate-300 group-hover:text-slate-500 transition-colors duration-300">
-                          {/* Fallback if no logo */}
+            <div className="flex logo-scroll-track w-max py-4">
+              {[0, 1].map((setIndex) => (
+                <div key={setIndex} className="flex items-center gap-12 sm:gap-16 pr-12 sm:pr-16 shrink-0">
+                  {partners.map((name, i) => {
+                    const logoUrl = getBrandLogo(name);
+                    return (
+                      <div key={`${name}-${i}`} className="flex flex-col items-center justify-center gap-3 shrink-0 group">
+                        {logoUrl ? (
+                          <img
+                            src={logoUrl}
+                            alt={name}
+                            className="h-10 sm:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                          />
+                        ) : (
+                          <div className="h-10 sm:h-12 w-auto flex items-center justify-center">
+                            <div className="text-xl sm:text-2xl font-bold tracking-wider text-slate-300 group-hover:text-slate-500 transition-colors duration-300">
+                              {/* Fallback if no logo */}
+                            </div>
+                          </div>
+                        )}
+                        <div className="text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-slate-400 group-hover:text-slate-600 transition-colors duration-300 whitespace-nowrap select-none cursor-default">
+                          {name}
                         </div>
                       </div>
-                    )}
-                    <div className="text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-slate-400 group-hover:text-slate-600 transition-colors duration-300 whitespace-nowrap select-none cursor-default">
-                      {name}
-                    </div>
-                  </div>
-                );
-              })}
+                    );
+                  })}
+                </div>
+              ))}
             </div>
           </div>
         </div>

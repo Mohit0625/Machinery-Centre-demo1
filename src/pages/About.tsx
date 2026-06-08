@@ -9,7 +9,7 @@ export function About() {
       {/* Page Header */}
       <div className="bg-slate-900 text-white py-16 border-b-4 border-orange-500">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-black mb-4 tracking-tight">Machinery Centre: A Legacy of Industrial Excellence</h1>
+          <h1 className="text-4xl font-black mb-4 tracking-tight">About</h1>
           <p className="text-slate-400 max-w-2xl text-lg">A legacy of trust, expertise, and commitment to the Indian industrial sector.</p>
         </div>
       </div>
@@ -49,7 +49,7 @@ export function About() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="bg-white p-6 rounded-sm border border-slate-200 shadow-sm">
                   <h3 className="text-slate-900 tracking-wide mb-3 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-blue-500" /> Pump Specialists
+                    <span className="w-2 h-2 rounded-full bg-orange-500" /> Pump Specialists
                   </h3>
                   <p className="text-slate-600 text-sm leading-relaxed">
                     At Gulson Engineering Company we specialized in pumps, meeting industry demands for Boiler feed Pumps, Chemical Pumps, Water Lifting Pumps, Sewerage Pumps, Self Priming Pumps, Centrifugal Pumps, Fire Fighting Pumps, and Booster Pumps.
@@ -127,7 +127,9 @@ export function About() {
               <div className="space-y-6 text-slate-300">
                 <div>
                   <h4 className="text-xs tracking-widest text-slate-500 mb-1">Address</h4>
-                  <p className="font-medium">3858, SHAH GANJ, G.B. ROAD,<br />DELHI-6</p>
+                  <a href="https://www.google.com/maps/search/?api=1&query=3858,+Shah+Ganj,+G.B.+Road,+Delhi-6" target="_blank" rel="noopener noreferrer" className="font-medium hover:text-white hover:underline transition-colors cursor-pointer block">
+                    3858, SHAH GANJ, G.B. ROAD,<br />DELHI-6
+                  </a>
                 </div>
                 <div>
                   <p className="font-medium">TEL: 011-41440012</p>

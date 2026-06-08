@@ -9,7 +9,7 @@ export function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const location = useLocation();
   const isRepairQuery = new URLSearchParams(location.search).get('type') === 'repair';
-  const [formData, setFormData] = useState({ name: "", email: "", contact: "", mobile: "", company: "", message: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", company: "", message: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useSEO(
@@ -30,14 +30,10 @@ export function Contact() {
       newErrors.email = "Invalid email address"; hasErrors = true;
     }
 
-    if (!formData.mobile.trim()) { 
-      newErrors.mobile = "Required"; hasErrors = true; 
-    } else if (!isValidIndianPhone(formData.mobile)) {
-      newErrors.mobile = "Invalid Indian mobile"; hasErrors = true;
-    }
-
-    if (formData.contact.trim() && !isValidIndianPhone(formData.contact)) {
-      newErrors.contact = "Invalid phone format"; hasErrors = true;
+    if (!formData.phone.trim()) { 
+      newErrors.phone = "Required"; hasErrors = true; 
+    } else if (!isValidIndianPhone(formData.phone)) {
+      newErrors.phone = "Invalid Indian mobile"; hasErrors = true;
     }
 
     if (!formData.message.trim()) { newErrors.message = "Required"; hasErrors = true; }
@@ -62,7 +58,7 @@ export function Contact() {
       <div className="bg-slate-900 text-white py-16 border-b-4 border-orange-500">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-black mb-4 tracking-tight">
-            {isRepairQuery ? "Industrial Machinery Repair & Maintenance Services" : "Contact Machinery Centre"}
+            {isRepairQuery ? "Industrial Machinery Repair & Maintenance Services" : "Contact"}
           </h1>
           <p className="text-slate-400 max-w-2xl text-lg">
             {isRepairQuery ? "Expert service, routine maintenance, and genuine OEM spares for your equipment." : "We are here to assist you with any inquiries, sales, or support."}
@@ -84,7 +80,9 @@ export function Contact() {
                   </div>
                   <div>
                     <h4 className="text-sm tracking-widest text-slate-500 mb-1">Office Location</h4>
-                    <p className="text-slate-800 font-medium">3858, SHAH GANJ, G.B. ROAD,<br />DELHI-6</p>
+                    <a href="https://www.google.com/maps/search/?api=1&query=3858,+Shah+Ganj,+G.B.+Road,+Delhi-6" target="_blank" rel="noopener noreferrer" className="text-slate-800 font-medium hover:text-orange-600 hover:underline transition-colors cursor-pointer block">
+                      3858, SHAH GANJ, G.B. ROAD,<br />DELHI-6
+                    </a>
                   </div>
                 </li>
                 
@@ -155,16 +153,11 @@ export function Contact() {
                       {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm text-slate-700">Contact No.</label>
-                      <input name="contact" value={formData.contact} onChange={handleChange} type="tel" className={`w-full bg-slate-50 border ${errors.contact ? 'border-red-400' : 'border-slate-200'} rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`} />
-                      {errors.contact && <p className="text-red-500 text-xs">{errors.contact}</p>}
+                      <label className="text-sm text-slate-700">Phone Number <span className="text-orange-500">*</span></label>
+                      <input name="phone" value={formData.phone} onChange={handleChange} type="tel" className={`w-full bg-slate-50 border ${errors.phone ? 'border-red-400' : 'border-slate-200'} rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`} />
+                      {errors.phone && <p className="text-red-500 text-xs">{errors.phone}</p>}
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm text-slate-700">Mobile No. <span className="text-orange-500">*</span></label>
-                      <input name="mobile" value={formData.mobile} onChange={handleChange} type="tel" className={`w-full bg-slate-50 border ${errors.mobile ? 'border-red-400' : 'border-slate-200'} rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`} />
-                      {errors.mobile && <p className="text-red-500 text-xs">{errors.mobile}</p>}
-                    </div>
-                    <div className="space-y-2 md:col-span-2">
                       <label className="text-sm text-slate-700">Company Name</label>
                       <input name="company" value={formData.company} onChange={handleChange} type="text" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
                     </div>

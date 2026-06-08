@@ -4,7 +4,7 @@ import { isValidIndianPhone } from "../utils/validation";
 export function Quote() {
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: "", lastName: "", phone: "", mobile: "",
+    firstName: "", lastName: "", phone: "",
     address1: "", address2: "", city: "", state: "", country: "", zip: "",
     item: "", quantity: "", industry: "", instructions: "", comments: "", source: ""
   });
@@ -23,9 +23,7 @@ export function Quote() {
       newErrors.phone = "Invalid Indian mobile"; hasErrors = true;
     }
 
-    if (formData.mobile.trim() && !isValidIndianPhone(formData.mobile)) {
-      newErrors.mobile = "Invalid Indian mobile"; hasErrors = true;
-    }
+
 
     if (!formData.item.trim()) { newErrors.item = "Required"; hasErrors = true; }
     
@@ -72,7 +70,7 @@ export function Quote() {
               onClick={() => {
                 setSubmitted(false);
                 setFormData({
-                  firstName: "", lastName: "", phone: "", mobile: "",
+                  firstName: "", lastName: "", phone: "",
                   address1: "", address2: "", city: "", state: "", country: "", zip: "",
                   item: "", quantity: "", industry: "", instructions: "", comments: "", source: ""
                 });
@@ -99,16 +97,12 @@ export function Quote() {
                     <label className="text-sm text-slate-700">Last Name</label>
                     <input name="lastName" value={formData.lastName} onChange={handleChange} type="text" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-2 md:col-span-2">
                     <label className="text-sm text-slate-700">Phone Number <span className="text-orange-500">*</span></label>
                     <input name="phone" value={formData.phone} onChange={handleChange} type="tel" className={`w-full bg-slate-50 border ${errors.phone ? 'border-red-400' : 'border-slate-200'} rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`} />
                     {errors.phone && <p className="text-red-500 text-xs">{errors.phone}</p>}
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-sm text-slate-700">Mobile No.</label>
-                    <input name="mobile" value={formData.mobile} onChange={handleChange} type="tel" className={`w-full bg-slate-50 border ${errors.mobile ? 'border-red-400' : 'border-slate-200'} rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`} />
-                    {errors.mobile && <p className="text-red-500 text-xs">{errors.mobile}</p>}
-                  </div>
+
                 </div>
               </div>
 
@@ -171,7 +165,7 @@ export function Quote() {
                   </div>
                   <div className="space-y-2 md:col-span-2">
                     <label className="text-sm text-slate-700">How did you find us?</label>
-                    <select name="source" value={formData.source} onChange={handleChange} className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors">
+                    <select name="source" value={formData.source} onChange={handleChange} className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors custom-select">
                       <option value="">Select an option</option>
                       <option value="Person">Person</option>
                       <option value="Search Engine">Search Engine</option>

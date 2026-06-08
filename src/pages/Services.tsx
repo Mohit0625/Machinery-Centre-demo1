@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { Wrench, Package, Cpu, ArrowRight, Star } from "lucide-react";
+import { Wrench, Package, Cpu, ArrowRight, Star, Handshake } from "lucide-react";
+import { getBrandLogo } from "../utils/logos";
 
 export function Services() {
   return (
@@ -16,10 +17,12 @@ export function Services() {
         {/* Solutions */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
-            <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded flex items-center justify-center mb-6">
-              <Package className="w-8 h-8" />
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded flex items-center justify-center shrink-0">
+                <Package className="w-8 h-8" />
+              </div>
+              <h2 className="text-3xl font-black text-slate-900">Industrial Solutions</h2>
             </div>
-            <h2 className="text-3xl font-black text-slate-900 mb-6">Industrial Solutions</h2>
             <p className="text-slate-600 text-lg leading-relaxed mb-6">
               We provide you with all the Air and Water solutions for your specific industry. You can rely on us for your needs of Boiler Feed Pumps, Chemical Pumps, Sewerage Pumps, and complete Compressed Air networks.
             </p>
@@ -35,18 +38,40 @@ export function Services() {
             </div>
           </div>
           <div className="bg-white p-8 rounded border border-slate-200 shadow-xl lg:ml-12">
-            <h3 className="text-xl text-slate-900 mb-6">Solution Partners</h3>
-            <ul className="grid grid-cols-2 gap-y-4 gap-x-2 text-sm font-medium text-slate-600">
-              <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-orange-500 rounded-full"/> Ingersoll Rand</li>
-              <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-orange-500 rounded-full"/> Kirloskar</li>
-              <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-orange-500 rounded-full"/> Crompton Greaves</li>
-              <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-orange-500 rounded-full"/> Trident</li>
-              <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-slate-400 rounded-full"/> GECO</li>
-              <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-slate-400 rounded-full"/> Rotodel</li>
-              <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-slate-400 rounded-full"/> Indfoss, Everest</li>
-              <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-slate-400 rounded-full"/> Sonee</li>
-              <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-slate-400 rounded-full"/> Annest Iwata</li>
-              <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-slate-400 rounded-full"/> Janatics, ELGI</li>
+            <div className="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+              <div className="w-10 h-10 bg-orange-100 text-orange-600 rounded flex items-center justify-center shrink-0">
+                <Handshake className="w-5 h-5" />
+              </div>
+              <h3 className="text-xl font-black text-slate-900">Solution Partners</h3>
+            </div>
+            <ul className="grid grid-cols-2 gap-y-6 gap-x-4 text-sm font-medium text-slate-700">
+              {[
+                { name: "Ingersoll Rand", domain: "ingersollrand.com" },
+                { name: "Kirloskar", domain: "kirloskar.com" },
+                { name: "Crompton Greaves", domain: "cgglobal.com" },
+                { name: "Trident", domain: "tridentpneumatics.com" },
+                { name: "GECO", domain: "gecopumps.com" },
+                { name: "Rotodel", domain: "rotodel.in" },
+                { name: "Indfoss", domain: "danfoss.com" },
+                { name: "Everest", domain: "everestblowers.com" },
+                { name: "Sonee", domain: "soneehardware.com" },
+                { name: "Annest Iwata", domain: "anestiwata.com" },
+                { name: "Janatics, ELGI", domain: "elgi.com" }
+              ].map(p => (
+                <li key={p.name} className="flex items-center gap-3">
+                  <div className="w-10 h-10 flex items-center justify-center shrink-0">
+                    <img 
+                      src={getBrandLogo(p.name) || `https://logo.clearbit.com/${p.domain}`} 
+                      alt={p.name} 
+                      className="w-full h-full object-contain rounded"
+                      onError={(e) => {
+                        e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(p.name)}&background=f1f5f9&color=64748b&bold=true&size=128`;
+                      }}
+                    /> 
+                  </div>
+                  <span className="leading-tight">{p.name}</span>
+                </li>
+              ))}
             </ul>
           </div>
         </section>
@@ -56,10 +81,12 @@ export function Services() {
         {/* Spares */}
         <section className="flex flex-col md:flex-row gap-8 lg:gap-16 items-start">
           <div className="md:w-1/3">
-             <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded flex items-center justify-center mb-6">
-              <Cpu className="w-8 h-8" />
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded flex items-center justify-center shrink-0">
+                <Cpu className="w-8 h-8" />
+              </div>
+              <h2 className="text-3xl font-black text-slate-900">Spares &amp; Accessories</h2>
             </div>
-            <h2 className="text-3xl font-black text-slate-900 mb-4">Spares &amp; Accessories</h2>
           </div>
           <div className="md:w-2/3">
             <p className="text-slate-600 text-lg leading-relaxed mb-6">

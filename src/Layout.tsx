@@ -65,14 +65,28 @@ export function Layout() {
         <header className={`transition-all duration-300 ${scrolled && isHome ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-200 py-3' : 'py-4'}`}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
             {/* Brand */}
-            <Link to="/" className="flex items-center gap-3 shrink-0">
-              <div>
-                <h1 className={`text-2xl font-sans font-bold ${logoColor} uppercase  leading-none`}>
-                  Machinery Centre
-                </h1>
-                <p className={`text-[9px] font-semibold ${taglineColor} tracking-[0.25em] uppercase mt-1`}>
-                  Compressors & Pumps
-                </p>
+            <Link to="/" className="flex items-center shrink-0">
+              <div className="flex items-center gap-3 pr-4 border-r border-slate-300/30">
+                <img 
+                  src="https://res.cloudinary.com/dt3m8h52i/image/upload/v1780925600/Copy_of_MC_LOGO_RED-Photoroom_ur93js.png" 
+                  alt="Machinery Centre Logo" 
+                  className="h-10 sm:h-12 w-auto object-contain"
+                />
+                <div className="hidden sm:block">
+                  <h1 className={`text-2xl font-sans font-bold ${logoColor} uppercase  leading-none`}>
+                    Machinery Centre
+                  </h1>
+                  <p className={`text-[9px] font-semibold ${taglineColor} tracking-[0.25em] uppercase mt-1`}>
+                    Compressors & Pumps
+                  </p>
+                </div>
+              </div>
+              <div className="pl-4">
+                <img 
+                  src="https://res.cloudinary.com/dt3m8h52i/image/upload/v1780925599/Copy_of_TRENDI-LOGO-Photoroom_cnispn.png" 
+                  alt="Trendi Logo" 
+                  className="h-7 sm:h-9 w-auto object-contain"
+                />
               </div>
             </Link>
 
@@ -183,17 +197,28 @@ export function Layout() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-12">
             {/* Brand Section */}
             <div className="md:col-span-5">
-              <Link to="/" className="flex items-center gap-3 mb-6 group">
-                <div className="w-10 h-10 bg-accent-500 rounded-lg flex items-center justify-center shadow-lg shadow-accent-500/20">
-                  <svg viewBox="0 0 24 24" className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="3"/>
-                    <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
-                  </svg>
+              <Link to="/" className="flex items-center mb-6 group w-max">
+                <div className="flex items-center gap-3 pr-4 border-r border-slate-600">
+                  <img 
+                    src="https://res.cloudinary.com/dt3m8h52i/image/upload/v1780925600/Copy_of_MC_LOGO_RED-Photoroom_ur93js.png" 
+                    alt="Machinery Centre Logo" 
+                    className="h-10 sm:h-12 w-auto object-contain"
+                  />
+                  <div>
+                    <h1 className="text-2xl font-sans font-bold text-white uppercase leading-none">
+                      Machinery Centre
+                    </h1>
+                    <p className="text-[9px] font-semibold text-slate-400 tracking-[0.25em] uppercase mt-1">
+                      Compressors & Pumps
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h2 className="text-xl font-sans text-white leading-none">
-                    Machinery Centre
-                  </h2>
+                <div className="pl-4">
+                  <img 
+                    src="https://res.cloudinary.com/dt3m8h52i/image/upload/v1780925599/Copy_of_TRENDI-LOGO-Photoroom_cnispn.png" 
+                    alt="Trendi Logo" 
+                    className="h-7 sm:h-9 w-auto object-contain"
+                  />
                 </div>
               </Link>
               <p className="text-slate-400 text-sm leading-relaxed max-w-md mb-6">

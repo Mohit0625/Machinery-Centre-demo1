@@ -47,7 +47,7 @@ const catalogData = {
               "Splash Lubrication",
               "Precision-balanced crankshaft"
             ],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/file/d/1V3G7HYCPfRk-0CJBdt7toAmquvRVHE3t/view"
           },
           {
             title: "Ingersoll Rand Two Stage Electric Driven Reciprocating Air Compressor",
@@ -240,7 +240,7 @@ const catalogData = {
             desc: "Refrigeration compressed air dryer with large condenser for high ambient temperatures.",
             brands: ["Trendi"],
             features: ["Low pressure drop", "High ambient temperatures handling"],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/file/d/1Dm1N3eWZrcqWPt-Vk9e21PDIFVrmQYr6/view"
           },
           {
             title: "TRENDI Coldspell",
@@ -303,21 +303,21 @@ const catalogData = {
             desc: "Provides protection from bacteria in compressed air applications for medical and food industries.",
             brands: ["Trendi"],
             features: ["Aluminium alloy housing, hard anodized", "Compatible with autoclave sterilisation", "Borosilicate filter media"],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/file/d/1Yhox1XasGhUigrJ6cnrAKFd0a4nhEPki/view"
           },
           {
             title: "TRENDI Carbon Adsorber Tower",
             desc: "Adsorber towers for production of oil free compressed air for various point of use applications.",
             brands: ["Trendi"],
             features: ["Activated Carbon Adsorbent", "Max Operating Pressure: 16 Kg/cm2", "Aluminium Alloy IS 63400 Construction"],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/file/d/15jBWXUF2HBFROzvLb4ishV8Ps5zmrat3/view"
           },
           {
             title: "TRENDI Submicron Filters Cleansweep",
             desc: "Extremely low installation clearance filters removing oil and particulate down to 0.01 micron.",
             brands: ["Trendi"],
             features: ["Oil Removal (Coalescing)", "Flow from 20 to 1810 m³/hour", "Install anywhere"],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/file/d/1kEIDFut6Hfmcf3P4hhlDpT40BCIO--7f/view"
           },
           {
             title: "TRENDI CTD Series",
@@ -512,7 +512,7 @@ function ProductCard({ product, onDownloadRequest }: { product: any, onDownloadR
         </Link>
         <button 
           onClick={onDownloadRequest}
-          className="flex items-center gap-1.5 text-xs tracking-wider bg-slate-100 text-slate-600 px-3 py-2 rounded hover:bg-slate-200 transition-colors"
+          className="flex items-center gap-1.5 text-xs font-semibold tracking-wider bg-orange-600 text-white px-4 py-2 rounded shadow hover:bg-orange-700 hover:shadow-md hover:-translate-y-0.5 transition-all"
         >
           <Download className="w-3.5 h-3.5" />
           Catalog
@@ -565,10 +565,13 @@ function CatalogDownloadModal({ productTitle, catalogLink, onClose }: { productT
       setIsSuccess(true);
       
       // Auto download or redirect to link
-      // In a real scenario, we might dynamically generate the presigned URL here
       setTimeout(() => {
-        // Mock download logic
-        alert(`Downloading PDF for ${productTitle}... (Mocked for Google Drive link)`);
+        if (catalogLink && catalogLink !== "#") {
+          window.open(catalogLink, '_blank');
+        } else {
+          // Fallback to the Air Treatment folder if no specific link is provided
+          window.open('https://drive.google.com/drive/folders/1IHEIFLeqMeAJMWKnQADmtt1mQvwLI2JA', '_blank');
+        }
         onClose();
       }, 1500);
     }, 1000);

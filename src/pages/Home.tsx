@@ -509,7 +509,7 @@ export function Home() {
           
           {/* Section Footer */}
           <div className="text-center mt-16 sm:mt-24">
-            <Link to="/products" className="inline-block bg-white text-slate-900 hover:bg-slate-100 px-8 py-4 rounded-full text-[11px] font-bold tracking-widest uppercase transition-colors shadow-xl">
+            <Link to="/products" className="inline-block bg-orange-600 text-white hover:bg-orange-700 px-8 py-4 rounded-full text-[11px] font-bold tracking-widest uppercase transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1">
               Download Complete Trendi Catalog
             </Link>
           </div>

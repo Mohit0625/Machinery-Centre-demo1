@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="100%" height="100%">
-  <g transform="translate(15, 15)" stroke="#cbd5e1" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M5 5v15M15 5v15M25 5v15M5 20h20M15 20v10"/>
-  </g>
-  <text x="55" y="32" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="15" fill="#f8fafc">TRIDENT</text>
-  <text x="55" y="44" font-family="system-ui, -apple-system, sans-serif" font-weight="500" font-size="8" fill="#94a3b8" letter-spacing="1.5">PNEUMATICS</text>
-</svg>

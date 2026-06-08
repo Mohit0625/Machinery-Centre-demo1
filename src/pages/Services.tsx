@@ -6,7 +6,7 @@ export function Services() {
     <div className="flex-1 bg-slate-50 flex flex-col">
       <div className="bg-slate-900 text-white py-16 border-b-4 border-orange-500">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-black uppercase tracking-tight mb-4">Our Services</h1>
+          <h1 className="text-4xl font-black mb-4">Our Services</h1>
           <p className="text-slate-400 max-w-2xl text-lg">Comprehensive after-sales support, spares, and end-to-end industrial solutions.</p>
         </div>
       </div>
@@ -19,12 +19,12 @@ export function Services() {
             <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded flex items-center justify-center mb-6">
               <Package className="w-8 h-8" />
             </div>
-            <h2 className="text-3xl font-black uppercase tracking-tight text-slate-900 mb-6">Industrial Solutions</h2>
+            <h2 className="text-3xl font-black text-slate-900 mb-6">Industrial Solutions</h2>
             <p className="text-slate-600 text-lg leading-relaxed mb-6">
               We provide you with all the Air and Water solutions for your specific industry. You can rely on us for your needs of Boiler Feed Pumps, Chemical Pumps, Sewerage Pumps, and complete Compressed Air networks.
             </p>
             <div className="space-y-2">
-              <h4 className="font-bold uppercase tracking-widest text-xs text-slate-500 mb-3">Industries Served</h4>
+              <h4 className="tracking-widest text-xs text-slate-500 mb-3">Industries Served</h4>
               <div className="flex flex-wrap gap-2">
                 {["Packaging", "Paint", "Cement", "Garage Equipments", "Textile", "Shoe Making", "Laundry"].map(ind => (
                   <span key={ind} className="bg-white border border-slate-200 px-3 py-1.5 rounded-sm text-sm font-medium text-slate-700 shadow-sm">
@@ -35,7 +35,7 @@ export function Services() {
             </div>
           </div>
           <div className="bg-white p-8 rounded border border-slate-200 shadow-xl lg:ml-12">
-            <h3 className="text-xl font-bold uppercase tracking-tight text-slate-900 mb-6">Solution Partners</h3>
+            <h3 className="text-xl text-slate-900 mb-6">Solution Partners</h3>
             <ul className="grid grid-cols-2 gap-y-4 gap-x-2 text-sm font-medium text-slate-600">
               <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-orange-500 rounded-full"/> Ingersoll Rand</li>
               <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-orange-500 rounded-full"/> Kirloskar</li>
@@ -59,13 +59,13 @@ export function Services() {
              <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded flex items-center justify-center mb-6">
               <Cpu className="w-8 h-8" />
             </div>
-            <h2 className="text-3xl font-black uppercase tracking-tight text-slate-900 mb-4">Spares &amp; Accessories</h2>
+            <h2 className="text-3xl font-black text-slate-900 mb-4">Spares &amp; Accessories</h2>
           </div>
           <div className="md:w-2/3">
             <p className="text-slate-600 text-lg leading-relaxed mb-6">
               We provide you with all the necessary spares and genuine OEM accessories for continuous, uninterrupted operations. Our inventory covers everything from basic consumables (filters, lubricants) to critical components for Fire Fighting, Booster, and Self Priming pumps.
             </p>
-            <Link to="/contact" className="inline-flex items-center gap-2 text-emerald-600 font-bold uppercase tracking-widest text-sm hover:text-emerald-700 transition-colors">
+            <Link to="/contact" className="inline-flex items-center gap-2 text-emerald-600 tracking-widest text-sm hover:text-emerald-700 transition-colors">
               Enquire for Spares <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -79,7 +79,7 @@ export function Services() {
             <Wrench className="w-64 h-64" />
           </div>
           <div className="relative z-10 max-w-3xl">
-            <h2 className="text-3xl font-black uppercase tracking-tight text-orange-500 mb-6 flex items-center gap-4">
+            <h2 className="text-3xl font-black text-orange-500 mb-6 flex items-center gap-4">
               <Wrench className="w-8 h-8" /> Critical Repairs
             </h2>
             <div className="space-y-4 text-slate-300 text-lg leading-relaxed mb-8">
@@ -91,7 +91,7 @@ export function Services() {
               </p>
             </div>
             
-            <Link to="/contact?type=repair" className="bg-orange-600 hover:bg-orange-500 text-white px-8 py-4 rounded-sm font-bold tracking-wide uppercase transition-all inline-block shadow-lg shadow-orange-500/20">
+            <Link to="/contact?type=repair" className="bg-orange-600 hover:bg-orange-500 text-white px-8 py-4 rounded-sm tracking-wide transition-all inline-block shadow-lg shadow-orange-500/20">
               Request Urgent Repair
             </Link>
           </div>

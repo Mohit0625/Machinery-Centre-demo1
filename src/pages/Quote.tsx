@@ -1,15 +1,51 @@
 import { useState } from "react";
 import { Send, FileText, CheckCircle } from "lucide-react";
-
+import { isValidIndianPhone } from "../utils/validation";
 export function Quote() {
   const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: "", lastName: "", phone: "", mobile: "",
+    address1: "", address2: "", city: "", state: "", country: "", zip: "",
+    item: "", quantity: "", industry: "", instructions: "", comments: "", source: ""
+  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    setTimeout(() => {
-      setSubmitted(true);
-    }, 800);
+    const newErrors: Record<string, string> = {};
+    let hasErrors = false;
+
+    if (!formData.firstName.trim()) { newErrors.firstName = "Required"; hasErrors = true; }
+    
+    if (!formData.phone.trim()) { 
+      newErrors.phone = "Required"; hasErrors = true; 
+    } else if (!isValidIndianPhone(formData.phone)) {
+      newErrors.phone = "Invalid Indian mobile"; hasErrors = true;
+    }
+
+    if (formData.mobile.trim() && !isValidIndianPhone(formData.mobile)) {
+      newErrors.mobile = "Invalid Indian mobile"; hasErrors = true;
+    }
+
+    if (!formData.item.trim()) { newErrors.item = "Required"; hasErrors = true; }
+    
+    if (!formData.quantity || Number(formData.quantity) < 1) {
+      newErrors.quantity = "Invalid"; hasErrors = true;
+    }
+
+    setErrors(newErrors);
+
+    if (!hasErrors) {
+      setTimeout(() => {
+        setSubmitted(true);
+      }, 800);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors(prev => ({ ...prev, [name]: "" }));
   };
 
   return (
@@ -19,7 +55,7 @@ export function Quote() {
           <div className="w-16 h-16 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mx-auto mb-6">
             <FileText className="w-8 h-8" />
           </div>
-          <h1 className="text-4xl font-serif uppercase tracking-normal text-slate-900 mb-4">Request a Quote</h1>
+          <h1 className="text-4xl text-slate-900 mb-4">Request a Quote</h1>
           <p className="text-slate-600 text-lg max-w-2xl mx-auto">
             Please place your order query here and we will get back to you with the details. Fill your details correctly for further processing.
           </p>
@@ -28,13 +64,20 @@ export function Quote() {
         {submitted ? (
           <div className="bg-white p-12 rounded-sm shadow-xl border border-slate-200 text-center">
             <CheckCircle className="w-16 h-16 text-emerald-500 mx-auto mb-6" />
-            <h2 className="text-2xl font-serif uppercase text-slate-900 mb-4">Quote Request Received</h2>
+            <h2 className="text-2xl text-slate-900 mb-4">Quote Request Received</h2>
             <p className="text-slate-600 max-w-md mx-auto mb-8">
               Thank you for your enquiry. Our team is reviewing your specifications and will contact you shortly.
             </p>
             <button 
-              onClick={() => setSubmitted(false)}
-              className="bg-slate-900 hover:bg-slate-800 text-white px-8 py-3 rounded-full font-bold uppercase text-[10px] tracking-widest"
+              onClick={() => {
+                setSubmitted(false);
+                setFormData({
+                  firstName: "", lastName: "", phone: "", mobile: "",
+                  address1: "", address2: "", city: "", state: "", country: "", zip: "",
+                  item: "", quantity: "", industry: "", instructions: "", comments: "", source: ""
+                });
+              }}
+              className="bg-slate-900 hover:bg-slate-800 text-white px-8 py-3 rounded-full text-[10px] tracking-widest"
             >
               Submit Another Request
             </button>
@@ -45,85 +88,90 @@ export function Quote() {
               
               {/* Personal Info */}
               <div>
-                <h3 className="text-lg font-serif italic text-slate-900 mb-6 border-b border-slate-200 pb-2">Contact Information</h3>
+                <h3 className="text-lg italic text-slate-900 mb-6 border-b border-slate-200 pb-2">Contact Information</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-700">First Name <span className="text-orange-500">*</span></label>
-                    <input required type="text" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
+                    <label className="text-sm text-slate-700">First Name <span className="text-orange-500">*</span></label>
+                    <input name="firstName" value={formData.firstName} onChange={handleChange} type="text" className={`w-full bg-slate-50 border ${errors.firstName ? 'border-red-400' : 'border-slate-200'} rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`} />
+                    {errors.firstName && <p className="text-red-500 text-xs">{errors.firstName}</p>}
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-700">Last Name</label>
-                    <input type="text" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
+                    <label className="text-sm text-slate-700">Last Name</label>
+                    <input name="lastName" value={formData.lastName} onChange={handleChange} type="text" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-700">Phone Number <span className="text-orange-500">*</span></label>
-                    <input required type="tel" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
+                    <label className="text-sm text-slate-700">Phone Number <span className="text-orange-500">*</span></label>
+                    <input name="phone" value={formData.phone} onChange={handleChange} type="tel" className={`w-full bg-slate-50 border ${errors.phone ? 'border-red-400' : 'border-slate-200'} rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`} />
+                    {errors.phone && <p className="text-red-500 text-xs">{errors.phone}</p>}
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-700">Mobile No.</label>
-                    <input type="tel" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
+                    <label className="text-sm text-slate-700">Mobile No.</label>
+                    <input name="mobile" value={formData.mobile} onChange={handleChange} type="tel" className={`w-full bg-slate-50 border ${errors.mobile ? 'border-red-400' : 'border-slate-200'} rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`} />
+                    {errors.mobile && <p className="text-red-500 text-xs">{errors.mobile}</p>}
                   </div>
                 </div>
               </div>
 
               {/* Address */}
               <div>
-                <h3 className="text-lg font-serif italic text-slate-900 mb-6 border-b border-slate-200 pb-2">Shipping Details</h3>
+                <h3 className="text-lg italic text-slate-900 mb-6 border-b border-slate-200 pb-2">Shipping Details</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2 md:col-span-2">
-                    <label className="text-sm font-bold text-slate-700">Address Line 1</label>
-                    <input type="text" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
+                    <label className="text-sm text-slate-700">Address Line 1</label>
+                    <input name="address1" value={formData.address1} onChange={handleChange} type="text" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
                   </div>
                   <div className="space-y-2 md:col-span-2">
-                    <label className="text-sm font-bold text-slate-700">Address Line 2</label>
-                    <input type="text" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
+                    <label className="text-sm text-slate-700">Address Line 2</label>
+                    <input name="address2" value={formData.address2} onChange={handleChange} type="text" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-700">City</label>
-                    <input type="text" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
+                    <label className="text-sm text-slate-700">City</label>
+                    <input name="city" value={formData.city} onChange={handleChange} type="text" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-700">State / Province</label>
-                    <input type="text" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
+                    <label className="text-sm text-slate-700">State / Province</label>
+                    <input name="state" value={formData.state} onChange={handleChange} type="text" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-700">Country</label>
-                    <input type="text" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
+                    <label className="text-sm text-slate-700">Country</label>
+                    <input name="country" value={formData.country} onChange={handleChange} type="text" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-700">Zip / Postal Code</label>
-                    <input type="text" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
+                    <label className="text-sm text-slate-700">Zip / Postal Code</label>
+                    <input name="zip" value={formData.zip} onChange={handleChange} type="text" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
                   </div>
                 </div>
               </div>
 
               {/* Order Specs */}
               <div>
-                <h3 className="text-lg font-serif italic text-slate-900 mb-6 border-b border-slate-200 pb-2">Order Specifications</h3>
+                <h3 className="text-lg italic text-slate-900 mb-6 border-b border-slate-200 pb-2">Order Specifications</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2 md:col-span-2">
-                    <label className="text-sm font-bold text-slate-700">Item Name / Model No. <span className="text-orange-500">*</span></label>
-                    <input required type="text" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
+                    <label className="text-sm text-slate-700">Item Name / Model No. <span className="text-orange-500">*</span></label>
+                    <input name="item" value={formData.item} onChange={handleChange} type="text" className={`w-full bg-slate-50 border ${errors.item ? 'border-red-400' : 'border-slate-200'} rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`} />
+                    {errors.item && <p className="text-red-500 text-xs">{errors.item}</p>}
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-700">Quantity <span className="text-orange-500">*</span></label>
-                    <input required type="number" min="1" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
+                    <label className="text-sm text-slate-700">Quantity <span className="text-orange-500">*</span></label>
+                    <input name="quantity" value={formData.quantity} onChange={handleChange} type="number" min="1" className={`w-full bg-slate-50 border ${errors.quantity ? 'border-red-400' : 'border-slate-200'} rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`} />
+                    {errors.quantity && <p className="text-red-500 text-xs">{errors.quantity}</p>}
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-700">Application Industry</label>
-                    <input type="text" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" placeholder="e.g. Paint, Cement..." />
+                    <label className="text-sm text-slate-700">Application Industry</label>
+                    <input name="industry" value={formData.industry} onChange={handleChange} type="text" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" placeholder="e.g. Paint, Cement..." />
                   </div>
                   <div className="space-y-2 md:col-span-2">
-                    <label className="text-sm font-bold text-slate-700">Delivery Instructions</label>
-                    <textarea rows={3} className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
+                    <label className="text-sm text-slate-700">Delivery Instructions</label>
+                    <textarea name="instructions" value={formData.instructions} onChange={handleChange} rows={3} className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
                   </div>
                   <div className="space-y-2 md:col-span-2">
-                    <label className="text-sm font-bold text-slate-700">Other Comments</label>
-                    <textarea rows={3} className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
+                    <label className="text-sm text-slate-700">Other Comments</label>
+                    <textarea name="comments" value={formData.comments} onChange={handleChange} rows={3} className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" />
                   </div>
                   <div className="space-y-2 md:col-span-2">
-                    <label className="text-sm font-bold text-slate-700">How did you find us?</label>
-                    <select className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors">
+                    <label className="text-sm text-slate-700">How did you find us?</label>
+                    <select name="source" value={formData.source} onChange={handleChange} className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors">
                       <option value="">Select an option</option>
                       <option value="Person">Person</option>
                       <option value="Search Engine">Search Engine</option>
@@ -136,7 +184,7 @@ export function Quote() {
               </div>
 
               <div className="pt-6">
-                <button type="submit" className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold uppercase tracking-widest text-[10px] py-4 rounded-full flex items-center justify-center gap-2 transition-colors">
+                <button type="submit" className="w-full bg-orange-500 hover:bg-orange-600 text-white tracking-widest text-[10px] py-4 rounded-full flex items-center justify-center gap-2 transition-colors">
                   Submit Enquiry <Send className="w-4 h-4" />
                 </button>
               </div>

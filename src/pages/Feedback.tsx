@@ -1,14 +1,43 @@
 import { useState } from "react";
 import { MessageSquare, CheckCircle } from "lucide-react";
+import { isValidEmail } from "../utils/validation";
+import { useSEO } from "../utils/useSEO";
 
 export function Feedback() {
   const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({ name: "", email: "", source: "", experienced: "", satisfied: "", message: "" });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  useSEO("Feedback & Grievance | Machinery Centre", "Share your feedback and grievances with Machinery Centre. Your input helps us modernize our services and enables a better system of trust and reliability.");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setTimeout(() => {
-      setSubmitted(true);
-    }, 800);
+    const newErrors: Record<string, string> = {};
+    let hasErrors = false;
+
+    if (!formData.name.trim()) { newErrors.name = "Required"; hasErrors = true; }
+    if (!formData.email.trim()) { 
+      newErrors.email = "Required"; hasErrors = true; 
+    } else if (!isValidEmail(formData.email)) { 
+      newErrors.email = "Invalid email address"; hasErrors = true; 
+    }
+    
+    if (!formData.experienced) { newErrors.experienced = "Please select an option"; hasErrors = true; }
+    if (!formData.satisfied) { newErrors.satisfied = "Please select an option"; hasErrors = true; }
+
+    setErrors(newErrors);
+
+    if (!hasErrors) {
+      setTimeout(() => {
+        setSubmitted(true);
+      }, 800);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors(prev => ({ ...prev, [name]: "" }));
   };
 
   return (
@@ -18,7 +47,7 @@ export function Feedback() {
           <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
              <MessageSquare className="w-8 h-8" />
           </div>
-          <h1 className="text-4xl font-black uppercase tracking-tight text-slate-900 mb-4">Feedback &amp; Grievance</h1>
+          <h1 className="text-4xl font-black text-slate-900 mb-4">Feedback &amp; Grievance</h1>
           <p className="text-slate-600 text-lg">
             Your feedback helps us modernize our services and enables a better system of trust and reliability.
           </p>
@@ -27,13 +56,16 @@ export function Feedback() {
         {submitted ? (
           <div className="bg-white p-12 rounded-sm shadow-xl border border-slate-200 text-center">
             <CheckCircle className="w-16 h-16 text-emerald-500 mx-auto mb-6" />
-            <h2 className="text-2xl font-black uppercase tracking-tight text-slate-900 mb-4">Feedback Submitted</h2>
+            <h2 className="text-2xl font-black text-slate-900 mb-4">Feedback Submitted</h2>
             <p className="text-slate-600 mb-8">
               Thank you! We value your input and will use it to improve our services.
             </p>
             <button 
-              onClick={() => setSubmitted(false)}
-              className="bg-slate-900 hover:bg-slate-800 text-white px-6 py-3 rounded-sm font-bold uppercase text-sm"
+              onClick={() => {
+                setSubmitted(false);
+                setFormData({ name: "", email: "", source: "", experienced: "", satisfied: "", message: "" });
+              }}
+              className="bg-slate-900 hover:bg-slate-800 text-white px-6 py-3 rounded-sm text-sm"
             >
               Submit Another Response
             </button>
@@ -43,18 +75,20 @@ export function Feedback() {
             <form onSubmit={handleSubmit} className="space-y-6">
               
               <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700">Your Name <span className="text-orange-500">*</span></label>
-                <input required type="text" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" />
+                <label className="text-sm text-slate-700">Your Name <span className="text-orange-500">*</span></label>
+                <input name="name" value={formData.name} onChange={handleChange} type="text" className={`w-full bg-slate-50 border ${errors.name ? 'border-red-400' : 'border-slate-200'} rounded px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors`} />
+                {errors.name && <p className="text-red-500 text-xs">{errors.name}</p>}
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700">Your Email <span className="text-orange-500">*</span></label>
-                <input required type="email" className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" />
+                <label className="text-sm text-slate-700">Your Email <span className="text-orange-500">*</span></label>
+                <input name="email" value={formData.email} onChange={handleChange} type="email" className={`w-full bg-slate-50 border ${errors.email ? 'border-red-400' : 'border-slate-200'} rounded px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors`} />
+                {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-bold text-slate-700">How did you hear about us?</label>
-                <select className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors">
+                <label className="text-sm text-slate-700">How did you hear about us?</label>
+                <select name="source" value={formData.source} onChange={handleChange} className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors">
                   <option value="">Select an option</option>
                   <option value="Friend">Friend</option>
                   <option value="TV">TV</option>
@@ -69,38 +103,40 @@ export function Feedback() {
               <div className="border-t border-slate-200 pt-6">
                  <div className="space-y-4">
                   <div>
-                    <label className="text-sm font-bold text-slate-700 block mb-2">Have you experienced our services?</label>
+                    <label className="text-sm text-slate-700 block mb-2">Have you experienced our services? <span className="text-orange-500">*</span></label>
                     <div className="flex gap-4">
                       <label className="flex items-center gap-2 cursor-pointer text-slate-700">
-                        <input type="radio" name="experienced" value="Yes" className="text-blue-600 focus:ring-blue-500" required /> Yes
+                        <input type="radio" name="experienced" value="Yes" checked={formData.experienced === 'Yes'} onChange={handleChange} className="text-blue-600 focus:ring-blue-500" /> Yes
                       </label>
                       <label className="flex items-center gap-2 cursor-pointer text-slate-700">
-                        <input type="radio" name="experienced" value="No" className="text-blue-600 focus:ring-blue-500" /> No
+                        <input type="radio" name="experienced" value="No" checked={formData.experienced === 'No'} onChange={handleChange} className="text-blue-600 focus:ring-blue-500" /> No
                       </label>
                     </div>
+                    {errors.experienced && <p className="text-red-500 text-xs mt-1">{errors.experienced}</p>}
                   </div>
 
                   <div>
-                    <label className="text-sm font-bold text-slate-700 block mb-2">Are you satisfied with our products/services?</label>
+                    <label className="text-sm text-slate-700 block mb-2">Are you satisfied with our products/services? <span className="text-orange-500">*</span></label>
                     <div className="flex gap-4">
                       <label className="flex items-center gap-2 cursor-pointer text-slate-700">
-                        <input type="radio" name="satisfied" value="Yes" className="text-green-600 focus:ring-green-500" required /> Yes
+                        <input type="radio" name="satisfied" value="Yes" checked={formData.satisfied === 'Yes'} onChange={handleChange} className="text-green-600 focus:ring-green-500" /> Yes
                       </label>
                       <label className="flex items-center gap-2 cursor-pointer text-slate-700">
-                        <input type="radio" name="satisfied" value="No" className="text-red-600 focus:ring-red-500" /> No
+                        <input type="radio" name="satisfied" value="No" checked={formData.satisfied === 'No'} onChange={handleChange} className="text-red-600 focus:ring-red-500" /> No
                       </label>
                     </div>
+                    {errors.satisfied && <p className="text-red-500 text-xs mt-1">{errors.satisfied}</p>}
                   </div>
                  </div>
               </div>
 
               <div className="space-y-2 pt-2">
-                <label className="text-sm font-bold text-slate-700">Message / Comments</label>
-                <textarea rows={4} className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" placeholder="Please share your thoughts or details about any grievance..." />
+                <label className="text-sm text-slate-700">Message / Comments</label>
+                <textarea name="message" value={formData.message} onChange={handleChange} rows={4} className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors" placeholder="Please share your thoughts or details about any grievance..." />
               </div>
 
               <div className="pt-4">
-                <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold uppercase tracking-wider text-sm py-4 rounded-sm transition-colors shadow-lg shadow-blue-500/20">
+                <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white tracking-wider text-sm py-4 rounded-sm transition-colors shadow-lg shadow-blue-500/20">
                   Submit Feedback
                 </button>
               </div>

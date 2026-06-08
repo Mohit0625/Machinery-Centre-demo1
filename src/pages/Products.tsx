@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Wind, Droplets, Filter, CheckCircle2, Factory, Cpu, Download, X } from "lucide-react";
+import { isValidEmail, isValidIndianPhone } from "../utils/validation";
+import { useSEO } from "../utils/useSEO";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -382,6 +384,8 @@ const categoriesList = Object.entries(catalogData).map(([id, data]) => ({
 // -----------------------------
 
 export function Products() {
+  useSEO("Industrial Air Compressors, Pumps & Air Treatment | Machinery Centre", "Browse our extensive catalog of industrial air compressors, pumps, and specialized air treatment equipment. Authorized B2B dealers for premium OEM brands.");
+  
   const [activeCategoryId, setActiveCategoryId] = useState(categoriesList[0].id);
   const activeCategory = catalogData[activeCategoryId as keyof typeof catalogData];
 
@@ -397,7 +401,7 @@ export function Products() {
       {/* Header */}
       <div className="bg-slate-900 text-white py-16 border-b-4 border-orange-500">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-serif uppercase tracking-normal mb-4">Our Products</h1>
+          <h1 className="text-4xl mb-4 font-bold tracking-tight">Premium Industrial Compressors, Pumps & OEM Spares</h1>
           <p className="text-slate-400 max-w-2xl text-lg">Wide and diverse range of options to optimize your business's fixed costs.</p>
         </div>
       </div>
@@ -432,7 +436,7 @@ export function Products() {
         <div className="space-y-12">
           {/* Category Header */}
           <div className="max-w-3xl mb-8">
-            <h2 className="text-3xl font-serif text-slate-900 mb-4 flex items-center gap-3">
+            <h2 className="text-3xl text-slate-900 mb-4 flex items-center gap-3">
               <activeCategory.icon className="w-8 h-8 text-orange-500" /> {activeCategory.label}
             </h2>
             <p className="text-slate-600 text-lg leading-relaxed">
@@ -444,7 +448,7 @@ export function Products() {
           <div className="space-y-16">
             {activeCategory.subcategories.map((subcat) => (
               <div key={subcat.id} className="space-y-6 pt-4 border-t border-slate-200 first:border-0 first:pt-0">
-                {subcat.label && <h3 className="text-2xl font-serif text-slate-800">{subcat.label}</h3>}
+                {subcat.label && <h3 className="text-2xl text-slate-800">{subcat.label}</h3>}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {subcat.products.map((product, idx) => (
                     <ProductCard 
@@ -479,11 +483,11 @@ export function Products() {
 function ProductCard({ product, onDownloadRequest }: { product: any, onDownloadRequest: () => void }) {
   return (
     <div className="bg-white border border-slate-200 rounded-sm p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full">
-      <h3 className="text-xl font-serif text-slate-900 mb-2">{product.title}</h3>
+      <h3 className="text-xl text-slate-900 mb-2">{product.title}</h3>
       {product.brands && (
         <div className="flex flex-wrap gap-2 mb-4">
           {product.brands.map((b: string) => (
-            <span key={b} className="text-[10px] font-bold tracking-wider uppercase bg-slate-100 text-slate-600 px-2 py-1 rounded">
+            <span key={b} className="text-[10px] tracking-wider bg-slate-100 text-slate-600 px-2 py-1 rounded">
               {b}
             </span>
           ))}
@@ -503,12 +507,12 @@ function ProductCard({ product, onDownloadRequest }: { product: any, onDownloadR
       )}
       
       <div className="mt-auto pt-4 border-t border-slate-100 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <Link to="/quote" className="text-orange-600 font-bold uppercase tracking-wider text-xs hover:text-orange-700 transition-colors">
+        <Link to="/quote" className="text-orange-600 tracking-wider text-xs hover:text-orange-700 transition-colors">
           Request Quote &rarr;
         </Link>
         <button 
           onClick={onDownloadRequest}
-          className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-600 px-3 py-2 rounded hover:bg-slate-200 transition-colors"
+          className="flex items-center gap-1.5 text-xs tracking-wider bg-slate-100 text-slate-600 px-3 py-2 rounded hover:bg-slate-200 transition-colors"
         >
           <Download className="w-3.5 h-3.5" />
           Catalog
@@ -524,11 +528,34 @@ function ProductCard({ product, onDownloadRequest }: { product: any, onDownloadR
 
 function CatalogDownloadModal({ productTitle, catalogLink, onClose }: { productTitle: string, catalogLink: string, onClose: () => void }) {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", company: "" });
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const newErrors: Record<string, string> = {};
+    let hasErrors = false;
+
+    if (!formData.name.trim()) { newErrors.name = "Required"; hasErrors = true; }
+    
+    if (!formData.email.trim()) { 
+      newErrors.email = "Required"; hasErrors = true; 
+    } else if (!isValidEmail(formData.email)) {
+      newErrors.email = "Invalid email"; hasErrors = true;
+    }
+
+    if (formData.phone.trim() && !isValidIndianPhone(formData.phone)) {
+      newErrors.phone = "Invalid Indian mobile"; hasErrors = true;
+    }
+
+    if (!formData.company.trim()) { newErrors.company = "Required"; hasErrors = true; }
+
+    setErrors(newErrors);
+
+    if (hasErrors) return;
+
     setIsSubmitting(true);
     
     // Simulate API call to send user details to company
@@ -547,6 +574,12 @@ function CatalogDownloadModal({ productTitle, catalogLink, onClose }: { productT
     }, 1000);
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors(prev => ({ ...prev, [name]: "" }));
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4">
       <div className="bg-white w-full max-w-md rounded-sm shadow-xl overflow-hidden relative">
@@ -559,7 +592,7 @@ function CatalogDownloadModal({ productTitle, catalogLink, onClose }: { productT
 
         <div className="p-6 sm:p-8">
           <div className="mb-6">
-            <h3 className="text-2xl font-serif text-slate-900 mb-2">Download Catalog</h3>
+            <h3 className="text-2xl text-slate-900 mb-2">Download Catalog</h3>
             <p className="text-sm text-slate-500">
               Please provide your details to download the complete {productTitle} PDF catalog.
             </p>
@@ -574,55 +607,60 @@ function CatalogDownloadModal({ productTitle, catalogLink, onClose }: { productT
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Full Name</label>
+                <label className="block text-xs text-slate-700 tracking-wider mb-1">Full Name</label>
                 <input 
-                  required
+                  name="name"
                   type="text" 
                   value={formData.name}
-                  onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors"
+                  onChange={handleChange}
+                  className={`w-full px-4 py-2 bg-slate-50 border ${errors.name ? 'border-red-400' : 'border-slate-200'} rounded-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`}
                   placeholder="John Doe"
                 />
+                {errors.name && <p className="text-red-500 text-[10px] mt-1">{errors.name}</p>}
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Email Address</label>
+                <label className="block text-xs text-slate-700 tracking-wider mb-1">Email Address</label>
                 <input 
-                  required
+                  name="email"
                   type="email" 
                   value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors"
+                  onChange={handleChange}
+                  className={`w-full px-4 py-2 bg-slate-50 border ${errors.email ? 'border-red-400' : 'border-slate-200'} rounded-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`}
                   placeholder="john@company.com"
                 />
+                {errors.email && <p className="text-red-500 text-[10px] mt-1">{errors.email}</p>}
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Phone <span className="text-slate-400 font-normal normal-case">(optional)</span></label>
+                  <label className="block text-xs text-slate-700 tracking-wider mb-1">Phone <span className="text-slate-400 font-normal normal-case">(optional)</span></label>
                   <input 
+                    name="phone"
                     type="tel" 
                     value={formData.phone}
-                    onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                    className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors"
-                    placeholder="+1 (555) 000-0000"
+                    onChange={handleChange}
+                    className={`w-full px-4 py-2 bg-slate-50 border ${errors.phone ? 'border-red-400' : 'border-slate-200'} rounded-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`}
+                    placeholder="+91 9800000000"
                   />
+                  {errors.phone && <p className="text-red-500 text-[10px] mt-1">{errors.phone}</p>}
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Company</label>
+                  <label className="block text-xs text-slate-700 tracking-wider mb-1">Company</label>
                   <input 
-                    required
+                    name="company"
                     type="text" 
                     value={formData.company}
-                    onChange={(e) => setFormData({...formData, company: e.target.value})}
-                    className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors"
+                    onChange={handleChange}
+                    className={`w-full px-4 py-2 bg-slate-50 border ${errors.company ? 'border-red-400' : 'border-slate-200'} rounded-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`}
                     placeholder="Acme Inc."
                   />
+                  {errors.company && <p className="text-red-500 text-[10px] mt-1">{errors.company}</p>}
                 </div>
               </div>
               <div className="pt-4">
                 <button 
                   type="submit" 
                   disabled={isSubmitting}
-                  className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold uppercase tracking-wider text-sm py-3 px-6 rounded-sm transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="w-full bg-orange-600 hover:bg-orange-700 text-white tracking-wider text-sm py-3 px-6 rounded-sm transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? "Processing..." : "Get Catalog"}
                 </button>

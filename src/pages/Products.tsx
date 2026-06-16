@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Wind, Droplets, Filter, CheckCircle2, Factory, Cpu, Download, X } from "lucide-react";
+import { Wind, Droplets, Filter, CheckCircle2, Download, X } from "lucide-react";
 import { isValidEmail, isValidIndianPhone } from "../utils/validation";
 import { useSEO } from "../utils/useSEO";
 import { getBrandLogo } from "../utils/logos";
@@ -29,14 +29,14 @@ const catalogData = {
             desc: "Advanced Screw Airend with Intelligent Microprocessor based Electronic Controller. Low Specific Power Consumption with less noise level and ease of maintenance.",
             brands: ["Trendi"],
             features: ["Three stage Air Oil Separator", "Compressors with VFD (Optional)", "Low Specific Power Consumption", "IE3 Electric Motors"],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/uc?export=download&id=1VN7WVekzZYVYHpGATtpQOEQQiaSqvtpp"
           },
           {
             title: "Trendi Base Mounted Direct Drive Screw Compressors",
             desc: "Base mounted direct drive screw compressors providing reliable performance. Available in multiple capacities and dimensions.",
             brands: ["Trendi"],
             features: ["Direct Drive", "Base Mounted", "Low noise design"],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/uc?export=download&id=1x45zNBjsj9jrgPzVVDyNcgDkvmIx5Kl7"
           },
           {
             title: "Trendi Motor Driven Two Stage Air Compressor",
@@ -48,7 +48,7 @@ const catalogData = {
               "Splash Lubrication",
               "Precision-balanced crankshaft"
             ],
-            catalogLink: "https://drive.google.com/file/d/1V3G7HYCPfRk-0CJBdt7toAmquvRVHE3t/view"
+            catalogLink: "https://drive.google.com/uc?export=download&id=1V3G7HYCPfRk-0CJBdt7toAmquvRVHE3t"
           },
           {
             title: "Ingersoll Rand Two Stage Electric Driven Reciprocating Air Compressor",
@@ -60,7 +60,7 @@ const catalogData = {
               "100% continuous duty",
               "Automatic start/stop control"
             ],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/uc?export=download&id=1nZQ7xCTVp73Fyus9UpWcVJdn_YtEJt3E"
           }
         ]
       }
@@ -77,9 +77,21 @@ const catalogData = {
         products: [
           {
             title: "Gear Pumps",
+            brands: ["Rotodel"],
             desc: "High viscosity fluid handling designed to run up to 1440 RPM.",
             features: ["Type HGSX", "Type HGHX"],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/uc?export=download&id=17bjoJ1m4XfzzhZwQdpA3J8bgP5_R1ln1"
+          },
+          {
+            title: "Rotary Gear Pumps Type 'HGN'",
+            desc: "Rotodel Type 'HGN' rotary gear pumps for transferring viscous, lubricating and non-abrasive fluids with smooth, pulsation-free flow.",
+            brands: ["Rotodel"],
+            features: [
+              "Type 'HGN' construction",
+              "Handles high-viscosity fluids",
+              "Smooth, pulsation-free flow"
+            ],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1LCiAcCRJdCNlRRNhtmutsk5clv28rvUS"
           }
         ]
       },
@@ -88,87 +100,15 @@ const catalogData = {
         label: "Metering Pump",
         products: [
           {
-            title: "KOSM THREE PHASE OPEN-WELL PUMPS",
-            desc: "Constructed with special grade engineering materials, compact designs for ease of handling and installation. Features wide voltage design and replaceable wearing parts.",
+            title: "Metering Pumps",
+            desc: "Precision metering and dosing pumps engineered for accurate, repeatable flow control in chemical dosing and process applications.",
             brands: ["Kirloskar"],
             features: [
-              "Head Range: Upto 38 metres", 
-              "Discharge Range: Upto 11 lps", 
-              "Power Ratings: 0.37 to 1.5 kW", 
-              "Advanced Water Cooled Motors Designs"
+              "Accurate, repeatable dosing",
+              "Adjustable flow / stroke control",
+              "Chemical-compatible construction"
             ],
-            catalogLink: "#"
-          },
-          {
-            title: "SELF PRIMING DEWATERING PUMPS",
-            desc: "Contains SP BS, SP M, SP COUPLED series. No need of foot valve and priming pumpset every time for quicker operations.",
-            brands: ["Kirloskar"],
-            features: [
-              "Non clog Impeller", 
-              "Flatter Efficiency Curve", 
-              "Dynamically Balanced Rotating Parts", 
-              "Easy Maintainable Designs"
-            ],
-            catalogLink: "#"
-          },
-          {
-            title: "SW/BW SEWAGE DE-WATERING SUBMERSIBLE PUMPS",
-            desc: "Sewage de-watering submersible pumps with automatic on-off switch and thermal overload protector.",
-            brands: ["Kirloskar"],
-            features: [
-              "Corrosion Free Stainless Steel body", 
-              "Head Range: Upto 12 meters", 
-              "Discharge Range: Upto 330 LPM"
-            ],
-            catalogLink: "#"
-          },
-          {
-            title: "INDUSTRIAL PRODUCT RANGE SEWAGE DE-WATERING SUBMERSIBLE PUMPS",
-            desc: "Sewage de-watering submersible pumps including ETERNA CW series. Heavy duty construction suitable for sewage and sludge.",
-            brands: ["Kirloskar"],
-            features: [
-              "High Efficiency And Energy Saving Design", 
-              "Robust Construction", 
-              "Head Range: Upto 70 Meters", 
-              "Discharge Range: Upto 4800 LPM"
-            ],
-            catalogLink: "#"
-          },
-          {
-            title: "KDI THREE PHASE MONOBLOC PUMPS",
-            desc: "Three phase monobloc pumps with minimum variations in efficiency during entire operating range.",
-            brands: ["Kirloskar"],
-            features: [
-              "Head Range: Upto 76 metres", 
-              "Discharge Range: Upto 39 lps", 
-              "Automatic Air Release", 
-              "Wide Voltage Design"
-            ],
-            catalogLink: "#"
-          },
-          {
-            title: "KDS/GMC THREE PHASE MONOBLOC PUMPS",
-            desc: "Three phase monobloc pumps designed to withstand wide voltage fluctuations. Delivers optimum efficiency at lower energy consumption.",
-            brands: ["Kirloskar"],
-            features: [
-              "Flatter Efficiency Curve", 
-              "Dynamically Balanced Rotating Parts", 
-              "CED – Cathodic Electro Deposition", 
-              "High Efficiency And Energy Saving Design"
-            ],
-            catalogLink: "#"
-          },
-          {
-            title: "KOS THREE PHASE OPEN-WELL PUMPS",
-            desc: "Three phase open-well pumps for industrial, domestic, and irrigation applications. Features high efficiency and energy saving design.",
-            brands: ["Kirloskar"],
-            features: [
-              "Head Range: Upto 76 metres", 
-              "Discharge Range: Upto 38 Ips", 
-              "Power Ratings: 2.2 to 11.2 kW", 
-              "Advanced Water Cooled Motors Designs"
-            ],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/uc?export=download&id=1J-1j3_cQbZW7RhaQY8N5plq0-sbBjl1F"
           }
         ]
       },
@@ -186,7 +126,7 @@ const catalogData = {
               "Wide Voltage Design",
               "Replaceable Wearing Parts"
             ],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/uc?export=download&id=1QaclCLlzM8B9ZieP083Bxp-8M4_V41Pc"
           }
         ]
       }
@@ -202,172 +142,148 @@ const catalogData = {
         label: "",
         products: [
           {
-            title: "TRENDI Series EDV-X",
+            title: "TRIDENT Series EDV-X",
             desc: "Automatic drain valves designed specially to drain sludge and rust laden condensate.",
-            brands: ["Trendi"],
+            brands: ["Trident"],
             features: ["Reliable all digital electronic circuitry", "ON and OFF timing adjustable", "Extended cycle time upto 32 hrs adjustable"],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/uc?export=download&id=1WxilzKTFSq2qZkMLvzezbGtvClPkGs7i"
           },
           {
-            title: "TRENDI Series LDV",
+            title: "TRIDENT Series LDV",
             desc: "Condensate sensing type automatic drain valves, offering zero air loss, noise free, and fault tolerant system.",
-            brands: ["Trendi"],
+            brands: ["Trident"],
             features: ["Condensate Sensing Type", "Zero Air Loss", "Design Patented", "Fault tolerant system"],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/uc?export=download&id=14Ya8W0lhZ4TCechRTRTRmAuH-TP9cYVZ"
           },
           {
-            title: "TRENDI Dryspell Series",
+            title: "TRIDENT Dryspell Series",
             desc: "Heatless desiccant compressed air dryers, offering total cleaning solution for lubricated as well as non-lubricated compressed air.",
-            brands: ["Trendi"],
+            brands: ["Trident"],
             features: ["Noise level < 70 decibels", "Free from corrosion & scale formation", "High strength adsorbent material"],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/uc?export=download&id=17Km0_hcnxVQ6YcY75JUlFsmiWzbOSWmD"
           },
           {
-            title: "TRENDI Dryspell Core",
+            title: "TRIDENT Dryspell Core",
             desc: "Desiccant compressed air dryers providing consistent dew point performance. Aluminium construction.",
-            brands: ["Trendi"],
+            brands: ["Trident"],
             features: ["Noise Level < 70 dBA", "Pressure Drop < 0.3 kg/cm² (g)", "ISO 8573-1:2010 class 3"],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/uc?export=download&id=1OAHw-OTnWODzrDWahUTAl5fqhLpSGrUW"
           },
           {
-            title: "TRENDI Dryspell Plus",
+            title: "TRIDENT Dryspell Plus",
             desc: "Desiccant compressed air dryers with purge economiser reducing purge loss according to load requirements.",
-            brands: ["Trendi"],
+            brands: ["Trident"],
             features: ["Noise Level < 80 dBA", "Aluminium Construction", "Accepts dewpoint meter signal"],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/uc?export=download&id=1_j0SdJC7_WD1-R9YIPlOHuLAbk_hm0FW"
           },
           {
-            title: "TRENDI Coldspell Core",
+            title: "TRIDENT Coldspell Core",
             desc: "Refrigeration compressed air dryer with large condenser for high ambient temperatures.",
-            brands: ["Trendi"],
+            brands: ["Trident"],
             features: ["Low pressure drop", "High ambient temperatures handling"],
-            catalogLink: "https://drive.google.com/file/d/1Dm1N3eWZrcqWPt-Vk9e21PDIFVrmQYr6/view"
+            catalogLink: "https://drive.google.com/uc?export=download&id=1Dm1N3eWZrcqWPt-Vk9e21PDIFVrmQYr6"
           },
           {
-            title: "TRENDI Coldspell",
+            title: "TRIDENT Coldspell",
             desc: "Refrigeration compressed air dryer featuring an anti-recycle feature for compressor protection.",
-            brands: ["Trendi"],
+            brands: ["Trident"],
             features: ["ISO 8573 - 1 : 2010 (E) class -5-", "Anti-recycle feature", "Large condenser"],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/uc?export=download&id=1W_-wRxgKEuZt5IZHc0WWDGESM2TcmBC-"
           },
           {
-            title: "TRENDI Coldspell - HP Series",
+            title: "TRIDENT Coldspell - HP Series",
             desc: "High pressure (40 Kg / cm2 (g)) refrigeration compressed air dryer with advanced 3 in 1 integrated SS heat exchanger.",
-            brands: ["Trendi"],
+            brands: ["Trident"],
             features: ["Microprocessor controller", "Anti freezer & anti recycle", "High pressure 40 Kg/cm2 (g)"],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/uc?export=download&id=1Q17byZmfDuDqD7HANn7tjynLKbCOfX-B"
           },
           {
-            title: "TRENDI DP V2 Series",
+            title: "TRIDENT DP V2 Series",
             desc: "Heatless compressed air dryers featuring purge economisers to reduce energy loss according to load requirements.",
-            brands: ["Trendi"],
+            brands: ["Trident"],
             features: ["Dewpoint meter signal cycle", "Pressure Drop < 0.3 kg/cm²", "Stainless Steel Internals"],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/uc?export=download&id=17un7IYiQpsvC_6qeyW97u7iRm6j5-y2N"
           },
           {
-            title: "TRENDI DP V3 Series",
+            title: "TRIDENT DP V3 Series",
             desc: "Heatless compressed air dryers with inbuilt sample gas chamber and electrical outlet for miniature dew point transmitter.",
-            brands: ["Trendi"],
+            brands: ["Trident"],
             features: ["ISO : 8573-1 : 2010 (E) Class 2", "LCD Display", "Aluminium filter with differential pressure indicator"],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/uc?export=download&id=1wYmSf6wBnARcrwHrWk_oN9roTRBvNAX7"
           },
           {
-            title: "TRENDI Medical Vacuum Filters High Performance Series",
+            title: "TRIDENT Medical Vacuum Filters High Performance Series",
             desc: "Designed to remove liquid, solid, and bacterial contamination from the suction side of vacuum pumps.",
-            brands: ["Trendi"],
+            brands: ["Trident"],
             features: ["Borosilicate filter element 99.995% efficiency", "Differential pressure gauge indicator", "Sterilisable drain flask"],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/uc?export=download&id=1lSSUk5gfnjhAaFec_POZScmeE4YNvhRX"
           },
           {
-            title: "TRENDI Nitrogen Generator",
+            title: "TRIDENT Nitrogen Generator",
             desc: "Modular nitrogen generator using PSA technology. Delivers uninterrupted nitrogen supply for multiple industries.",
-            brands: ["Trendi"],
+            brands: ["Trident"],
             features: ["Purity from 95% to 99.999%", "Microprocessor controller", "Corrosion free modular aluminium construction"],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/uc?export=download&id=1nNlJeUun0Zq2_VLr7fFNIKDoTU28uEnY"
           },
           {
             title: "TRIDENT Breathing Air System",
             desc: "Provides breathing air mandated by NFPA 99. Operates with pressure swing adsorption.",
             brands: ["Trident"],
             features: ["Guaranteed dew point performance", "Compact digital CO & Dewpoint Monitor", "Bacterial Penetration upto 0.0001%"],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/uc?export=download&id=1abuKUpjlG9j9qRVYDo3CnzJtEa2xMxRJ"
           },
           {
-            title: "TRENDI Vortex Filter VXD 2",
+            title: "TRIDENT Vortex Filter VXD 2",
             desc: "Eliminates 100% water in liquid phase from compressed air. Compact, light weight, and uses no electricity.",
-            brands: ["Trendi"],
+            brands: ["Trident"],
             features: ["Removes water, oil and solid particles", "No Electricity used", "All aluminium resist oxidation"],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/uc?export=download&id=1Gdeuy0sZfvVsvB89To4kVYZod1sjOeCj"
           },
           {
-            title: "TRENDI Bacteria Filter Series",
+            title: "TRIDENT Bacteria Filter Series",
             desc: "Provides protection from bacteria in compressed air applications for medical and food industries.",
-            brands: ["Trendi"],
+            brands: ["Trident"],
             features: ["Aluminium alloy housing, hard anodized", "Compatible with autoclave sterilisation", "Borosilicate filter media"],
-            catalogLink: "https://drive.google.com/file/d/1Yhox1XasGhUigrJ6cnrAKFd0a4nhEPki/view"
+            catalogLink: "https://drive.google.com/uc?export=download&id=1Yhox1XasGhUigrJ6cnrAKFd0a4nhEPki"
           },
           {
-            title: "TRENDI Carbon Adsorber Tower",
+            title: "TRIDENT Carbon Adsorber Tower",
             desc: "Adsorber towers for production of oil free compressed air for various point of use applications.",
-            brands: ["Trendi"],
+            brands: ["Trident"],
             features: ["Activated Carbon Adsorbent", "Max Operating Pressure: 16 Kg/cm2", "Aluminium Alloy IS 63400 Construction"],
-            catalogLink: "https://drive.google.com/file/d/15jBWXUF2HBFROzvLb4ishV8Ps5zmrat3/view"
+            catalogLink: "https://drive.google.com/uc?export=download&id=15jBWXUF2HBFROzvLb4ishV8Ps5zmrat3"
           },
           {
-            title: "TRENDI Submicron Filters Cleansweep",
+            title: "TRIDENT Submicron Filters Cleansweep",
             desc: "Extremely low installation clearance filters removing oil and particulate down to 0.01 micron.",
-            brands: ["Trendi"],
+            brands: ["Trident"],
             features: ["Oil Removal (Coalescing)", "Flow from 20 to 1810 m³/hour", "Install anywhere"],
-            catalogLink: "https://drive.google.com/file/d/1kEIDFut6Hfmcf3P4hhlDpT40BCIO--7f/view"
+            catalogLink: "https://drive.google.com/uc?export=download&id=1_CM0y0VbRDy1iMxmjLadMl-1EqeA7g1e"
           },
           {
-            title: "TRENDI CTD Series",
+            title: "TRIDENT CTD Series",
             desc: "High discharge automatic drain valves with robust construction and adjustable ON/OFF timings.",
-            brands: ["Trendi"],
+            brands: ["Trident"],
             features: ["Adjustable ON/OFF timings", "Highly reliable", "Can handle contaminated condensate"],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/uc?export=download&id=1uM8Hn2Bv2HVHX-Wvn60GTgxMECPmA-Uq"
           },
           {
-            title: "TRENDI DB Series",
+            title: "TRIDENT DB Series",
             desc: "Blower Reactivated Air Dryers working on thermal swing principle for economical energy consumption.",
-            brands: ["Trendi"],
+            brands: ["Trident"],
             features: ["Extensive Mimic display", "Energy saving purge economiser", "Dewpoint better than -40 ° C"],
-            catalogLink: "#"
-          }
-        ]
-      }
-    ]
-  },
-  spares: {
-    label: "Spares",
-    icon: Cpu,
-    description: "We provide you with all the spares and accessories for Boiler Feed Pumps, Chemical Pumps, Water Lifting Pumps, Sewerage Pumps, Self Priming Pumps, Centrifugal Pumps, Pumps for Fire Fighting, Booster Pumps, etc.",
-    subcategories: [
-      {
-        id: "parts-accessories",
-        label: "Parts & Accessories",
-        products: [
-          {
-            title: "Pump Spares",
-            desc: "Genuine parts and accessories for a wide range of industrial and commercial pumps.",
-            features: [
-              "Boiler Feed Pump Spares",
-              "Chemical Pump Spares",
-              "Water Lifting & Sewerage Pump Spares",
-              "Fire Fighting & Booster Pump Spares"
-            ],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/uc?export=download&id=15S-TVRADI6hlWn7VdATEqauw8EHgXG4Z"
           },
           {
-            title: "Compressor & Air Parts",
-            desc: "OEM and compatible accessories for major compressor brands.",
+            title: "TRIDENT Locodry",
+            desc: "Heatless desiccant air dryer engineered to deliver consistent low dew-point performance with minimal purge loss for critical compressed-air applications.",
+            brands: ["Trident"],
             features: [
-              "Ingersoll Rand Spares",
-              "Kirloskar & Crompton Greaves Spares",
-              "Trident, Elgi, & Janatics Components",
-              "Rotodel, Indfoss, & Everest Accessories"
+              "Heatless regeneration",
+              "Consistent low dew-point performance",
+              "Energy-saving purge control"
             ],
-            catalogLink: "#"
+            catalogLink: "https://drive.google.com/uc?export=download&id=1xVn3hoatS4QzmlqTrGJ7OflscYdj3LP6"
           }
         ]
       }

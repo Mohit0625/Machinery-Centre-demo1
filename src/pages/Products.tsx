@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Wind, Droplets, Filter, CheckCircle2, Download, X } from "lucide-react";
+import { Wind, Droplets, Filter, CheckCircle2, Download, X, Cpu } from "lucide-react";
 import { isValidEmail, isValidIndianPhone } from "../utils/validation";
 import { useSEO } from "../utils/useSEO";
 import { getBrandLogo } from "../utils/logos";
@@ -284,6 +284,41 @@ const catalogData = {
               "Energy-saving purge control"
             ],
             catalogLink: "https://drive.google.com/uc?export=download&id=1xVn3hoatS4QzmlqTrGJ7OflscYdj3LP6"
+          }
+        ]
+      }
+    ]
+  },
+  spares: {
+    label: "Spares",
+    icon: Cpu,
+    description: "We provide you with all the spares and accessories for Boiler Feed Pumps, Chemical Pumps, Water Lifting Pumps, Sewerage Pumps, Self Priming Pumps, Centrifugal Pumps, Pumps for Fire Fighting, Booster Pumps, etc.",
+    subcategories: [
+      {
+        id: "parts-accessories",
+        label: "Parts & Accessories",
+        products: [
+          {
+            title: "Pump Spares",
+            desc: "Genuine parts and accessories for a wide range of industrial and commercial pumps.",
+            features: [
+              "Boiler Feed Pump Spares",
+              "Chemical Pump Spares",
+              "Water Lifting & Sewerage Pump Spares",
+              "Fire Fighting & Booster Pump Spares"
+            ],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1rUveEEGcs_G-Ha8gmeC1tE9UAqGaPODX"
+          },
+          {
+            title: "Compressor & Air Parts",
+            desc: "OEM and compatible accessories for major compressor brands. Air & oil filters, air-oil separators, intake valves, gaskets, service kits and more.",
+            features: [
+              "Ingersoll Rand Spares",
+              "Kirloskar & Crompton Greaves Spares",
+              "Trident, Elgi, & Janatics Components",
+              "Rotodel, Indfoss, & Everest Accessories"
+            ],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1PIawPtp0X-e10yHstbav5lh5A1he4ABQ"
           }
         ]
       }

@@ -1,9 +1,27 @@
 import { Building2, History, Target, Users } from "lucide-react";
+import { motion } from "motion/react";
 import { useSEO } from "../utils/useSEO";
+
+const owners = [
+  {
+    name: "[Partner Name]",
+    role: "Managing Partner",
+    image: "/assets/images/Owner.jpeg",
+    bio: "With over 35 years of experience in industrial machinery, leading the strategic vision and growth of the company.",
+  },
+  {
+    name: "[Manager Name]",
+    role: "Operations Head",
+    image: "/assets/images/Owner.jpeg",
+    bio: "Overseeing daily operations, supply chain logistics, and ensuring that our nationwide network runs smoothly.",
+  },
+];
 
 export function About() {
   useSEO("About Machinery Centre | Industrial Equipment Suppliers Since 1987", "Established in 1987 under Gulson Engineering, Machinery Centre is a trusted B2B supplier of industrial machinery, air compressors, and pumps across India.");
-  
+
+  const yearsOfLegacy = new Date().getFullYear() - 1987;
+
   return (
     <div className="flex-1 bg-slate-50">
       {/* Page Header */}
@@ -18,7 +36,7 @@ export function About() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-12">
-            
+
             <section>
               <div className="flex items-center gap-3 mb-6">
                 <History className="w-8 h-8 text-orange-500" />
@@ -26,14 +44,14 @@ export function About() {
               </div>
               <div className="prose prose-slate max-w-none text-slate-600 space-y-6 text-lg leading-relaxed">
                 <p>
-                  Machinery Centre came into existence in November, 1987 after its parent company, 
-                  <strong> Gulson Engineering Company</strong>, decided to diversify its business which itself came 
+                  Machinery Centre came into existence in November, 1987 after its parent company,
+                  <strong> Gulson Engineering Company</strong>, decided to diversify its business which itself came
                   into existence in 1978.
                 </p>
                 <p>
-                  With our presence at G.B. Road for over {new Date().getFullYear() - 1987} years, our motto has always been 
-                  serving the Indian industry with our expert knowledge to select the right product 
-                  to match their exact requirements. We look forward to becoming a one stop shop for 
+                  With our presence at G.B. Road for over {yearsOfLegacy} years, our motto has always been
+                  serving the Indian industry with our expert knowledge to select the right product
+                  to match their exact requirements. We look forward to becoming a one stop shop for
                   your Water &amp; Air Requirements.
                 </p>
               </div>
@@ -68,6 +86,7 @@ export function About() {
 
             <div className="w-full h-px bg-slate-200 mt-12 mb-12" />
 
+            {/* ── Owners / Leadership (original position) ───────────── */}
             <section>
               <div className="flex items-center gap-3 mb-6">
                 <Users className="w-8 h-8 text-orange-500" />
@@ -77,45 +96,47 @@ export function About() {
                 Behind Machinery Centre's decades of success is a dedicated team of partners and management professionals who ensure operational excellence and unparalleled service delivery.
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Team Member 1 */}
-                <div className="group rounded-lg overflow-hidden border border-slate-200 bg-white hover:shadow-lg transition-all duration-300">
-                  <div className="h-64 overflow-hidden bg-slate-100 flex items-center justify-center">
-                    <img 
-                      src="/assets/images/industry-cement.png" 
-                      alt="Partner" 
-                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
-                    />
-                  </div>
-                  <div className="p-6 text-center">
-                    <h3 className="text-xl font-bold text-slate-900 mb-1">[Partner Name]</h3>
-                    <p className="text-accent-600 text-sm font-semibold tracking-wider uppercase mb-3">Managing Partner</p>
-                    <p className="text-slate-500 text-sm leading-relaxed">
-                      With over 35 years of experience in industrial machinery, leading the strategic vision and growth of the company.
-                    </p>
-                  </div>
-                </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+                {owners.map((o, i) => (
+                  <motion.article
+                    key={i}
+                    initial={{ opacity: 0, y: 32 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.6, delay: 0.12 * i, ease: [0.22, 1, 0.36, 1] }}
+                    className="group relative"
+                  >
+                    <div className="relative">
+                      {/* offset orange accent frame */}
+                      <div className="absolute inset-0 translate-x-3 translate-y-3 rounded-sm bg-orange-500 transition-transform duration-500 ease-out group-hover:translate-x-4 group-hover:translate-y-4" />
+                      <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-slate-100 shadow-xl ring-1 ring-slate-900/5">
+                        <img
+                          src={o.image}
+                          alt={o.name}
+                          loading="lazy"
+                          className="h-full w-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
+                        />
+                        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-slate-900/60 to-transparent" />
+                        {/* index number — now ON TOP of the photo (was behind) */}
+                        <span className="absolute top-3 left-3 z-20 text-4xl font-black leading-none text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)]">
+                          0{i + 1}
+                        </span>
+                      </div>
+                    </div>
 
-                {/* Team Member 2 */}
-                <div className="group rounded-lg overflow-hidden border border-slate-200 bg-white hover:shadow-lg transition-all duration-300">
-                  <div className="h-64 overflow-hidden bg-slate-100 flex items-center justify-center">
-                    <img 
-                      src="/assets/images/industry-textile.png" 
-                      alt="Management" 
-                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
-                    />
-                  </div>
-                  <div className="p-6 text-center">
-                    <h3 className="text-xl font-bold text-slate-900 mb-1">[Manager Name]</h3>
-                    <p className="text-accent-600 text-sm font-semibold tracking-wider uppercase mb-3">Operations Head</p>
-                    <p className="text-slate-500 text-sm leading-relaxed">
-                      Overseeing daily operations, supply chain logistics, and ensuring that our nationwide network runs smoothly.
-                    </p>
-                  </div>
-                </div>
+                    <div className="mt-6">
+                      <div className="flex items-center gap-3">
+                        <span className="h-px w-8 bg-orange-500" />
+                        <span className="text-xs font-bold uppercase tracking-[0.2em] text-orange-600">{o.role}</span>
+                      </div>
+                      <h3 className="mt-2 text-2xl font-black text-slate-900">{o.name}</h3>
+                      <p className="mt-3 leading-relaxed text-slate-500">{o.bio}</p>
+                    </div>
+                  </motion.article>
+                ))}
               </div>
             </section>
-            
+
           </div>
 
           {/* Sidebar */}
@@ -123,7 +144,7 @@ export function About() {
             <div className="bg-slate-900 text-white p-8 rounded-sm shadow-xl sticky top-24 border-t-4 border-orange-500">
               <Building2 className="w-12 h-12 text-orange-500 mb-6" />
               <h3 className="text-xl tracking-wide mb-6">Corporate Office</h3>
-              
+
               <div className="space-y-6 text-slate-300">
                 <div>
                   <h4 className="text-xs tracking-widest text-slate-500 mb-1">Address</h4>

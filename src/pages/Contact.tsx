@@ -4,20 +4,23 @@ import { useLocation } from "react-router-dom";
 
 import { isValidIndianPhone, isValidEmail } from "../utils/validation";
 import { useSEO } from "../utils/useSEO";
+import { sendLead, nowInIST } from "../utils/leadForm";
 
 export function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const location = useLocation();
   const isRepairQuery = new URLSearchParams(location.search).get('type') === 'repair';
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "", company: "", message: "", consentTerms: false });
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", company: "", message: "", consentTerms: false, botcheck: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   useSEO(
     isRepairQuery ? "Industrial Machinery Repair & OEM Spares | Machinery Centre" : "Contact Machinery Centre | Industrial Equipment Suppliers",
     isRepairQuery ? "Expert industrial machinery repair and maintenance services. We provide genuine OEM spares for packaging, cement, and paint industry compressors and pumps." : "Get in touch with Machinery Centre. We are here to assist you with inquiries, sales, and support for all your industrial pump and compressor needs."
   );
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: Record<string, string> = {};
     let hasErrors = false;
@@ -44,11 +47,36 @@ export function Contact() {
 
     setErrors(newErrors);
 
-    if (!hasErrors) {
-      setTimeout(() => {
-        setSubmitted(true);
-        console.log("Contact form submitted with consent timestamp:", new Date().toISOString());
-      }, 800);
+    if (hasErrors) return;
+
+    setSubmitError("");
+    setIsSubmitting(true);
+
+    try {
+      await sendLead({
+        inbox: "general",
+        subject: `${isRepairQuery ? "Repair enquiry" : "Contact enquiry"} from ${formData.name.trim()}`,
+        replyTo: formData.email.trim(),
+        botcheck: formData.botcheck,
+        fields: {
+          "Enquiry Type": isRepairQuery ? "Repair / Service" : "General Contact",
+          "Customer Name": formData.name.trim(),
+          Email: formData.email.trim(),
+          Phone: formData.phone.trim(),
+          Company: formData.company.trim() || "Not provided",
+          Message: formData.message.trim(),
+          Consent: formData.consentTerms
+            ? "✓ Agreed to Terms of Use & Privacy Policy"
+            : "✗ Not agreed",
+          "Submitted At": nowInIST(),
+        },
+      });
+      setIsSubmitting(false);
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Contact form submission failed:", err);
+      setIsSubmitting(false);
+      setSubmitError("Couldn't send your message right now — please try again, or call us directly.");
     }
   };
 
@@ -128,7 +156,7 @@ export function Contact() {
                   Thank you for reaching out. We will contact you back within 1-2 business days.
                 </p>
                 <button 
-                  onClick={() => setSubmitted(false)}
+                  onClick={() => { setSubmitted(false); setFormData({ name: "", email: "", phone: "", company: "", message: "", consentTerms: false, botcheck: "" }); setErrors({}); }}
                   className="bg-slate-900 hover:bg-slate-800 text-white px-8 py-3 rounded-full text-[10px] tracking-widest uppercase"
                 >
                   Send Another Message
@@ -147,6 +175,7 @@ export function Contact() {
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  <input type="text" name="botcheck" value={formData.botcheck} onChange={handleChange} className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <label className="text-sm text-slate-700">First and Last Name <span className="text-orange-500">*</span></label>
@@ -190,8 +219,12 @@ export function Contact() {
                     {errors.consentTerms && <p className="text-red-500 text-xs ml-7">{errors.consentTerms}</p>}
                   </div>
 
-                  <button type="submit" className="bg-orange-500 hover:bg-orange-600 text-white tracking-widest text-[10px] px-8 py-4 rounded-full flex items-center justify-center gap-2 transition-colors w-full uppercase">
-                    Submit Message <Send className="w-4 h-4" />
+                  {submitError && (
+                    <p className="text-red-500 text-sm text-center bg-red-50 border border-red-100 rounded p-3">{submitError}</p>
+                  )}
+
+                  <button type="submit" disabled={isSubmitting} className="bg-orange-500 hover:bg-orange-600 text-white tracking-widest text-[10px] px-8 py-4 rounded-full flex items-center justify-center gap-2 transition-colors w-full uppercase disabled:opacity-70 disabled:cursor-not-allowed">
+                    {isSubmitting ? "Sending..." : <>Submit Message <Send className="w-4 h-4" /></>}
                   </button>
                 </form>
               </div>

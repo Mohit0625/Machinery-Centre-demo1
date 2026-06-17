@@ -16,6 +16,7 @@ import {
 import { isValidIndianPhone } from "../utils/validation";
 import { useSEO } from "../utils/useSEO";
 import { getBrandLogo } from "../utils/logos";
+import { sendLead, nowInIST } from "../utils/leadForm";
 
 // ── Intersection Observer Hook ────────────────────────────────
 function useInView(threshold = 0.15) {
@@ -126,11 +127,13 @@ export function Home() {
 
   useSEO("Industrial Air Compressors & Pumps | Authorized Dealer | Machinery Centre", "Machinery Centre is a leading authorized dealer of industrial air compressors, pumps, and OEM spares for 35+ years. Explore Ingersoll-Rand, Kirloskar & our Trendi range.");
 
-  const [quoteForm, setQuoteForm] = useState({ firstName: "", phone: "", item: "", quantity: "", consentTerms: false });
+  const [quoteForm, setQuoteForm] = useState({ firstName: "", phone: "", item: "", quantity: "", consentTerms: false, botcheck: "" });
   const [quoteErrors, setQuoteErrors] = useState<Record<string, string>>({});
   const [quoteSubmitted, setQuoteSubmitted] = useState(false);
+  const [quoteSubmitting, setQuoteSubmitting] = useState(false);
+  const [quoteError, setQuoteError] = useState("");
 
-  const handleQuoteSubmit = (e: React.FormEvent) => {
+  const handleQuoteSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: Record<string, string> = {};
     let hasErrors = false;
@@ -163,11 +166,34 @@ export function Home() {
 
     setQuoteErrors(newErrors);
 
-    if (!hasErrors) {
-      setTimeout(() => {
-        setQuoteSubmitted(true);
-        console.log("Quote form submitted with consent timestamp:", new Date().toISOString());
-      }, 800);
+    if (hasErrors) return;
+
+    setQuoteError("");
+    setQuoteSubmitting(true);
+
+    try {
+      await sendLead({
+        inbox: "general",
+        subject: `Quick quote: ${quoteForm.item.trim()} ×${quoteForm.quantity} — ${quoteForm.firstName.trim()}`,
+        botcheck: quoteForm.botcheck,
+        fields: {
+          "Customer Name": quoteForm.firstName.trim(),
+          Phone: quoteForm.phone.trim(),
+          "Item / Model": quoteForm.item.trim(),
+          Quantity: quoteForm.quantity,
+          Consent: quoteForm.consentTerms
+            ? "✓ Agreed to Terms of Use & Privacy Policy"
+            : "✗ Not agreed",
+          "Submitted At": nowInIST(),
+          Source: "Home page quick-quote form",
+        },
+      });
+      setQuoteSubmitting(false);
+      setQuoteSubmitted(true);
+    } catch (err) {
+      console.error("Home quote form submission failed:", err);
+      setQuoteSubmitting(false);
+      setQuoteError("Couldn't submit right now — please try again, or call us directly.");
     }
   };
 
@@ -599,7 +625,7 @@ export function Home() {
                   <h3 className="text-2xl text-white mb-2">Thank You!</h3>
                   <p className="text-slate-300 mb-6">Our team will contact you shortly with quote details.</p>
                   <button
-                    onClick={() => { setQuoteSubmitted(false); setQuoteForm({ firstName: "", phone: "", item: "", quantity: "", consentTerms: false }); }}
+                    onClick={() => { setQuoteSubmitted(false); setQuoteForm({ firstName: "", phone: "", item: "", quantity: "", consentTerms: false, botcheck: "" }); }}
                     className="btn-pill btn-accent text-[11px]"
                   >
                     Submit Another Request
@@ -610,6 +636,7 @@ export function Home() {
                   onSubmit={handleQuoteSubmit}
                   className="glass-card p-8 sm:p-10"
                 >
+                  <input type="text" name="botcheck" value={quoteForm.botcheck} onChange={(e) => setQuoteForm({ ...quoteForm, botcheck: e.target.value })} className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
                     <div>
                       <label className="block text-white/70 text-xs font-semibold tracking-wider mb-2">
@@ -696,12 +723,22 @@ export function Home() {
                     </label>
                     {quoteErrors.consentTerms && <p className="text-red-400 text-[10px] mt-1.5 ml-6">{quoteErrors.consentTerms}</p>}
                   </div>
+                  {quoteError && (
+                    <p className="text-red-400 text-xs text-center bg-red-500/10 border border-red-400/20 rounded-md p-3 mb-4">{quoteError}</p>
+                  )}
                   <button
                     type="submit"
-                    className="w-full btn-pill bg-white text-slate-900 hover:bg-slate-100 text-[11px] py-4"
+                    disabled={quoteSubmitting}
+                    className="w-full btn-pill bg-white text-slate-900 hover:bg-slate-100 text-[11px] py-4 disabled:opacity-70 disabled:cursor-not-allowed"
                   >
-                    <Send className="w-4 h-4" />
-                    Submit Enquiry
+                    {quoteSubmitting ? (
+                      "Submitting..."
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" />
+                        Submit Enquiry
+                      </>
+                    )}
                   </button>
                 </form>
               )}

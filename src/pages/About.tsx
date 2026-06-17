@@ -106,7 +106,7 @@ export function About() {
                     transition={{ duration: 0.6, delay: 0.12 * i, ease: [0.22, 1, 0.36, 1] }}
                     className="bg-white rounded-sm border border-slate-200 shadow-sm overflow-hidden flex flex-col group"
                   >
-                    <div className="relative overflow-hidden bg-slate-100 border-b border-slate-200 aspect-[4/5]">
+                    <div className="relative overflow-hidden bg-slate-100 border-b border-slate-200 aspect-4/5">
                       <img
                         src={o.image}
                         alt={o.name}

@@ -4,6 +4,7 @@ import { Wind, Droplets, Filter, CheckCircle2, Download, X, Cpu } from "lucide-r
 import { isValidEmail, isValidIndianPhone } from "../utils/validation";
 import { useSEO } from "../utils/useSEO";
 import { getBrandLogo } from "../utils/logos";
+import { sendLead, nowInIST } from "../utils/leadForm";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -491,12 +492,19 @@ function ProductCard({ product, onDownloadRequest }: { product: any, onDownloadR
 // -----------------------------
 
 function CatalogDownloadModal({ productTitle, catalogLink, onClose }: { productTitle: string, catalogLink: string, onClose: () => void }) {
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "", company: "", consentTerms: false });
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", company: "", consentTerms: false, botcheck: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // The catalog the visitor came for. Resolved once so the auto-open and the
+  // manual fallback button always point at exactly the same destination.
+  const downloadUrl =
+    catalogLink && catalogLink !== "#"
+      ? catalogLink
+      : "https://drive.google.com/drive/folders/1IHEIFLeqMeAJMWKnQADmtt1mQvwLI2JA";
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const newErrors: Record<string, string> = {};
@@ -524,26 +532,42 @@ function CatalogDownloadModal({ productTitle, catalogLink, onClose }: { productT
 
     if (hasErrors) return;
 
+    // Open the catalog FIRST, while we're still inside the click's synchronous
+    // path — this preserves the user-gesture token so the browser won't treat
+    // the new tab as an unsolicited popup and block it. The lead notification
+    // below is purely best-effort and must never gate the download.
+    window.open(downloadUrl, "_blank", "noopener,noreferrer");
+
     setIsSubmitting(true);
-    
-    // Simulate API call to send user details to company
-    setTimeout(() => {
-      console.log("Sent user details to business:", { productTitle, ...formData });
-      console.log("Catalog form submitted with consent timestamp:", new Date().toISOString());
-      setIsSubmitting(false);
-      setIsSuccess(true);
-      
-      // Auto download or redirect to link
-      setTimeout(() => {
-        if (catalogLink && catalogLink !== "#") {
-          window.open(catalogLink, '_blank');
-        } else {
-          // Fallback to the Air Treatment folder if no specific link is provided
-          window.open('https://drive.google.com/drive/folders/1IHEIFLeqMeAJMWKnQADmtt1mQvwLI2JA', '_blank');
-        }
-        onClose();
-      }, 1500);
-    }, 1000);
+
+    // Notifying Machinery Centre is best-effort: if it fails — relay service
+    // down, inbox not activated, visitor offline, request times out — the
+    // customer has ALREADY got their catalog, so we just log and move on.
+    try {
+      // The `fields` keys become the labels in the email, in the order listed.
+      await sendLead({
+        inbox: "product",
+        subject: `New catalog request: ${productTitle} — ${formData.company.trim()}`,
+        replyTo: formData.email.trim(),
+        botcheck: formData.botcheck,
+        fields: {
+          "Product Requested": productTitle,
+          "Customer Name": formData.name.trim(),
+          Company: formData.company.trim(),
+          Email: formData.email.trim(),
+          Phone: formData.phone.trim() || "Not provided",
+          Consent: formData.consentTerms
+            ? "✓ Agreed to Terms of Use & Privacy Policy"
+            : "✗ Not agreed",
+          "Submitted At": nowInIST(),
+        },
+      });
+    } catch (err) {
+      console.error("Catalog lead notification failed — download already delivered:", err);
+    }
+
+    setIsSubmitting(false);
+    setIsSuccess(true);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -575,10 +599,31 @@ function CatalogDownloadModal({ productTitle, catalogLink, onClose }: { productT
             <div className="bg-emerald-50 text-emerald-800 p-4 rounded-sm border border-emerald-100 flex flex-col items-center justify-center py-8">
               <CheckCircle2 className="w-12 h-12 text-emerald-500 mb-3" />
               <p className="font-medium text-center">Thank you!</p>
-              <p className="text-sm text-emerald-600 text-center mt-1">Your download will begin shortly.</p>
+              <p className="text-sm text-emerald-600 text-center mt-1">Your catalog should have opened in a new tab.</p>
+              <a
+                href={downloadUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-5 inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white tracking-widest text-[10px] uppercase py-3 px-6 rounded-full transition-colors"
+              >
+                <Download className="w-3.5 h-3.5" />
+                Download catalog
+              </a>
+              <p className="text-[10px] text-emerald-700/70 text-center mt-3">Didn't open? Tap the button above.</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Honeypot anti-spam field — hidden from real users, bots tend to fill it */}
+              <input
+                type="text"
+                name="botcheck"
+                value={formData.botcheck}
+                onChange={handleChange}
+                className="hidden"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+              />
               <div>
                 <label className="block text-xs text-slate-700 tracking-wider mb-1">Full Name</label>
                 <input 
@@ -649,8 +694,8 @@ function CatalogDownloadModal({ productTitle, catalogLink, onClose }: { productT
               </div>
 
               <div className="pt-2">
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   disabled={isSubmitting}
                   className="w-full bg-orange-500 hover:bg-orange-600 text-white tracking-widest text-[10px] uppercase py-4 px-6 rounded-full transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                 >

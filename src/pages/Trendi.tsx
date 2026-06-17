@@ -119,9 +119,9 @@ export function Trendi() {
               <a href="#compressors" className="btn-pill bg-orange-500 text-white hover:bg-orange-600 px-8 py-4 text-xs">
                 Explore The Range
               </a>
-              <a href="/assets/trendi-catalog.pdf" download className="btn-pill bg-white/10 text-white border border-white/20 hover:bg-white/20 px-8 py-4 text-xs flex items-center justify-center gap-2">
+              <Link to="/products" className="btn-pill bg-white/10 text-white border border-white/20 hover:bg-white/20 px-8 py-4 text-xs flex items-center justify-center gap-2">
                 <Download className="w-4 h-4" /> Download Complete Catalog
-              </a>
+              </Link>
             </div>
           </motion.div>
         </div>

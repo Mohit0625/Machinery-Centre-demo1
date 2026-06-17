@@ -8,7 +8,6 @@ const navLinks = [
   { name: "Trendi", path: "/trendi" },
   { name: "Services", path: "/services" },
   { name: "About", path: "/about" },
-  { name: "Quote", path: "/quote" },
   { name: "Contact", path: "/contact" },
   { name: "Feedback", path: "/feedback" },
 ];

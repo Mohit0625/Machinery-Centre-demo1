@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { Send, FileText, CheckCircle } from "lucide-react";
 import { isValidIndianPhone } from "../utils/validation";
+import { sendLead, nowInIST } from "../utils/leadForm";
 export function Quote() {
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "", lastName: "", phone: "",
     address1: "", address2: "", city: "", state: "", country: "", zip: "",
     item: "", quantity: "", industry: "", instructions: "", comments: "", source: "",
-    consentTerms: false
+    consentTerms: false, botcheck: ""
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: Record<string, string> = {};
     let hasErrors = false;
@@ -38,11 +41,44 @@ export function Quote() {
 
     setErrors(newErrors);
 
-    if (!hasErrors) {
-      setTimeout(() => {
-        setSubmitted(true);
-        console.log("Quote form submitted with consent timestamp:", new Date().toISOString());
-      }, 800);
+    if (hasErrors) return;
+
+    setSubmitError("");
+    setIsSubmitting(true);
+
+    const fullName = `${formData.firstName.trim()} ${formData.lastName.trim()}`.trim();
+    const address = [formData.address1, formData.address2, formData.city, formData.state, formData.country, formData.zip]
+      .map((p) => p.trim())
+      .filter(Boolean)
+      .join(", ");
+
+    try {
+      await sendLead({
+        inbox: "general",
+        subject: `Quote request: ${formData.item.trim()} ×${formData.quantity} — ${fullName}`,
+        botcheck: formData.botcheck,
+        fields: {
+          "Customer Name": fullName,
+          Phone: formData.phone.trim(),
+          "Item / Model": formData.item.trim(),
+          Quantity: formData.quantity,
+          "Application Industry": formData.industry.trim() || "Not specified",
+          "Shipping Address": address || "Not provided",
+          "Delivery Instructions": formData.instructions.trim() || "None",
+          "Other Comments": formData.comments.trim() || "None",
+          "Heard About Us Via": formData.source || "Not specified",
+          Consent: formData.consentTerms
+            ? "✓ Agreed to Terms of Use & Privacy Policy"
+            : "✗ Not agreed",
+          "Submitted At": nowInIST(),
+        },
+      });
+      setIsSubmitting(false);
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Quote form submission failed:", err);
+      setIsSubmitting(false);
+      setSubmitError("Couldn't submit your enquiry right now — please try again, or call us directly.");
     }
   };
 
@@ -79,7 +115,7 @@ export function Quote() {
                 setFormData({
                   firstName: "", lastName: "", phone: "",
                   address1: "", address2: "", city: "", state: "", country: "", zip: "",
-                  item: "", quantity: "", industry: "", instructions: "", comments: "", source: "", consentTerms: false
+                  item: "", quantity: "", industry: "", instructions: "", comments: "", source: "", consentTerms: false, botcheck: ""
                 });
               }}
               className="bg-slate-900 hover:bg-slate-800 text-white px-8 py-3 rounded-full text-[10px] tracking-widest"
@@ -90,6 +126,7 @@ export function Quote() {
         ) : (
           <div className="bg-white p-8 sm:p-12 rounded-sm shadow-xl border border-slate-200">
             <form onSubmit={handleSubmit} className="space-y-8">
+              <input type="text" name="botcheck" value={formData.botcheck} onChange={handleChange} className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
               
               {/* Personal Info */}
               <div>
@@ -200,9 +237,13 @@ export function Quote() {
                 {errors.consentTerms && <p className="text-red-500 text-xs ml-7">{errors.consentTerms}</p>}
               </div>
 
+              {submitError && (
+                <p className="text-red-500 text-sm text-center bg-red-50 border border-red-100 rounded p-3">{submitError}</p>
+              )}
+
               <div className="pt-6">
-                <button type="submit" className="w-full bg-orange-500 hover:bg-orange-600 text-white tracking-widest text-[10px] py-4 rounded-full flex items-center justify-center gap-2 transition-colors">
-                  Submit Enquiry <Send className="w-4 h-4" />
+                <button type="submit" disabled={isSubmitting} className="w-full bg-orange-500 hover:bg-orange-600 text-white tracking-widest text-[10px] py-4 rounded-full flex items-center justify-center gap-2 transition-colors disabled:opacity-70 disabled:cursor-not-allowed">
+                  {isSubmitting ? "Submitting..." : <>Submit Enquiry <Send className="w-4 h-4" /></>}
                 </button>
               </div>
 

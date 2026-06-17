@@ -2,15 +2,18 @@ import { useState } from "react";
 import { MessageSquare, CheckCircle } from "lucide-react";
 import { isValidEmail } from "../utils/validation";
 import { useSEO } from "../utils/useSEO";
+import { sendLead, nowInIST } from "../utils/leadForm";
 
 export function Feedback() {
   const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState({ name: "", email: "", source: "", experienced: "", satisfied: "", message: "", consentTerms: false });
+  const [formData, setFormData] = useState({ name: "", email: "", source: "", experienced: "", satisfied: "", message: "", consentTerms: false, botcheck: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   useSEO("Feedback & Grievance | Machinery Centre", "Share your feedback and grievances with Machinery Centre. Your input helps us modernize our services and enables a better system of trust and reliability.");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: Record<string, string> = {};
     let hasErrors = false;
@@ -31,11 +34,36 @@ export function Feedback() {
 
     setErrors(newErrors);
 
-    if (!hasErrors) {
-      setTimeout(() => {
-        setSubmitted(true);
-        console.log("Feedback form submitted with consent timestamp:", new Date().toISOString());
-      }, 800);
+    if (hasErrors) return;
+
+    setSubmitError("");
+    setIsSubmitting(true);
+
+    try {
+      await sendLead({
+        inbox: "general",
+        subject: `Feedback from ${formData.name.trim()}`,
+        replyTo: formData.email.trim(),
+        botcheck: formData.botcheck,
+        fields: {
+          "Customer Name": formData.name.trim(),
+          Email: formData.email.trim(),
+          "Heard About Us Via": formData.source || "Not specified",
+          "Experienced Our Services": formData.experienced,
+          "Satisfied With Us": formData.satisfied,
+          Message: formData.message.trim() || "No additional comments",
+          Consent: formData.consentTerms
+            ? "✓ Agreed to Terms of Use & Privacy Policy"
+            : "✗ Not agreed",
+          "Submitted At": nowInIST(),
+        },
+      });
+      setIsSubmitting(false);
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Feedback form submission failed:", err);
+      setIsSubmitting(false);
+      setSubmitError("Couldn't submit your feedback right now — please try again.");
     }
   };
 
@@ -69,7 +97,7 @@ export function Feedback() {
             <button 
               onClick={() => {
                 setSubmitted(false);
-                setFormData({ name: "", email: "", source: "", experienced: "", satisfied: "", message: "", consentTerms: false });
+                setFormData({ name: "", email: "", source: "", experienced: "", satisfied: "", message: "", consentTerms: false, botcheck: "" });
               }}
               className="bg-slate-900 hover:bg-slate-800 text-white px-6 py-3 rounded-sm text-sm"
             >
@@ -79,6 +107,7 @@ export function Feedback() {
         ) : (
           <div className="bg-white p-8 sm:p-12 rounded-sm shadow-xl border border-slate-200">
             <form onSubmit={handleSubmit} className="space-y-6">
+              <input type="text" name="botcheck" value={formData.botcheck} onChange={handleChange} className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
               
               <div className="space-y-2">
                 <label className="text-sm text-slate-700">Your Name <span className="text-orange-500">*</span></label>
@@ -157,9 +186,13 @@ export function Feedback() {
                 {errors.consentTerms && <p className="text-red-500 text-xs ml-7">{errors.consentTerms}</p>}
               </div>
 
+              {submitError && (
+                <p className="text-red-500 text-sm text-center bg-red-50 border border-red-100 rounded p-3">{submitError}</p>
+              )}
+
               <div className="pt-4">
-                <button type="submit" className="w-full bg-orange-500 hover:bg-orange-600 text-white tracking-widest text-[10px] py-4 rounded-full flex items-center justify-center gap-2 transition-colors uppercase">
-                  Submit Feedback
+                <button type="submit" disabled={isSubmitting} className="w-full bg-orange-500 hover:bg-orange-600 text-white tracking-widest text-[10px] py-4 rounded-full flex items-center justify-center gap-2 transition-colors uppercase disabled:opacity-70 disabled:cursor-not-allowed">
+                  {isSubmitting ? "Submitting..." : "Submit Feedback"}
                 </button>
               </div>
 

@@ -5,3 +5,5 @@ coverage/
 .DS_Store
 *.log
 CONTENT_SHEET.md
+
+.env.local

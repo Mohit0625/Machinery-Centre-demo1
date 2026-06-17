@@ -5,7 +5,7 @@ import { useSEO } from "../utils/useSEO";
 
 export function Feedback() {
   const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState({ name: "", email: "", source: "", experienced: "", satisfied: "", message: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", source: "", experienced: "", satisfied: "", message: "", consentTerms: false });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useSEO("Feedback & Grievance | Machinery Centre", "Share your feedback and grievances with Machinery Centre. Your input helps us modernize our services and enables a better system of trust and reliability.");
@@ -25,24 +25,30 @@ export function Feedback() {
     if (!formData.experienced) { newErrors.experienced = "Please select an option"; hasErrors = true; }
     if (!formData.satisfied) { newErrors.satisfied = "Please select an option"; hasErrors = true; }
 
+    if (!formData.consentTerms) {
+      newErrors.consentTerms = "You must agree to the Terms of Use and Privacy Policy"; hasErrors = true;
+    }
+
     setErrors(newErrors);
 
     if (!hasErrors) {
       setTimeout(() => {
         setSubmitted(true);
+        console.log("Feedback form submitted with consent timestamp:", new Date().toISOString());
       }, 800);
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const { name, value, type } = e.target;
+    const val = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
+    setFormData(prev => ({ ...prev, [name]: val }));
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: "" }));
   };
 
   return (
-    <div className="flex-1 bg-slate-50 flex flex-col items-center py-12">
-      <div className="container mx-auto px-4 max-w-2xl">
+    <div className="flex-1 bg-slate-50 flex flex-col items-center py-20 sm:py-28">
+      <div className="w-full max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
           <div className="w-16 h-16 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mx-auto mb-6">
              <MessageSquare className="w-8 h-8" />
@@ -63,7 +69,7 @@ export function Feedback() {
             <button 
               onClick={() => {
                 setSubmitted(false);
-                setFormData({ name: "", email: "", source: "", experienced: "", satisfied: "", message: "" });
+                setFormData({ name: "", email: "", source: "", experienced: "", satisfied: "", message: "", consentTerms: false });
               }}
               className="bg-slate-900 hover:bg-slate-800 text-white px-6 py-3 rounded-sm text-sm"
             >
@@ -133,6 +139,22 @@ export function Feedback() {
               <div className="space-y-2 pt-2">
                 <label className="text-sm text-slate-700">Message / Comments</label>
                 <textarea name="message" value={formData.message} onChange={handleChange} rows={4} className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" placeholder="Please share your thoughts or details about any grievance..." />
+              </div>
+
+              <div className="space-y-2 pt-2">
+                <label className="flex items-center gap-3 cursor-pointer group">
+                  <input 
+                    type="checkbox" 
+                    name="consentTerms"
+                    checked={formData.consentTerms as boolean} 
+                    onChange={handleChange}
+                    className="w-4 h-4 shrink-0 text-orange-600 bg-slate-50 border-slate-300 rounded focus:ring-orange-500 cursor-pointer accent-orange-500"
+                  />
+                  <div className="text-sm text-slate-600 leading-tight">
+                    I have read and agree to the <a href="/terms-of-use" target="_blank" rel="noreferrer" className="text-orange-600 hover:underline">Terms of Use</a> and <a href="/privacy-policy" target="_blank" rel="noreferrer" className="text-orange-600 hover:underline">Privacy Policy</a>. <span className="text-orange-500">*</span>
+                  </div>
+                </label>
+                {errors.consentTerms && <p className="text-red-500 text-xs ml-7">{errors.consentTerms}</p>}
               </div>
 
               <div className="pt-4">

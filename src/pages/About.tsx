@@ -4,15 +4,15 @@ import { useSEO } from "../utils/useSEO";
 
 const owners = [
   {
-    name: "[Partner Name]",
-    role: "Managing Partner",
-    image: "/assets/images/Owner.jpeg",
+    name: "Sandeep Dhawan",
+    role: "Partner",
+    image: "https://res.cloudinary.com/dt3m8h52i/image/upload/v1781712588/ChatGPT_Image_Jun_17_2026_09_32_05_PM_mjmy4a.png",
     bio: "With over 35 years of experience in industrial machinery, leading the strategic vision and growth of the company.",
   },
   {
-    name: "[Manager Name]",
-    role: "Operations Head",
-    image: "/assets/images/Owner.jpeg",
+    name: "Sumit Dhawan",
+    role: "Partner",
+    image: "https://res.cloudinary.com/dt3m8h52i/image/upload/v1781713341/ChatGPT_Image_Jun_17_2026_09_51_46_PM_epeqih.png",
     bio: "Overseeing daily operations, supply chain logistics, and ensuring that our nationwide network runs smoothly.",
   },
 ];
@@ -26,13 +26,13 @@ export function About() {
     <div className="flex-1 bg-slate-50">
       {/* Page Header */}
       <div className="bg-slate-900 text-white py-16 border-b-4 border-orange-500">
-        <div className="container mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-black mb-4 tracking-tight">About</h1>
           <p className="text-slate-400 max-w-2xl text-lg">A legacy of trust, expertise, and commitment to the Indian industrial sector.</p>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-12">
@@ -104,33 +104,23 @@ export function About() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.6, delay: 0.12 * i, ease: [0.22, 1, 0.36, 1] }}
-                    className="group relative"
+                    className="bg-white rounded-sm border border-slate-200 shadow-sm overflow-hidden flex flex-col group"
                   >
-                    <div className="relative">
-                      {/* offset orange accent frame */}
-                      <div className="absolute inset-0 translate-x-3 translate-y-3 rounded-sm bg-orange-500 transition-transform duration-500 ease-out group-hover:translate-x-4 group-hover:translate-y-4" />
-                      <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-slate-100 shadow-xl ring-1 ring-slate-900/5">
-                        <img
-                          src={o.image}
-                          alt={o.name}
-                          loading="lazy"
-                          className="h-full w-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
-                        />
-                        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-slate-900/60 to-transparent" />
-                        {/* index number — now ON TOP of the photo (was behind) */}
-                        <span className="absolute top-3 left-3 z-20 text-4xl font-black leading-none text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)]">
-                          0{i + 1}
-                        </span>
-                      </div>
+                    <div className="relative overflow-hidden bg-slate-100 border-b border-slate-200 aspect-[4/5]">
+                      <img
+                        src={o.image}
+                        alt={o.name}
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
                     </div>
-
-                    <div className="mt-6">
-                      <div className="flex items-center gap-3">
-                        <span className="h-px w-8 bg-orange-500" />
-                        <span className="text-xs font-bold uppercase tracking-[0.2em] text-orange-600">{o.role}</span>
-                      </div>
-                      <h3 className="mt-2 text-2xl font-black text-slate-900">{o.name}</h3>
-                      <p className="mt-3 leading-relaxed text-slate-500">{o.bio}</p>
+                    <div className="p-6">
+                      <h3 className="text-slate-900 font-bold text-xl mb-1">{o.name}</h3>
+                      <p className="text-orange-500 text-sm font-semibold tracking-wide uppercase mb-4 flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-orange-500" />
+                        {o.role}
+                      </p>
+                      <p className="text-slate-600 text-sm leading-relaxed">{o.bio}</p>
                     </div>
                   </motion.article>
                 ))}
@@ -140,8 +130,8 @@ export function About() {
           </div>
 
           {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="bg-slate-900 text-white p-8 rounded-sm shadow-xl sticky top-24 border-t-4 border-orange-500">
+          <div className="lg:col-span-1 sticky top-24 self-start">
+            <div className="bg-slate-900 text-white p-8 rounded-sm shadow-xl border-t-4 border-orange-500">
               <Building2 className="w-12 h-12 text-orange-500 mb-6" />
               <h3 className="text-xl tracking-wide mb-6">Corporate Office</h3>
 

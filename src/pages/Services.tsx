@@ -6,13 +6,13 @@ export function Services() {
   return (
     <div className="flex-1 bg-slate-50 flex flex-col">
       <div className="bg-slate-900 text-white py-16 border-b-4 border-orange-500">
-        <div className="container mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-black mb-4">Our Services</h1>
           <p className="text-slate-400 max-w-2xl text-lg">Comprehensive after-sales support, spares, and end-to-end industrial solutions.</p>
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-16 space-y-16 flex-1">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 space-y-16 flex-1">
         
         {/* Solutions */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -128,7 +128,7 @@ export function Services() {
 
       <div className="w-full h-px bg-slate-200" />
 
-      <div className="container mx-auto px-4 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
         {/* ═══════════════════════════════════════════════════════
              SUCCESSFUL SERVICES SHOWCASE
              ═══════════════════════════════════════════════════════ */}

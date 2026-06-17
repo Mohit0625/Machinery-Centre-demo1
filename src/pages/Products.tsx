@@ -352,7 +352,7 @@ export function Products() {
     <div className="flex-1 bg-slate-50 flex flex-col">
       {/* Header */}
       <div className="bg-slate-900 text-white py-16 border-b-4 border-orange-500">
-        <div className="container mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl mb-4 font-bold tracking-tight">Premium Industrial Compressors, Pumps & OEM Spares</h1>
           <p className="text-slate-400 max-w-2xl text-lg">Wide and diverse range of options to optimize your business's fixed costs.</p>
         </div>
@@ -360,7 +360,7 @@ export function Products() {
 
       {/* Category Navigation */}
       <div className="bg-white border-b border-slate-200 sticky top-[73px] z-40 shadow-sm">
-        <div className="container mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex overflow-x-auto no-scrollbar">
             {categoriesList.map((cat) => {
               const Icon = cat.icon;
@@ -384,7 +384,7 @@ export function Products() {
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-12 flex-1">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 flex-1">
         <div className="space-y-12">
           {/* Category Header */}
           <div className="max-w-3xl mb-8">
@@ -491,7 +491,7 @@ function ProductCard({ product, onDownloadRequest }: { product: any, onDownloadR
 // -----------------------------
 
 function CatalogDownloadModal({ productTitle, catalogLink, onClose }: { productTitle: string, catalogLink: string, onClose: () => void }) {
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "", company: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", company: "", consentTerms: false });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -516,6 +516,10 @@ function CatalogDownloadModal({ productTitle, catalogLink, onClose }: { productT
 
     if (!formData.company.trim()) { newErrors.company = "Required"; hasErrors = true; }
 
+    if (!formData.consentTerms) {
+      newErrors.consentTerms = "You must agree to the Terms of Use and Privacy Policy"; hasErrors = true;
+    }
+
     setErrors(newErrors);
 
     if (hasErrors) return;
@@ -525,6 +529,7 @@ function CatalogDownloadModal({ productTitle, catalogLink, onClose }: { productT
     // Simulate API call to send user details to company
     setTimeout(() => {
       console.log("Sent user details to business:", { productTitle, ...formData });
+      console.log("Catalog form submitted with consent timestamp:", new Date().toISOString());
       setIsSubmitting(false);
       setIsSuccess(true);
       
@@ -542,8 +547,9 @@ function CatalogDownloadModal({ productTitle, catalogLink, onClose }: { productT
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    const val = type === 'checkbox' ? checked : value;
+    setFormData(prev => ({ ...prev, [name]: val }));
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: "" }));
   };
 
@@ -623,7 +629,26 @@ function CatalogDownloadModal({ productTitle, catalogLink, onClose }: { productT
                   {errors.company && <p className="text-red-500 text-[10px] mt-1">{errors.company}</p>}
                 </div>
               </div>
-              <div className="pt-4">
+              
+              <div className="space-y-4 pt-4 border-t border-slate-100">
+                <div>
+                  <label className="flex items-center gap-3 cursor-pointer group">
+                    <input 
+                      type="checkbox" 
+                      name="consentTerms"
+                      checked={formData.consentTerms as boolean} 
+                      onChange={handleChange}
+                      className="w-4 h-4 shrink-0 text-orange-600 bg-slate-50 border-slate-300 rounded focus:ring-orange-500 cursor-pointer accent-orange-500"
+                    />
+                    <div className="text-xs text-slate-600 leading-tight">
+                      I have read and agree to the <a href="/terms-of-use" target="_blank" rel="noreferrer" className="text-orange-600 hover:underline">Terms of Use</a> and <a href="/privacy-policy" target="_blank" rel="noreferrer" className="text-orange-600 hover:underline">Privacy Policy</a>. <span className="text-orange-500">*</span>
+                    </div>
+                  </label>
+                  {errors.consentTerms && <p className="text-red-500 text-[10px] ml-7 mt-1">{errors.consentTerms}</p>}
+                </div>
+              </div>
+
+              <div className="pt-2">
                 <button 
                   type="submit" 
                   disabled={isSubmitting}

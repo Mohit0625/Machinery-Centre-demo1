@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 const navLinks = [
   { name: "Home", path: "/" },
   { name: "Products", path: "/products" },
+  { name: "Trendi", path: "/trendi" },
   { name: "Services", path: "/services" },
   { name: "About", path: "/about" },
   { name: "Quote", path: "/quote" },
@@ -238,7 +239,7 @@ export function Layout() {
             </div>
 
             {/* Quick Links */}
-            <div className="md:col-span-3">
+            <div className="md:col-span-2">
               <h3 className="text-white tracking-wider mb-6 text-xs">Quick Links</h3>
               <ul className="space-y-3">
                 {["Home", "Products", "Services", "About", "Feedback"].map((name) => {
@@ -257,8 +258,25 @@ export function Layout() {
               </ul>
             </div>
 
+            {/* Legal */}
+            <div className="md:col-span-2">
+              <h3 className="text-white tracking-wider mb-6 text-xs">Legal</h3>
+              <ul className="space-y-3">
+                <li>
+                  <Link to="/privacy-policy" className="text-sm text-slate-400 hover:text-white hover:translate-x-1 transition-all duration-300 inline-block">
+                    Privacy Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/terms-of-use" className="text-sm text-slate-400 hover:text-white hover:translate-x-1 transition-all duration-300 inline-block">
+                    Terms of Use
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
             {/* Contact */}
-            <div className="md:col-span-4">
+            <div className="md:col-span-3">
               <h3 className="text-white tracking-wider mb-6 text-xs">Contact</h3>
               <ul className="space-y-4 text-sm">
                 <li className="flex items-start gap-3">

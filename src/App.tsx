@@ -11,6 +11,9 @@ import { Services } from "./pages/Services";
 import { Quote } from "./pages/Quote";
 import { Contact } from "./pages/Contact";
 import { Feedback } from "./pages/Feedback";
+import { PrivacyPolicy } from "./pages/PrivacyPolicy";
+import { TermsOfUse } from "./pages/TermsOfUse";
+import { Trendi } from "./pages/Trendi";
 
 export default function App() {
   return (
@@ -20,10 +23,13 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="products" element={<Products />} />
+          <Route path="trendi" element={<Trendi />} />
           <Route path="services" element={<Services />} />
           <Route path="quote" element={<Quote />} />
           <Route path="contact" element={<Contact />} />
           <Route path="feedback" element={<Feedback />} />
+          <Route path="privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="terms-of-use" element={<TermsOfUse />} />
         </Route>
       </Routes>
     </BrowserRouter>

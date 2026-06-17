@@ -126,42 +126,48 @@ export function Home() {
 
   useSEO("Industrial Air Compressors & Pumps | Authorized Dealer | Machinery Centre", "Machinery Centre is a leading authorized dealer of industrial air compressors, pumps, and OEM spares for 35+ years. Explore Ingersoll-Rand, Kirloskar & our Trendi range.");
 
-  const [quoteForm, setQuoteForm] = useState({ firstName: "", phone: "", item: "", quantity: "" });
-  const [quoteErrors, setQuoteErrors] = useState({ firstName: "", phone: "", item: "", quantity: "" });
+  const [quoteForm, setQuoteForm] = useState({ firstName: "", phone: "", item: "", quantity: "", consentTerms: false });
+  const [quoteErrors, setQuoteErrors] = useState<Record<string, string>>({});
   const [quoteSubmitted, setQuoteSubmitted] = useState(false);
 
   const handleQuoteSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const errors = { firstName: "", phone: "", item: "", quantity: "" };
+    const newErrors: Record<string, string> = {};
     let hasErrors = false;
 
     if (!quoteForm.firstName.trim()) {
-      errors.firstName = "First name is required";
+      newErrors.firstName = "First name is required";
       hasErrors = true;
     }
     
     if (!quoteForm.phone.trim()) {
-      errors.phone = "Phone number is required";
+      newErrors.phone = "Phone number is required";
       hasErrors = true;
     } else if (!isValidIndianPhone(quoteForm.phone)) {
-      errors.phone = "Valid 10-digit Indian mobile required (starts with 6-9)";
+      newErrors.phone = "Valid 10-digit Indian mobile required (starts with 6-9)";
       hasErrors = true;
     }
 
     if (!quoteForm.item.trim()) {
-      errors.item = "Item name is required";
+      newErrors.item = "Item name is required";
       hasErrors = true;
     }
 
     if (!quoteForm.quantity || Number(quoteForm.quantity) < 1) {
-      errors.quantity = "Min quantity is 1";
-      hasErrors = true;
+      newErrors.quantity = "Invalid qty"; hasErrors = true;
+    }
+    
+    if (!quoteForm.consentTerms) {
+      newErrors.consentTerms = "You must agree to the Terms of Use and Privacy Policy"; hasErrors = true;
     }
 
-    setQuoteErrors(errors);
+    setQuoteErrors(newErrors);
 
     if (!hasErrors) {
-      setQuoteSubmitted(true);
+      setTimeout(() => {
+        setQuoteSubmitted(true);
+        console.log("Quote form submitted with consent timestamp:", new Date().toISOString());
+      }, 800);
     }
   };
 
@@ -536,9 +542,9 @@ export function Home() {
           
           {/* Section Footer */}
           <div className="text-center mt-16 sm:mt-24">
-            <a href="/assets/trendi-catalog.pdf" download className="inline-block bg-orange-600 text-white hover:bg-orange-700 px-8 py-4 rounded-full text-[11px] font-bold tracking-widest uppercase transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1">
-              Download Complete Trendi Catalog
-            </a>
+            <Link to="/trendi" className="inline-block bg-orange-600 text-white hover:bg-orange-700 px-8 py-4 rounded-full text-[11px] font-bold tracking-widest uppercase transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1">
+              Explore the Complete Trendi Range
+            </Link>
           </div>
         </div>
       </section>
@@ -593,7 +599,7 @@ export function Home() {
                   <h3 className="text-2xl text-white mb-2">Thank You!</h3>
                   <p className="text-slate-300 mb-6">Our team will contact you shortly with quote details.</p>
                   <button
-                    onClick={() => { setQuoteSubmitted(false); setQuoteForm({ firstName: "", phone: "", item: "", quantity: "" }); }}
+                    onClick={() => { setQuoteSubmitted(false); setQuoteForm({ firstName: "", phone: "", item: "", quantity: "", consentTerms: false }); }}
                     className="btn-pill btn-accent text-[11px]"
                   >
                     Submit Another Request
@@ -672,6 +678,23 @@ export function Home() {
                       />
                       {quoteErrors.quantity && <p className="text-red-400 text-[10px] mt-1.5">{quoteErrors.quantity}</p>}
                     </div>
+                  </div>
+                  <div className="mb-6">
+                    <label className="flex items-center gap-3 cursor-pointer group">
+                      <input 
+                        type="checkbox" 
+                        checked={quoteForm.consentTerms} 
+                        onChange={(e) => {
+                          setQuoteForm({ ...quoteForm, consentTerms: e.target.checked });
+                          if (quoteErrors.consentTerms) setQuoteErrors({ ...quoteErrors, consentTerms: "" });
+                        }}
+                        className="w-3.5 h-3.5 shrink-0 text-accent-500 bg-white/10 border-white/20 rounded focus:ring-accent-500 cursor-pointer accent-orange-500"
+                      />
+                      <div className="text-xs text-white/70 leading-tight">
+                        I have read and agree to the <a href="/terms-of-use" target="_blank" rel="noreferrer" className="text-accent-400 hover:text-white transition-colors underline">Terms of Use</a> and <a href="/privacy-policy" target="_blank" rel="noreferrer" className="text-accent-400 hover:text-white transition-colors underline">Privacy Policy</a>. *
+                      </div>
+                    </label>
+                    {quoteErrors.consentTerms && <p className="text-red-400 text-[10px] mt-1.5 ml-6">{quoteErrors.consentTerms}</p>}
                   </div>
                   <button
                     type="submit"

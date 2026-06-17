@@ -9,7 +9,7 @@ export function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const location = useLocation();
   const isRepairQuery = new URLSearchParams(location.search).get('type') === 'repair';
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "", company: "", message: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", company: "", message: "", consentTerms: false });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useSEO(
@@ -38,25 +38,31 @@ export function Contact() {
 
     if (!formData.message.trim()) { newErrors.message = "Required"; hasErrors = true; }
 
+    if (!formData.consentTerms) {
+      newErrors.consentTerms = "You must agree to the Terms of Use and Privacy Policy"; hasErrors = true;
+    }
+
     setErrors(newErrors);
 
     if (!hasErrors) {
       setTimeout(() => {
         setSubmitted(true);
+        console.log("Contact form submitted with consent timestamp:", new Date().toISOString());
       }, 800);
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const { name, value, type } = e.target;
+    const val = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
+    setFormData(prev => ({ ...prev, [name]: val }));
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: "" }));
   };
 
   return (
     <div className="flex-1 bg-slate-50">
       <div className="bg-slate-900 text-white py-16 border-b-4 border-orange-500">
-        <div className="container mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-black mb-4 tracking-tight">
             {isRepairQuery ? "Industrial Machinery Repair & Maintenance Services" : "Contact"}
           </h1>
@@ -66,7 +72,7 @@ export function Contact() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Contact Details side */}
           <div className="lg:col-span-1 space-y-8">
@@ -168,7 +174,23 @@ export function Contact() {
                     </div>
                   </div>
 
-                  <button type="submit" className="bg-orange-500 hover:bg-orange-600 text-white tracking-widest text-[10px] px-8 py-4 rounded-full flex items-center justify-center gap-2 transition-colors w-full sm:w-auto uppercase">
+                  <div className="space-y-2 pt-2">
+                    <label className="flex items-center gap-3 cursor-pointer group">
+                      <input 
+                        type="checkbox" 
+                        name="consentTerms"
+                        checked={formData.consentTerms as boolean} 
+                        onChange={handleChange}
+                        className="w-4 h-4 shrink-0 text-orange-600 bg-slate-50 border-slate-300 rounded focus:ring-orange-500 cursor-pointer accent-orange-500"
+                      />
+                      <div className="text-sm text-slate-600 leading-tight">
+                        I have read and agree to the <a href="/terms-of-use" target="_blank" rel="noreferrer" className="text-orange-600 hover:underline">Terms of Use</a> and <a href="/privacy-policy" target="_blank" rel="noreferrer" className="text-orange-600 hover:underline">Privacy Policy</a>. <span className="text-orange-500">*</span>
+                      </div>
+                    </label>
+                    {errors.consentTerms && <p className="text-red-500 text-xs ml-7">{errors.consentTerms}</p>}
+                  </div>
+
+                  <button type="submit" className="bg-orange-500 hover:bg-orange-600 text-white tracking-widest text-[10px] px-8 py-4 rounded-full flex items-center justify-center gap-2 transition-colors w-full uppercase">
                     Submit Message <Send className="w-4 h-4" />
                   </button>
                 </form>

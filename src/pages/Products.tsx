@@ -360,7 +360,7 @@ export function Products() {
       </div>
 
       {/* Category Navigation */}
-      <div className="bg-white border-b border-slate-200 sticky top-[73px] z-40 shadow-sm">
+      <div className="bg-white border-b border-slate-200 sticky z-40 shadow-sm" style={{ top: "var(--nav-h, 73px)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex overflow-x-auto no-scrollbar">
             {categoriesList.map((cat) => {
@@ -371,7 +371,7 @@ export function Products() {
                   key={cat.id}
                   onClick={() => setActiveCategoryId(cat.id)}
                   className={cn(
-                    "flex items-center gap-2 px-6 py-4 font-bold uppercase tracking-wide text-sm whitespace-nowrap border-b-2 transition-colors",
+                    "flex items-center gap-2.5 px-7 py-5 font-bold uppercase tracking-wide text-sm whitespace-nowrap border-b-2 transition-colors",
                     isActive ? "border-orange-500 text-orange-600" : "border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300"
                   )}
                 >
@@ -402,7 +402,7 @@ export function Products() {
             {activeCategory.subcategories.map((subcat) => (
               <div key={subcat.id} className="space-y-6 pt-4 border-t border-slate-200 first:border-0 first:pt-0">
                 {subcat.label && <h3 className="text-2xl text-slate-800">{subcat.label}</h3>}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
                   {subcat.products.map((product, idx) => (
                     <ProductCard 
                       key={idx} 
@@ -435,7 +435,7 @@ export function Products() {
 
 function ProductCard({ product, onDownloadRequest }: { product: any, onDownloadRequest: () => void }) {
   return (
-    <div className="bg-white border border-slate-200 rounded-sm p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full">
+    <div className="bg-white border border-slate-200 rounded-sm p-7 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full">
       {product.brands && (
         <div className="flex flex-wrap gap-4 mb-4 items-center">
           {product.brands.map((b: string) => {

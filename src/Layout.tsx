@@ -39,7 +39,7 @@ export function Layout() {
   const taglineColor = isHeaderSolid ? "text-slate-500" : "text-white/60";
 
   return (
-    <div className="min-h-screen flex flex-col font-sans overflow-x-hidden">
+    <div className="min-h-screen flex flex-col font-sans overflow-x-clip">
       
       {/* ── Header Container ───────────────────────── */}
       <div className={`w-full z-50 transition-all duration-300 pt-[env(safe-area-inset-top)] ${isHome ? 'fixed top-0 left-0 right-0' : 'sticky top-0 bg-white shadow-sm'}`}>

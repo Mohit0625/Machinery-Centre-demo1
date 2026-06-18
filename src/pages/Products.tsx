@@ -336,6 +336,18 @@ const categoriesList = Object.entries(catalogData).map(([id, data]) => ({
 // Main Components
 // -----------------------------
 
+const CATALOG_FALLBACK_URL = "https://drive.google.com/drive/folders/1IHEIFLeqMeAJMWKnQADmtt1mQvwLI2JA";
+
+function resolveCatalogUrl(catalogLink: string) {
+  return catalogLink && catalogLink !== "#" ? catalogLink : CATALOG_FALLBACK_URL;
+}
+
+function openCatalog(catalogLink: string) {
+  window.open(resolveCatalogUrl(catalogLink), "_blank", "noopener,noreferrer");
+}
+
+const REQUIRE_DETAILS_BEFORE_DOWNLOAD: boolean = false;
+
 export function Products() {
   useSEO("Industrial Air Compressors, Pumps & Air Treatment | Machinery Centre", "Browse our extensive catalog of industrial air compressors, pumps, and specialized air treatment equipment. Authorized B2B dealers for premium OEM brands.");
   
@@ -346,7 +358,11 @@ export function Products() {
   const [selectedCatalog, setSelectedCatalog] = useState<{ title: string, link: string } | null>(null);
 
   const handleDownloadRequest = (title: string, link: string) => {
-    setSelectedCatalog({ title, link });
+    if (REQUIRE_DETAILS_BEFORE_DOWNLOAD) {
+      setSelectedCatalog({ title, link }); // open the lead-capture modal
+    } else {
+      openCatalog(link); // popup disabled for now → download straight away
+    }
   };
 
   return (
@@ -499,10 +515,7 @@ function CatalogDownloadModal({ productTitle, catalogLink, onClose }: { productT
 
   // The catalog the visitor came for. Resolved once so the auto-open and the
   // manual fallback button always point at exactly the same destination.
-  const downloadUrl =
-    catalogLink && catalogLink !== "#"
-      ? catalogLink
-      : "https://drive.google.com/drive/folders/1IHEIFLeqMeAJMWKnQADmtt1mQvwLI2JA";
+  const downloadUrl = resolveCatalogUrl(catalogLink);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

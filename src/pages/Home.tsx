@@ -74,15 +74,7 @@ function Counter({ end, suffix = "", label }: { end: number; suffix?: string; la
   );
 }
 
-// ── Product data ──────────────────────────────────────────────
-const products = [
-  { num: "01", brand: "Trendi", title: "Energy Efficient Screw Air Compressor", desc: "Advanced Screw Airend with Intelligent Microprocessor based Electronic Controller. Low power consumption." },
-  { num: "02", brand: "Kirloskar", title: "Three Phase Open-Well Pumps", desc: "Constructed with special grade engineering materials. Compact designs for handling and installation." },
-  { num: "03", brand: "KV/DV", title: "Vacuum Pumps", desc: "Designed to withstand wide voltage fluctuations. Dynamic balancing and overload prevention." },
-  { num: "04", brand: "Trendi", title: "Air Treatment Dryspell Series", desc: "Heatless desiccant compressed air dryers. Total cleaning for lubricated and non-lubricated air." },
-  { num: "05", brand: "", title: "High Viscosity Gear Pumps", desc: "High viscosity fluid handling designed to run up to 1440 RPM. Available in HGSX and HGHX types." },
-  { num: "06", brand: "", title: "Compressor & Air Parts / Spares", desc: "OEM and compatible accessories for all major compressor brands. Ingersoll Rand, Kirloskar, and more." },
-];
+
 
 // ── Expertise cards ───────────────────────────────────────────
 const expertiseCards = [
@@ -377,75 +369,78 @@ export function Home() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-           4. 3x2 PRODUCT GRID
+           4. BENTO PRODUCT GRID
            ═══════════════════════════════════════════════════════ */}
       <section ref={productGrid.ref} className="py-20 sm:py-28 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`text-center max-w-2xl mx-auto mb-16 transition-all duration-700 ${productGrid.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <span className="text-[11px] tracking-[0.3em] text-accent-500 mb-4 block">
-              Featured Range
-            </span>
-            <h2 className="text-4xl sm:text-5xl text-slate-900 mb-4">
-              Our Products
-            </h2>
-            <p className="text-slate-600 text-lg">
-              Wide and diverse range of options to optimize your business's fixed costs.
-            </p>
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+            
+            {/* Top Left: Text Block */}
+            <div className={`p-4 sm:p-8 lg:p-10 flex flex-col justify-center transition-all duration-700 ${productGrid.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              <span className="text-[11px] tracking-[0.3em] text-accent-500 mb-4 block uppercase font-bold">
+                Featured Range
+              </span>
+              <h2 className="text-4xl sm:text-5xl text-slate-900 mb-6 font-black tracking-tight">
+                Our Solutions
+              </h2>
+              <p className="text-slate-600 text-lg mb-8 leading-relaxed">
+                We understand specific needs and then build solutions to help industries unlock their limitless potential.
+              </p>
+              <div>
+                <Link to="/products" className="btn-pill btn-accent inline-flex items-center gap-2">
+                  Explore Products <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {products.map((product, i) => {
-              const isTrendi = product.brand === "Trendi";
-              return (
-                <div
-                  key={product.num}
-                  className={`transition-all duration-700 ${
-                    productGrid.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                  } ${isTrendi ? 'lg:col-span-2' : 'lg:col-span-1'}`}
-                  style={{ transitionDelay: `${i * 75}ms` }}
-                >
-                  <div className={`rounded-2xl border transition-all duration-300 group h-full ${
-                    isTrendi
-                      ? 'p-8 sm:p-10 bg-gradient-to-br from-white to-accent-50/50 shadow-md border-accent-200 hover:shadow-2xl hover:-translate-y-1 hover:border-accent-400'
-                      : 'p-6 bg-white shadow-sm border-slate-100 hover:shadow-xl hover:-translate-y-1 hover:border-accent-200'
-                  }`}>
-                  <span className={`block mb-2 font-black transition-colors ${
-                    isTrendi ? 'text-7xl text-accent-500/30 group-hover:text-accent-500' : 'text-5xl text-accent-500/20 group-hover:text-accent-500/70'
-                  } leading-none tracking-tighter`}>
-                    {product.num}
-                  </span>
-                  <h3 className="mb-4 flex flex-col gap-1 items-start">
-                    {product.brand && (
-                      <div className="flex items-center gap-3 mb-1">
-                        {getBrandLogo(product.brand) && (
-                          <img 
-                            src={getBrandLogo(product.brand)} 
-                            alt={`${product.brand} Logo`} 
-                            className="h-8 w-auto object-contain"
-                          />
-                        )}
-                        <span className="text-lg text-slate-800 font-black uppercase tracking-tight">
-                          {product.brand}
-                        </span>
-                      </div>
-                    )}
-                    <span className={`${isTrendi ? 'text-base' : 'text-sm'} font-semibold ${product.brand ? 'text-slate-600' : 'text-slate-800'} uppercase tracking-wide leading-snug`}>
-                      {product.title}
-                    </span>
-                  </h3>
-                  <p className={`${isTrendi ? 'text-slate-600 text-base' : 'text-slate-500 text-xs'} leading-relaxed`}>
-                    {product.desc}
-                  </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className={`text-center mt-12 transition-all duration-700 delay-500 ${productGrid.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <Link to="/products" className="btn-pill btn-accent text-[11px]">
-              View All Compressors & Pumps <ArrowRight className="w-4 h-4" />
+            {/* Top Middle: Air Compressors */}
+            <Link to="/products/compressors" className={`group relative h-[300px] sm:h-[400px] rounded-2xl overflow-hidden transition-all duration-700 delay-100 ${productGrid.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              <img src="/assets/images/about-main.png" alt="Air Compressors" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
+              <div className="absolute bottom-6 left-0 right-0 px-6 text-center">
+                <h3 className="text-white text-xl sm:text-2xl font-bold tracking-tight">Air Compressors</h3>
+              </div>
             </Link>
+
+            {/* Top Right: Industrial Pumps */}
+            <Link to="/products/pumps" className={`group relative h-[300px] sm:h-[400px] rounded-2xl overflow-hidden transition-all duration-700 delay-200 ${productGrid.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              <img src="/assets/images/service-milling.png" alt="Industrial Pumps" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
+              <div className="absolute bottom-6 left-0 right-0 px-6 text-center">
+                <h3 className="text-white text-xl sm:text-2xl font-bold tracking-tight">Industrial Pumps</h3>
+              </div>
+            </Link>
+
+            {/* Bottom Left: Trendi Range */}
+            <Link to="/trendi" className={`group relative h-[300px] sm:h-[400px] rounded-2xl overflow-hidden transition-all duration-700 delay-300 ${productGrid.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              <img src="/assets/images/hero-machinery.png" alt="Trendi Range" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
+              <div className="absolute bottom-6 left-0 right-0 px-6 flex flex-col items-center justify-center">
+                {getBrandLogo("Trendi") && (
+                  <img src={getBrandLogo("Trendi")} alt="Trendi Logo" className="h-8 w-auto object-contain bg-white/10 p-1.5 rounded mb-3 backdrop-blur-sm" />
+                )}
+                <h3 className="text-white text-xl sm:text-2xl font-bold tracking-tight">The Trendi Range</h3>
+              </div>
+            </Link>
+
+            {/* Bottom Middle: Air Treatment */}
+            <Link to="/products/air-treatment" className={`group relative h-[300px] sm:h-[400px] rounded-2xl overflow-hidden transition-all duration-700 delay-400 ${productGrid.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              <img src="/assets/images/service-laser.png" alt="Air Treatment" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
+              <div className="absolute bottom-6 left-0 right-0 px-6 text-center">
+                <h3 className="text-white text-xl sm:text-2xl font-bold tracking-tight">Air Treatment</h3>
+              </div>
+            </Link>
+
+            {/* Bottom Right: Spares & Accessories */}
+            <Link to="/products/spares" className={`group relative h-[300px] sm:h-[400px] rounded-2xl overflow-hidden transition-all duration-700 delay-500 ${productGrid.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              <img src="/assets/images/service-turning.png" alt="Spares & Accessories" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
+              <div className="absolute bottom-6 left-0 right-0 px-6 text-center">
+                <h3 className="text-white text-xl sm:text-2xl font-bold tracking-tight">Spares & Accessories</h3>
+              </div>
+            </Link>
+
           </div>
         </div>
       </section>

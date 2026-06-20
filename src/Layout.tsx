@@ -123,11 +123,7 @@ export function Layout() {
             </Link>
 
             {/* Desktop Nav Container */}
-            <nav className={`hidden lg:flex items-center rounded-full transition-all duration-500 ${
-              scrolled || !isHome 
-                ? '' 
-                : 'bg-slate-900/20 backdrop-blur-md border border-white/10 shadow-2xl pl-6 pr-2 py-1.5'
-            }`}>
+            <nav className="hidden lg:flex items-center transition-all duration-500">
               
               <div className={`flex items-center ${scrolled || !isHome ? 'gap-1' : 'gap-2'}`}>
                 {/* Home Link */}

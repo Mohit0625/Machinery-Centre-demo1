@@ -70,18 +70,18 @@ const catalogData = {
   "air-treatment": {
     label: "Air Treatment",
     icon: Filter,
-    description: "Complete compressed air treatment solutions. From providing equipment, to piping, hosing and fitting needs of your enterprise.",
+    description: "Complete compressed air treatment solutions.",
     subcategories: [
       {
         id: "all-air-treatment",
         label: "",
         products: [
           {
-            title: "TRIDENT Series EDV-X",
-            desc: "Automatic drain valves designed specially to drain sludge and rust laden condensate.",
+            title: "TRIDENT CTD Series",
+            desc: "High discharge automatic drain valves with robust construction and adjustable ON/OFF timings.",
             brands: ["Trident"],
-            features: ["Reliable all digital electronic circuitry", "ON and OFF timing adjustable", "Extended cycle time upto 32 hrs adjustable"],
-            catalogLink: "https://drive.google.com/uc?export=download&id=1WxilzKTFSq2qZkMLvzezbGtvClPkGs7i"
+            features: ["Adjustable ON/OFF timings", "Highly reliable", "Can handle contaminated condensate"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1uM8Hn2Bv2HVHX-Wvn60GTgxMECPmA-Uq"
           },
           {
             title: "TRIDENT Series LDV",
@@ -90,6 +90,21 @@ const catalogData = {
             features: ["Condensate Sensing Type", "Zero Air Loss", "Design Patented", "Fault tolerant system"],
             catalogLink: "https://drive.google.com/uc?export=download&id=14Ya8W0lhZ4TCechRTRTRmAuH-TP9cYVZ"
           },
+          {
+            title: "TRIDENT Series EDV-X",
+            desc: "Automatic drain valves designed specially to drain sludge and rust laden condensate.",
+            brands: ["Trident"],
+            features: ["Reliable all digital electronic circuitry", "ON and OFF timing adjustable", "Extended cycle time upto 32 hrs adjustable"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1WxilzKTFSq2qZkMLvzezbGtvClPkGs7i"
+          },
+          {
+            title: "TRIDENT Submicron Filters Cleansweep",
+            desc: "Extremely low installation clearance filters removing oil and particulate down to 0.01 micron.",
+            brands: ["Trident"],
+            features: ["Oil Removal (Coalescing)", "Flow from 20 to 1810 m³/hour", "Install anywhere"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1_CM0y0VbRDy1iMxmjLadMl-1EqeA7g1e"
+          },
+
           {
             title: "TRIDENT Dryspell Series",
             desc: "Heatless desiccant compressed air dryers, offering total cleaning solution for lubricated as well as non-lubricated compressed air.",
@@ -147,11 +162,11 @@ const catalogData = {
             catalogLink: "https://drive.google.com/uc?export=download&id=1wYmSf6wBnARcrwHrWk_oN9roTRBvNAX7"
           },
           {
-            title: "TRIDENT Medical Vacuum Filters High Performance Series",
-            desc: "Designed to remove liquid, solid, and bacterial contamination from the suction side of vacuum pumps.",
+            title: "TRIDENT Breathing Air System",
+            desc: "Provides breathing air mandated by NFPA 99. Operates with pressure swing adsorption.",
             brands: ["Trident"],
-            features: ["Borosilicate filter element 99.995% efficiency", "Differential pressure gauge indicator", "Sterilisable drain flask"],
-            catalogLink: "https://drive.google.com/uc?export=download&id=1lSSUk5gfnjhAaFec_POZScmeE4YNvhRX"
+            features: ["Guaranteed dew point performance", "Compact digital CO & Dewpoint Monitor", "Bacterial Penetration upto 0.0001%"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1abuKUpjlG9j9qRVYDo3CnzJtEa2xMxRJ"
           },
           {
             title: "TRIDENT Nitrogen Generator",
@@ -161,18 +176,18 @@ const catalogData = {
             catalogLink: "https://drive.google.com/uc?export=download&id=1nNlJeUun0Zq2_VLr7fFNIKDoTU28uEnY"
           },
           {
-            title: "TRIDENT Breathing Air System",
-            desc: "Provides breathing air mandated by NFPA 99. Operates with pressure swing adsorption.",
-            brands: ["Trident"],
-            features: ["Guaranteed dew point performance", "Compact digital CO & Dewpoint Monitor", "Bacterial Penetration upto 0.0001%"],
-            catalogLink: "https://drive.google.com/uc?export=download&id=1abuKUpjlG9j9qRVYDo3CnzJtEa2xMxRJ"
-          },
-          {
             title: "TRIDENT Vortex Filter VXD 2",
             desc: "Eliminates 100% water in liquid phase from compressed air. Compact, light weight, and uses no electricity.",
             brands: ["Trident"],
             features: ["Removes water, oil and solid particles", "No Electricity used", "All aluminium resist oxidation"],
             catalogLink: "https://drive.google.com/uc?export=download&id=1Gdeuy0sZfvVsvB89To4kVYZod1sjOeCj"
+          },
+          {
+            title: "TRIDENT Medical Vacuum Filters High Performance Series",
+            desc: "Designed to remove liquid, solid, and bacterial contamination from the suction side of vacuum pumps.",
+            brands: ["Trident"],
+            features: ["Borosilicate filter element 99.995% efficiency", "Differential pressure gauge indicator", "Sterilisable drain flask"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1lSSUk5gfnjhAaFec_POZScmeE4YNvhRX"
           },
           {
             title: "TRIDENT Bacteria Filter Series",
@@ -189,37 +204,12 @@ const catalogData = {
             catalogLink: "https://drive.google.com/uc?export=download&id=15jBWXUF2HBFROzvLb4ishV8Ps5zmrat3"
           },
           {
-            title: "TRIDENT Submicron Filters Cleansweep",
-            desc: "Extremely low installation clearance filters removing oil and particulate down to 0.01 micron.",
-            brands: ["Trident"],
-            features: ["Oil Removal (Coalescing)", "Flow from 20 to 1810 m³/hour", "Install anywhere"],
-            catalogLink: "https://drive.google.com/uc?export=download&id=1_CM0y0VbRDy1iMxmjLadMl-1EqeA7g1e"
-          },
-          {
-            title: "TRIDENT CTD Series",
-            desc: "High discharge automatic drain valves with robust construction and adjustable ON/OFF timings.",
-            brands: ["Trident"],
-            features: ["Adjustable ON/OFF timings", "Highly reliable", "Can handle contaminated condensate"],
-            catalogLink: "https://drive.google.com/uc?export=download&id=1uM8Hn2Bv2HVHX-Wvn60GTgxMECPmA-Uq"
-          },
-          {
             title: "TRIDENT DB Series",
             desc: "Blower Reactivated Air Dryers working on thermal swing principle for economical energy consumption.",
             brands: ["Trident"],
             features: ["Extensive Mimic display", "Energy saving purge economiser", "Dewpoint better than -40 ° C"],
             catalogLink: "https://drive.google.com/uc?export=download&id=15S-TVRADI6hlWn7VdATEqauw8EHgXG4Z"
           },
-          {
-            title: "TRIDENT Locodry",
-            desc: "Heatless desiccant air dryer engineered to deliver consistent low dew-point performance with minimal purge loss for critical compressed-air applications.",
-            brands: ["Trident"],
-            features: [
-              "Heatless regeneration",
-              "Consistent low dew-point performance",
-              "Energy-saving purge control"
-            ],
-            catalogLink: "https://drive.google.com/uc?export=download&id=1xVn3hoatS4QzmlqTrGJ7OflscYdj3LP6"
-          }
         ]
       }
     ]

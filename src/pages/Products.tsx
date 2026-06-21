@@ -220,6 +220,23 @@ const catalogData = {
     description: "Stockist for Crompton Greaves, Kirloskar, Rotodel, Indfoss, Everest. Specialized in meeting the demand of industry for diverse requirements.",
     subcategories: [
       {
+        id: "metering-pump",
+        label: "Metering Pump",
+        products: [
+          {
+            title: "Metering Pumps",
+            desc: "Precision metering pumps engineered for accurate, repeatable flow control in chemical dosing and process applications.",
+            brands: ["Kirloskar"],
+            features: [
+              "Accurate, repeatable dosing",
+              "Adjustable flow / stroke control",
+              "Chemical-compatible construction"
+            ],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1J-1j3_cQbZW7RhaQY8N5plq0-sbBjl1F"
+          }
+        ]
+      },
+      {
         id: "gear-pump",
         label: "Gear Pump",
         products: [
@@ -243,23 +260,7 @@ const catalogData = {
           }
         ]
       },
-      {
-        id: "metering-pump",
-        label: "Metering Pump",
-        products: [
-          {
-            title: "Metering Pumps",
-            desc: "Precision metering pumps engineered for accurate, repeatable flow control in chemical dosing and process applications.",
-            brands: ["Kirloskar"],
-            features: [
-              "Accurate, repeatable dosing",
-              "Adjustable flow / stroke control",
-              "Chemical-compatible construction"
-            ],
-            catalogLink: "https://drive.google.com/uc?export=download&id=1J-1j3_cQbZW7RhaQY8N5plq0-sbBjl1F"
-          }
-        ]
-      },
+      
     ]
   },
   spares: {

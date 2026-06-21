@@ -26,7 +26,7 @@ const catalogData = {
         label: "",
         products: [
           {
-            title: "Trendi Energy Efficient Screw Air Compressor",
+            title: "Trendi Energy Efficient Belt Drive Screw Air Compressor",
             desc: "Advanced Screw Airend with Intelligent Microprocessor based Electronic Controller. Low Specific Power Consumption with less noise level and ease of maintenance.",
             brands: ["Trendi"],
             features: ["Three stage Air Oil Separator", "Compressors with VFD (Optional)", "Low Specific Power Consumption", "IE3 Electric Motors"],
@@ -62,72 +62,6 @@ const catalogData = {
               "Automatic start/stop control"
             ],
             catalogLink: "https://drive.google.com/uc?export=download&id=1nZQ7xCTVp73Fyus9UpWcVJdn_YtEJt3E"
-          }
-        ]
-      }
-    ]
-  },
-  pumps: {
-    label: "Pumps",
-    icon: Droplets,
-    description: "Stockist for Crompton Greaves, Kirloskar, Rotodel, Indfoss, Everest. Specialized in meeting the demand of industry for diverse requirements.",
-    subcategories: [
-      {
-        id: "gear-pump",
-        label: "Gear Pump",
-        products: [
-          {
-            title: "Gear Pumps",
-            brands: ["Rotodel"],
-            desc: "High viscosity fluid handling designed to run up to 1440 RPM.",
-            features: ["Type HGSX", "Type HGHX"],
-            catalogLink: "https://drive.google.com/uc?export=download&id=17bjoJ1m4XfzzhZwQdpA3J8bgP5_R1ln1"
-          },
-          {
-            title: "Rotary Gear Pumps Type 'HGN'",
-            desc: "Rotodel Type 'HGN' rotary gear pumps for transferring viscous, lubricating and non-abrasive fluids with smooth, pulsation-free flow.",
-            brands: ["Rotodel"],
-            features: [
-              "Type 'HGN' construction",
-              "Handles high-viscosity fluids",
-              "Smooth, pulsation-free flow"
-            ],
-            catalogLink: "https://drive.google.com/uc?export=download&id=1LCiAcCRJdCNlRRNhtmutsk5clv28rvUS"
-          }
-        ]
-      },
-      {
-        id: "metering-pump",
-        label: "Metering Pump",
-        products: [
-          {
-            title: "Metering Pumps",
-            desc: "Precision metering and dosing pumps engineered for accurate, repeatable flow control in chemical dosing and process applications.",
-            brands: ["Kirloskar"],
-            features: [
-              "Accurate, repeatable dosing",
-              "Adjustable flow / stroke control",
-              "Chemical-compatible construction"
-            ],
-            catalogLink: "https://drive.google.com/uc?export=download&id=1J-1j3_cQbZW7RhaQY8N5plq0-sbBjl1F"
-          }
-        ]
-      },
-      {
-        id: "vacuum-pump",
-        label: "Vacuum Pump",
-        products: [
-          {
-            title: "KV/DV VACUUM PUMPS",
-            desc: "Designed to withstand wide voltage fluctuations. Features dynamic balancing mapping and designed to prevent overloading.",
-            brands: ["Kirloskar"],
-            features: [
-              "Vacuum: Upto 640 mm of mercury", 
-              "Air Flow Rate: Upto 162 m³/hr", 
-              "Wide Voltage Design",
-              "Replaceable Wearing Parts"
-            ],
-            catalogLink: "https://drive.google.com/uc?export=download&id=1QaclCLlzM8B9ZieP083Bxp-8M4_V41Pc"
           }
         ]
       }
@@ -288,6 +222,54 @@ const catalogData = {
           }
         ]
       }
+    ]
+  },
+  pumps: {
+    label: "Pumps",
+    icon: Droplets,
+    description: "Stockist for Crompton Greaves, Kirloskar, Rotodel, Indfoss, Everest. Specialized in meeting the demand of industry for diverse requirements.",
+    subcategories: [
+      {
+        id: "gear-pump",
+        label: "Gear Pump",
+        products: [
+          {
+            title: "Gear Pumps",
+            brands: ["Rotodel Gear Pump Type 'HGSX'"],
+            desc: "High viscosity fluid handling designed to run up to 1440 RPM.",
+            features: ["Used in Food & Pharma", "Smooth, pulsation-free flow", "compact and efficient" ],
+            catalogLink: "https://drive.google.com/uc?export=download&id=17bjoJ1m4XfzzhZwQdpA3J8bgP5_R1ln1"
+          },
+          {
+            title: "Rotary Gear Pumps Type 'HGN'",
+            desc: "Rotodel Type 'HGN' rotary gear pumps for transferring viscous, lubricating and non-abrasive fluids with smooth, pulsation-free flow.",
+            brands: ["Rotodel"],
+            features: [
+              "Type 'HGN' construction",
+              "Handles high-viscosity fluids",
+              "Smooth, pulsation-free flow"
+            ],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1LCiAcCRJdCNlRRNhtmutsk5clv28rvUS"
+          }
+        ]
+      },
+      {
+        id: "metering-pump",
+        label: "Metering Pump",
+        products: [
+          {
+            title: "Metering Pumps",
+            desc: "Precision metering pumps engineered for accurate, repeatable flow control in chemical dosing and process applications.",
+            brands: ["Kirloskar"],
+            features: [
+              "Accurate, repeatable dosing",
+              "Adjustable flow / stroke control",
+              "Chemical-compatible construction"
+            ],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1J-1j3_cQbZW7RhaQY8N5plq0-sbBjl1F"
+          }
+        ]
+      },
     ]
   },
   spares: {

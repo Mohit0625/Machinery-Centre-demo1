@@ -25,7 +25,7 @@ export function Layout() {
   const [megaMenuOpen, setMegaMenuOpen] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === "/";
-  const closeTimeoutRef = useRef<NodeJS.Timeout>();
+  const closeTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
   useEffect(() => {
     setMobileMenuOpen(false);

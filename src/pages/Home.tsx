@@ -105,6 +105,14 @@ const partners = [
   "Sonee",
 ];
 
+// ── Featured solution categories (Home "Our Solutions" grid) ──
+const solutions = [
+  { name: "Air Compressors", path: "/products/compressors", desc: "Reliable industrial air systems", img: "/assets/images/about-main.png" },
+  { name: "Industrial Pumps", path: "/products/pumps", desc: "High-performance fluid handling", img: "/assets/images/service-milling.png" },
+  { name: "Air Treatment", path: "/products/air-treatment", desc: "Dryers, filters & purifiers", img: "/assets/images/service-laser.png" },
+  { name: "Spares & Accessories", path: "/products/spares", desc: "Genuine OEM parts & oils", img: "/assets/images/service-turning.png" },
+];
+
 // ═══════════════════════════════════════════════════════════════
 // HOME COMPONENT
 // ═══════════════════════════════════════════════════════════════
@@ -373,10 +381,10 @@ export function Home() {
            ═══════════════════════════════════════════════════════ */}
       <section ref={productGrid.ref} className="py-20 sm:py-28 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-            
-            {/* Top Left: Text Block */}
-            <div className={`p-4 sm:p-8 lg:p-10 flex flex-col justify-center transition-all duration-700 ${productGrid.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <div className="flex flex-col lg:flex-row gap-10 lg:gap-14 lg:items-center">
+
+            {/* Text Block */}
+            <div className={`lg:w-[32%] lg:shrink-0 flex flex-col justify-center transition-all duration-700 ${productGrid.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
               <span className="text-[11px] tracking-[0.3em] text-accent-500 mb-4 block uppercase font-bold">
                 Featured Range
               </span>
@@ -387,59 +395,46 @@ export function Home() {
                 We understand specific needs and then build solutions to help industries unlock their limitless potential.
               </p>
               <div>
-                <Link to="/products" className="btn-pill btn-accent inline-flex items-center gap-2">
-                  Explore Products <ArrowRight className="w-4 h-4" />
+                <Link to="/products" className="btn-pill btn-accent inline-flex items-center gap-2 group">
+                  Explore Products
+                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
               </div>
             </div>
 
-            {/* Top Middle: Air Compressors */}
-            <Link to="/products/compressors" className={`group relative h-[300px] sm:h-[400px] rounded-2xl overflow-hidden transition-all duration-700 delay-100 ${productGrid.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-              <img src="/assets/images/about-main.png" alt="Air Compressors" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
-              <div className="absolute bottom-6 left-0 right-0 px-6 text-center">
-                <h3 className="text-white text-xl sm:text-2xl font-bold tracking-tight">Air Compressors</h3>
-              </div>
-            </Link>
+            {/* Solutions Grid */}
+            <div className="lg:flex-1 grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+              {solutions.map((s, i) => (
+                <div
+                  key={s.path}
+                  style={{ transitionDelay: productGrid.visible ? `${i * 90 + 100}ms` : "0ms" }}
+                  className={`transition-all duration-700 ${productGrid.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+                >
+                  <Link
+                    to={s.path}
+                    className="group relative block h-[280px] sm:h-[340px] lg:h-[380px] rounded-2xl overflow-hidden ring-1 ring-slate-900/5 shadow-sm hover:shadow-2xl transition-shadow duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-400"
+                  >
+                    <img
+                      src={s.img}
+                      alt={s.name}
+                      className="w-full h-full object-cover transition-transform duration-[1100ms] ease-out group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/25 to-transparent transition-colors duration-500 group-hover:from-slate-950"></div>
 
-            {/* Top Right: Industrial Pumps */}
-            <Link to="/products/pumps" className={`group relative h-[300px] sm:h-[400px] rounded-2xl overflow-hidden transition-all duration-700 delay-200 ${productGrid.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-              <img src="/assets/images/service-milling.png" alt="Industrial Pumps" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
-              <div className="absolute bottom-6 left-0 right-0 px-6 text-center">
-                <h3 className="text-white text-xl sm:text-2xl font-bold tracking-tight">Industrial Pumps</h3>
-              </div>
-            </Link>
+                    {/* Arrow affordance */}
+                    <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/15 backdrop-blur-sm ring-1 ring-white/25 flex items-center justify-center text-white transition-all duration-300 group-hover:bg-accent-500 group-hover:ring-accent-500">
+                      <ArrowRight className="w-4 h-4 -rotate-45 transition-transform duration-300 group-hover:rotate-0" />
+                    </div>
 
-            {/* Bottom Left: Trendi Range */}
-            <Link to="/trendi" className={`group relative h-[300px] sm:h-[400px] rounded-2xl overflow-hidden transition-all duration-700 delay-300 ${productGrid.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-              <img src="/assets/images/hero-machinery.png" alt="Trendi Range" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
-              <div className="absolute bottom-6 left-0 right-0 px-6 flex flex-col items-center justify-center">
-                {getBrandLogo("Trendi") && (
-                  <img src={getBrandLogo("Trendi")} alt="Trendi Logo" className="h-8 w-auto object-contain bg-white/10 p-1.5 rounded mb-3 backdrop-blur-sm" />
-                )}
-                <h3 className="text-white text-xl sm:text-2xl font-bold tracking-tight">The Trendi Range</h3>
-              </div>
-            </Link>
-
-            {/* Bottom Middle: Air Treatment */}
-            <Link to="/products/air-treatment" className={`group relative h-[300px] sm:h-[400px] rounded-2xl overflow-hidden transition-all duration-700 delay-400 ${productGrid.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-              <img src="/assets/images/service-laser.png" alt="Air Treatment" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
-              <div className="absolute bottom-6 left-0 right-0 px-6 text-center">
-                <h3 className="text-white text-xl sm:text-2xl font-bold tracking-tight">Air Treatment</h3>
-              </div>
-            </Link>
-
-            {/* Bottom Right: Spares & Accessories */}
-            <Link to="/products/spares" className={`group relative h-[300px] sm:h-[400px] rounded-2xl overflow-hidden transition-all duration-700 delay-500 ${productGrid.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-              <img src="/assets/images/service-turning.png" alt="Spares & Accessories" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
-              <div className="absolute bottom-6 left-0 right-0 px-6 text-center">
-                <h3 className="text-white text-xl sm:text-2xl font-bold tracking-tight">Spares & Accessories</h3>
-              </div>
-            </Link>
+                    {/* Label */}
+                    <div className="absolute inset-x-0 bottom-0 p-6">
+                      <h3 className="text-white text-xl sm:text-2xl font-bold tracking-tight">{s.name}</h3>
+                      <p className="text-white/70 text-sm mt-1.5 leading-snug">{s.desc}</p>
+                    </div>
+                  </Link>
+                </div>
+              ))}
+            </div>
 
           </div>
         </div>

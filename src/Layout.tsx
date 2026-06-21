@@ -3,6 +3,7 @@ import { PhoneCall, Mail, MapPin, Menu, X, ChevronRight, ChevronDown, ArrowRight
 import { useState, useEffect, useRef } from "react";
 
 const navLinks = [
+  { name: "Products", path: "/products" },
   { name: "Trendi", path: "/trendi" },
   { name: "Careers", path: "/careers" },
   { name: "Blog", path: "/blog" },
@@ -138,60 +139,6 @@ export function Layout() {
                     location.pathname === "/" ? 'w-1/2' : 'w-0 group-hover:w-1/2'
                   }`}></span>
                 </Link>
-
-                {/* Products Mega Menu Trigger */}
-                <div 
-                  className="relative group h-full flex items-center"
-                  onMouseEnter={handleMegaMenuEnter}
-                  onMouseLeave={handleMegaMenuLeave}
-                >
-                  <button className={`relative flex items-center gap-1.5 px-3 xl:px-4 py-2.5 text-[12px] xl:text-[13px] font-bold tracking-wide transition-all duration-300 whitespace-nowrap ${
-                    location.pathname.includes("/products") ? activeColor : textColor
-                  }`}>
-                    <span className={`block transition-transform duration-300 group-hover:-translate-y-[2px] ${hoverTextColor}`}>Products</span>
-                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 group-hover:-translate-y-[2px] ${megaMenuOpen ? 'rotate-180' : ''} ${hoverTextColor}`} />
-                    <span className={`absolute bottom-1 left-1/2 -translate-x-1/2 h-[2px] bg-orange-500 transition-all duration-300 ease-out rounded-full ${
-                      location.pathname.includes("/products") ? 'w-1/2' : 'w-0 group-hover:w-1/2'
-                    }`}></span>
-                  </button>
-
-                  {/* Mega Menu Dropdown */}
-                  <div className={`absolute top-full left-1/2 -translate-x-1/2 pt-4 transition-all duration-300 ease-out transform origin-top ${
-                    megaMenuOpen ? 'opacity-100 scale-100 pointer-events-auto translate-y-0' : 'opacity-0 scale-95 pointer-events-none -translate-y-2'
-                  }`}>
-                    <div className="w-[600px] bg-white rounded-xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] border border-slate-200/60 overflow-hidden flex flex-col relative before:absolute before:inset-0 before:bg-gradient-to-b before:from-slate-50/50 before:to-transparent before:pointer-events-none">
-                      <div className="grid grid-cols-2 p-4 gap-2 relative z-10">
-                        {productCategories.map((category) => (
-                          <Link 
-                            key={category.name} 
-                            to={category.path}
-                            className="group/item flex flex-col p-4 rounded-lg hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100"
-                            onClick={() => setMegaMenuOpen(false)}
-                          >
-                            <span className="text-sm font-bold text-slate-900 group-hover/item:text-orange-600 transition-colors flex items-center justify-between">
-                              {category.name}
-                              <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-2 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-300" />
-                            </span>
-                            <span className="text-xs text-slate-500 mt-1">{category.desc}</span>
-                          </Link>
-                        ))}
-                      </div>
-                      <div className="bg-slate-50 p-4 border-t border-slate-100 flex items-center justify-between relative z-10">
-                        <div>
-                          <p className="text-xs font-bold text-slate-900">Need expert consultation?</p>
-                          <p className="text-[11px] text-slate-500 mt-0.5">We help you choose the right equipment.</p>
-                        </div>
-                        <Link 
-                          to="/contact" 
-                          className="text-xs font-bold text-orange-600 hover:text-orange-700 flex items-center group/btn"
-                          onClick={() => setMegaMenuOpen(false)}
-                        >
-                          Talk to an Engineer <ArrowRight className="w-3.5 h-3.5 ml-1.5 group-hover/btn:translate-x-1 transition-transform" />
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
 
                 {/* Rest of Nav Links */}
                 {navLinks.map((link) => (

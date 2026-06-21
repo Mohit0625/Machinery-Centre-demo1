@@ -1,706 +1,724 @@
-import { useState, useMemo, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { 
-  Filter as FilterIcon, Search, CheckCircle2, 
-  ChevronRight, ArrowRight, X, PhoneCall, ShieldCheck, Factory, Award, Droplets, Wind, Cpu
-} from "lucide-react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Wind, Droplets, Filter, CheckCircle2, Download, X, Cpu } from "lucide-react";
 import { isValidEmail, isValidIndianPhone } from "../utils/validation";
 import { useSEO } from "../utils/useSEO";
 import { getBrandLogo } from "../utils/logos";
 import { sendLead, nowInIST } from "../utils/leadForm";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { catalogData } from "../data/catalog";
 
 function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
 }
 
-// Flat structure of subcategories for the Visual Explorer
-const allSubcategories = Object.values(catalogData).flatMap(cat => cat.subcategories);
+// -----------------------------
+// Catalog Data Structure
+// -----------------------------
+const catalogData = {
+  compressors: {
+    label: "Compressors",
+    icon: Wind,
+    description: "Authorized Dealers of Ingersoll-Rand, Sonee Air Compressors and Trident. Diverse range of options to optimize your business's fixed costs.",
+    subcategories: [
+      {
+        id: "all-compressors",
+        label: "",
+        products: [
+          {
+            title: "Trendi Energy Efficient Screw Air Compressor",
+            desc: "Advanced Screw Airend with Intelligent Microprocessor based Electronic Controller. Low Specific Power Consumption with less noise level and ease of maintenance.",
+            brands: ["Trendi"],
+            features: ["Three stage Air Oil Separator", "Compressors with VFD (Optional)", "Low Specific Power Consumption", "IE3 Electric Motors"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1VN7WVekzZYVYHpGATtpQOEQQiaSqvtpp"
+          },
+          {
+            title: "Trendi Base Mounted Direct Drive Screw Compressors",
+            desc: "Base mounted direct drive screw compressors providing reliable performance. Available in multiple capacities and dimensions.",
+            brands: ["Trendi"],
+            features: ["Direct Drive", "Base Mounted", "Low noise design"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1x45zNBjsj9jrgPzVVDyNcgDkvmIx5Kl7"
+          },
+          {
+            title: "Trendi Motor Driven Two Stage Air Compressor",
+            desc: "Two-stage design providing 175 PSIG operation with durable cast iron construction and extended pump life.",
+            brands: ["Trendi"],
+            features: [
+              "Removable Cylinders: 360° cooling", 
+              "Finned Copper Intercooler", 
+              "Splash Lubrication",
+              "Precision-balanced crankshaft"
+            ],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1V3G7HYCPfRk-0CJBdt7toAmquvRVHE3t"
+          },
+          {
+            title: "Ingersoll Rand Two Stage Electric Driven Reciprocating Air Compressor",
+            desc: "Designed for heavy shop or industrial use, providing quality and performance ideal for a wide range of applications including automotive service, fleet maintenance, and manufacturing lines.",
+            brands: ["Ingersoll Rand"],
+            features: [
+              "Durable cast-iron, two-stage design", 
+              "175 PSI maximum operating pressure", 
+              "100% continuous duty",
+              "Automatic start/stop control"
+            ],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1nZQ7xCTVp73Fyus9UpWcVJdn_YtEJt3E"
+          }
+        ]
+      }
+    ]
+  },
+  pumps: {
+    label: "Pumps",
+    icon: Droplets,
+    description: "Stockist for Crompton Greaves, Kirloskar, Rotodel, Indfoss, Everest. Specialized in meeting the demand of industry for diverse requirements.",
+    subcategories: [
+      {
+        id: "gear-pump",
+        label: "Gear Pump",
+        products: [
+          {
+            title: "Gear Pumps",
+            brands: ["Rotodel"],
+            desc: "High viscosity fluid handling designed to run up to 1440 RPM.",
+            features: ["Type HGSX", "Type HGHX"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=17bjoJ1m4XfzzhZwQdpA3J8bgP5_R1ln1"
+          },
+          {
+            title: "Rotary Gear Pumps Type 'HGN'",
+            desc: "Rotodel Type 'HGN' rotary gear pumps for transferring viscous, lubricating and non-abrasive fluids with smooth, pulsation-free flow.",
+            brands: ["Rotodel"],
+            features: [
+              "Type 'HGN' construction",
+              "Handles high-viscosity fluids",
+              "Smooth, pulsation-free flow"
+            ],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1LCiAcCRJdCNlRRNhtmutsk5clv28rvUS"
+          }
+        ]
+      },
+      {
+        id: "metering-pump",
+        label: "Metering Pump",
+        products: [
+          {
+            title: "Metering Pumps",
+            desc: "Precision metering and dosing pumps engineered for accurate, repeatable flow control in chemical dosing and process applications.",
+            brands: ["Kirloskar"],
+            features: [
+              "Accurate, repeatable dosing",
+              "Adjustable flow / stroke control",
+              "Chemical-compatible construction"
+            ],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1J-1j3_cQbZW7RhaQY8N5plq0-sbBjl1F"
+          }
+        ]
+      },
+      {
+        id: "vacuum-pump",
+        label: "Vacuum Pump",
+        products: [
+          {
+            title: "KV/DV VACUUM PUMPS",
+            desc: "Designed to withstand wide voltage fluctuations. Features dynamic balancing mapping and designed to prevent overloading.",
+            brands: ["Kirloskar"],
+            features: [
+              "Vacuum: Upto 640 mm of mercury", 
+              "Air Flow Rate: Upto 162 m³/hr", 
+              "Wide Voltage Design",
+              "Replaceable Wearing Parts"
+            ],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1QaclCLlzM8B9ZieP083Bxp-8M4_V41Pc"
+          }
+        ]
+      }
+    ]
+  },
+  "air-treatment": {
+    label: "Air Treatment",
+    icon: Filter,
+    description: "Complete compressed air treatment solutions. From providing equipment, to piping, hosing and fitting needs of your enterprise.",
+    subcategories: [
+      {
+        id: "all-air-treatment",
+        label: "",
+        products: [
+          {
+            title: "TRIDENT Series EDV-X",
+            desc: "Automatic drain valves designed specially to drain sludge and rust laden condensate.",
+            brands: ["Trident"],
+            features: ["Reliable all digital electronic circuitry", "ON and OFF timing adjustable", "Extended cycle time upto 32 hrs adjustable"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1WxilzKTFSq2qZkMLvzezbGtvClPkGs7i"
+          },
+          {
+            title: "TRIDENT Series LDV",
+            desc: "Condensate sensing type automatic drain valves, offering zero air loss, noise free, and fault tolerant system.",
+            brands: ["Trident"],
+            features: ["Condensate Sensing Type", "Zero Air Loss", "Design Patented", "Fault tolerant system"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=14Ya8W0lhZ4TCechRTRTRmAuH-TP9cYVZ"
+          },
+          {
+            title: "TRIDENT Dryspell Series",
+            desc: "Heatless desiccant compressed air dryers, offering total cleaning solution for lubricated as well as non-lubricated compressed air.",
+            brands: ["Trident"],
+            features: ["Noise level < 70 decibels", "Free from corrosion & scale formation", "High strength adsorbent material"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=17Km0_hcnxVQ6YcY75JUlFsmiWzbOSWmD"
+          },
+          {
+            title: "TRIDENT Dryspell Core",
+            desc: "Desiccant compressed air dryers providing consistent dew point performance. Aluminium construction.",
+            brands: ["Trident"],
+            features: ["Noise Level < 70 dBA", "Pressure Drop < 0.3 kg/cm² (g)", "ISO 8573-1:2010 class 3"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1OAHw-OTnWODzrDWahUTAl5fqhLpSGrUW"
+          },
+          {
+            title: "TRIDENT Dryspell Plus",
+            desc: "Desiccant compressed air dryers with purge economiser reducing purge loss according to load requirements.",
+            brands: ["Trident"],
+            features: ["Noise Level < 80 dBA", "Aluminium Construction", "Accepts dewpoint meter signal"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1_j0SdJC7_WD1-R9YIPlOHuLAbk_hm0FW"
+          },
+          {
+            title: "TRIDENT Coldspell Core",
+            desc: "Refrigeration compressed air dryer with large condenser for high ambient temperatures.",
+            brands: ["Trident"],
+            features: ["Low pressure drop", "High ambient temperatures handling"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1Dm1N3eWZrcqWPt-Vk9e21PDIFVrmQYr6"
+          },
+          {
+            title: "TRIDENT Coldspell",
+            desc: "Refrigeration compressed air dryer featuring an anti-recycle feature for compressor protection.",
+            brands: ["Trident"],
+            features: ["ISO 8573 - 1 : 2010 (E) class -5-", "Anti-recycle feature", "Large condenser"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1W_-wRxgKEuZt5IZHc0WWDGESM2TcmBC-"
+          },
+          {
+            title: "TRIDENT Coldspell - HP Series",
+            desc: "High pressure (40 Kg / cm2 (g)) refrigeration compressed air dryer with advanced 3 in 1 integrated SS heat exchanger.",
+            brands: ["Trident"],
+            features: ["Microprocessor controller", "Anti freezer & anti recycle", "High pressure 40 Kg/cm2 (g)"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1Q17byZmfDuDqD7HANn7tjynLKbCOfX-B"
+          },
+          {
+            title: "TRIDENT DP V2 Series",
+            desc: "Heatless compressed air dryers featuring purge economisers to reduce energy loss according to load requirements.",
+            brands: ["Trident"],
+            features: ["Dewpoint meter signal cycle", "Pressure Drop < 0.3 kg/cm²", "Stainless Steel Internals"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=17un7IYiQpsvC_6qeyW97u7iRm6j5-y2N"
+          },
+          {
+            title: "TRIDENT DP V3 Series",
+            desc: "Heatless compressed air dryers with inbuilt sample gas chamber and electrical outlet for miniature dew point transmitter.",
+            brands: ["Trident"],
+            features: ["ISO : 8573-1 : 2010 (E) Class 2", "LCD Display", "Aluminium filter with differential pressure indicator"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1wYmSf6wBnARcrwHrWk_oN9roTRBvNAX7"
+          },
+          {
+            title: "TRIDENT Medical Vacuum Filters High Performance Series",
+            desc: "Designed to remove liquid, solid, and bacterial contamination from the suction side of vacuum pumps.",
+            brands: ["Trident"],
+            features: ["Borosilicate filter element 99.995% efficiency", "Differential pressure gauge indicator", "Sterilisable drain flask"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1lSSUk5gfnjhAaFec_POZScmeE4YNvhRX"
+          },
+          {
+            title: "TRIDENT Nitrogen Generator",
+            desc: "Modular nitrogen generator using PSA technology. Delivers uninterrupted nitrogen supply for multiple industries.",
+            brands: ["Trident"],
+            features: ["Purity from 95% to 99.999%", "Microprocessor controller", "Corrosion free modular aluminium construction"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1nNlJeUun0Zq2_VLr7fFNIKDoTU28uEnY"
+          },
+          {
+            title: "TRIDENT Breathing Air System",
+            desc: "Provides breathing air mandated by NFPA 99. Operates with pressure swing adsorption.",
+            brands: ["Trident"],
+            features: ["Guaranteed dew point performance", "Compact digital CO & Dewpoint Monitor", "Bacterial Penetration upto 0.0001%"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1abuKUpjlG9j9qRVYDo3CnzJtEa2xMxRJ"
+          },
+          {
+            title: "TRIDENT Vortex Filter VXD 2",
+            desc: "Eliminates 100% water in liquid phase from compressed air. Compact, light weight, and uses no electricity.",
+            brands: ["Trident"],
+            features: ["Removes water, oil and solid particles", "No Electricity used", "All aluminium resist oxidation"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1Gdeuy0sZfvVsvB89To4kVYZod1sjOeCj"
+          },
+          {
+            title: "TRIDENT Bacteria Filter Series",
+            desc: "Provides protection from bacteria in compressed air applications for medical and food industries.",
+            brands: ["Trident"],
+            features: ["Aluminium alloy housing, hard anodized", "Compatible with autoclave sterilisation", "Borosilicate filter media"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1Yhox1XasGhUigrJ6cnrAKFd0a4nhEPki"
+          },
+          {
+            title: "TRIDENT Carbon Adsorber Tower",
+            desc: "Adsorber towers for production of oil free compressed air for various point of use applications.",
+            brands: ["Trident"],
+            features: ["Activated Carbon Adsorbent", "Max Operating Pressure: 16 Kg/cm2", "Aluminium Alloy IS 63400 Construction"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=15jBWXUF2HBFROzvLb4ishV8Ps5zmrat3"
+          },
+          {
+            title: "TRIDENT Submicron Filters Cleansweep",
+            desc: "Extremely low installation clearance filters removing oil and particulate down to 0.01 micron.",
+            brands: ["Trident"],
+            features: ["Oil Removal (Coalescing)", "Flow from 20 to 1810 m³/hour", "Install anywhere"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1_CM0y0VbRDy1iMxmjLadMl-1EqeA7g1e"
+          },
+          {
+            title: "TRIDENT CTD Series",
+            desc: "High discharge automatic drain valves with robust construction and adjustable ON/OFF timings.",
+            brands: ["Trident"],
+            features: ["Adjustable ON/OFF timings", "Highly reliable", "Can handle contaminated condensate"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1uM8Hn2Bv2HVHX-Wvn60GTgxMECPmA-Uq"
+          },
+          {
+            title: "TRIDENT DB Series",
+            desc: "Blower Reactivated Air Dryers working on thermal swing principle for economical energy consumption.",
+            brands: ["Trident"],
+            features: ["Extensive Mimic display", "Energy saving purge economiser", "Dewpoint better than -40 ° C"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=15S-TVRADI6hlWn7VdATEqauw8EHgXG4Z"
+          },
+          {
+            title: "TRIDENT Locodry",
+            desc: "Heatless desiccant air dryer engineered to deliver consistent low dew-point performance with minimal purge loss for critical compressed-air applications.",
+            brands: ["Trident"],
+            features: [
+              "Heatless regeneration",
+              "Consistent low dew-point performance",
+              "Energy-saving purge control"
+            ],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1xVn3hoatS4QzmlqTrGJ7OflscYdj3LP6"
+          }
+        ]
+      }
+    ]
+  },
+  spares: {
+    label: "Spares",
+    icon: Cpu,
+    description: "We provide you with all the spares and accessories for Boiler Feed Pumps, Chemical Pumps, Water Lifting Pumps, Sewerage Pumps, Self Priming Pumps, Centrifugal Pumps, Pumps for Fire Fighting, Booster Pumps, etc.",
+    subcategories: [
+      {
+        id: "parts-accessories",
+        label: "Parts & Accessories",
+        products: [
+          {
+            title: "Pump Spares",
+            desc: "Genuine parts and accessories for a wide range of industrial and commercial pumps.",
+            features: [
+              "Boiler Feed Pump Spares",
+              "Chemical Pump Spares",
+              "Water Lifting & Sewerage Pump Spares",
+              "Fire Fighting & Booster Pump Spares"
+            ],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1rUveEEGcs_G-Ha8gmeC1tE9UAqGaPODX"
+          },
+          {
+            title: "Compressor & Air Parts",
+            desc: "OEM and compatible accessories for major compressor brands. Air & oil filters, air-oil separators, intake valves, gaskets, service kits and more.",
+            features: [
+              "Ingersoll Rand Spares",
+              "Kirloskar & Crompton Greaves Spares",
+              "Trident, Elgi, & Janatics Components",
+              "Rotodel, Indfoss, & Everest Accessories"
+            ],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1PIawPtp0X-e10yHstbav5lh5A1he4ABQ"
+          }
+        ]
+      }
+    ]
+  }
+};
 
-// All distinct brands
-const allBrands = Array.from(new Set(
-  allSubcategories.flatMap(sub => sub.products.flatMap(p => p.brands))
-));
+const categoriesList = Object.entries(catalogData).map(([id, data]) => ({
+  id,
+  ...data
+}));
+
+// -----------------------------
+// Main Components
+// -----------------------------
+
+const CATALOG_FALLBACK_URL = "https://drive.google.com/drive/folders/1IHEIFLeqMeAJMWKnQADmtt1mQvwLI2JA";
+
+function resolveCatalogUrl(catalogLink: string) {
+  return catalogLink && catalogLink !== "#" ? catalogLink : CATALOG_FALLBACK_URL;
+}
+
+function openCatalog(catalogLink: string) {
+  window.open(resolveCatalogUrl(catalogLink), "_blank", "noopener,noreferrer");
+}
+
+const REQUIRE_DETAILS_BEFORE_DOWNLOAD: boolean = false;
 
 export function Products() {
-  useSEO(
-    "Industrial Air Compressors, Pumps & Air Treatment | Machinery Centre", 
-    "Browse our extensive catalog of industrial air compressors, pumps, and specialized air treatment equipment. Authorized B2B dealers for premium OEM brands."
-  );
-
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const initialBrand = searchParams.get("brand");
+  useSEO("Industrial Air Compressors, Pumps & Air Treatment | Machinery Centre", "Browse our extensive catalog of industrial air compressors, pumps, and specialized air treatment equipment. Authorized B2B dealers for premium OEM brands.");
   
-  // Filters
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedBrands, setSelectedBrands] = useState<string[]>(initialBrand ? [initialBrand] : []);
-  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([]);
+  const [activeCategoryId, setActiveCategoryId] = useState(categoriesList[0].id);
+  const activeCategory = catalogData[activeCategoryId as keyof typeof catalogData];
 
-  // Mobile Drawers & Modals
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  const [quoteDrawerProduct, setQuoteDrawerProduct] = useState<any>(null);
-  const [quickPreviewProduct, setQuickPreviewProduct] = useState<any>(null);
+  // State for Catalog Download Modal
+  const [selectedCatalog, setSelectedCatalog] = useState<{ title: string, link: string } | null>(null);
 
-  // Filter products globally
-  const filteredProducts = useMemo(() => {
-    let results: any[] = [];
-    allSubcategories.forEach(sub => {
-      // Subcategory filter
-      if (selectedSubcategories.length > 0 && !selectedSubcategories.includes(sub.id)) {
-        return;
-      }
-      
-      sub.products.forEach(product => {
-        // Brand filter
-        if (selectedBrands.length > 0 && !product.brands.some(b => selectedBrands.includes(b))) {
-          return;
-        }
-
-        // Search query filter
-        if (searchQuery) {
-          const q = searchQuery.toLowerCase();
-          const matchesTitle = product.title.toLowerCase().includes(q);
-          const matchesDesc = product.desc.toLowerCase().includes(q);
-          const matchesBrand = product.brands.some(b => b.toLowerCase().includes(q));
-          if (!matchesTitle && !matchesDesc && !matchesBrand) return;
-        }
-
-        results.push({ ...product, subcategory: sub });
-      });
-    });
-    return results;
-  }, [selectedBrands, selectedSubcategories, searchQuery]);
-
-  return (
-    <div className="flex-1 bg-slate-50 flex flex-col relative">
-      
-      {/* 1. HERO SECTION */}
-      <div className="bg-slate-900 text-white pt-20 pb-16 border-b-4 border-orange-500 relative overflow-hidden">
-        <div className="absolute right-0 top-0 w-1/2 h-full opacity-5 pointer-events-none">
-          <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="w-full h-full fill-current">
-            <polygon points="0,100 100,0 100,100" />
-          </svg>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
-            <div className="max-w-3xl">
-              <span className="text-orange-500 font-bold tracking-widest text-[11px] uppercase mb-4 block">
-                Visual Explorer
-              </span>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl mb-6 font-black tracking-tight">
-                Industrial Product Catalogue
-              </h1>
-              <p className="text-slate-300 max-w-2xl text-lg leading-relaxed mb-8">
-                Discover our comprehensive range of industrial solutions. Browse by category, application, or brand to find the exact equipment for your needs.
-              </p>
-              
-              <div className="flex flex-wrap items-center gap-6 text-sm text-slate-400 font-medium">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-orange-500">
-                    <CheckCircle2 className="w-4 h-4" />
-                  </div>
-                  <span className="text-white">{filteredProducts.length} Products Found</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-orange-500">
-                    <Award className="w-4 h-4" />
-                  </div>
-                  <span className="text-white">{allBrands.length} Partner Brands</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-orange-500">
-                    <ShieldCheck className="w-4 h-4" />
-                  </div>
-                  <span className="text-white">39+ Years Experience</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 2. VISUAL SOLUTION EXPLORER */}
-      <div className="bg-slate-100 py-12 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-6 flex justify-between items-end">
-            <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Explore Solutions</h2>
-            {selectedSubcategories.length > 0 && (
-              <button onClick={() => setSelectedSubcategories([])} className="text-[11px] font-bold uppercase tracking-wider text-orange-600 hover:text-orange-700">Clear Selection</button>
-            )}
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {allSubcategories.map(sub => {
-              const isSelected = selectedSubcategories.includes(sub.id);
-              return (
-                <div
-                  key={sub.id}
-                  onClick={() => {
-                    if (isSelected) setSelectedSubcategories(selectedSubcategories.filter(id => id !== sub.id));
-                    else setSelectedSubcategories([...selectedSubcategories, sub.id]);
-                  }}
-                  className={cn(
-                    "relative h-32 rounded-xl overflow-hidden cursor-pointer group transition-all duration-300",
-                    isSelected ? "ring-2 ring-orange-500 ring-offset-2 shadow-lg scale-[1.02]" : "hover:-translate-y-1 hover:shadow-md"
-                  )}
-                >
-                  <img src={sub.image || "/assets/images/about-main.png"} alt={sub.label} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                  <div className={cn(
-                    "absolute inset-0 bg-gradient-to-t transition-colors duration-300",
-                    isSelected ? "from-slate-900/90 via-slate-900/40 to-slate-900/20" : "from-slate-900/80 via-slate-900/30 to-transparent group-hover:from-slate-900/90"
-                  )} />
-                  <div className="absolute bottom-3 left-3 right-3">
-                    <h3 className="text-white font-bold text-sm leading-tight group-hover:text-orange-400 transition-colors">{sub.label}</h3>
-                    <span className="text-slate-300 text-[10px] font-bold uppercase tracking-wider">{sub.products.length} Items</span>
-                  </div>
-                  {isSelected && (
-                    <div className="absolute top-2 right-2 w-5 h-5 bg-orange-500 rounded-full flex items-center justify-center shadow-sm">
-                      <CheckCircle2 className="w-3 h-3 text-white" />
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
-      {/* 3. BRAND DISCOVERY SHOWCASE */}
-      <div className="bg-white border-b border-slate-200 py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
-          <span className="text-xs font-bold text-slate-400 uppercase tracking-widest mr-8 shrink-0">Filter by Brand:</span>
-          <div className="flex gap-8 overflow-x-auto no-scrollbar pb-1 items-center">
-            {allBrands.map(brand => {
-              const isSelected = selectedBrands.includes(brand);
-              const logo = getBrandLogo(brand);
-              return (
-                <button
-                  key={brand}
-                  onClick={() => {
-                    if (isSelected) setSelectedBrands(selectedBrands.filter(b => b !== brand));
-                    else setSelectedBrands([...selectedBrands, brand]);
-                  }}
-                  className={cn(
-                    "flex items-center justify-center transition-all shrink-0",
-                    isSelected ? "opacity-100 scale-110" : "opacity-40 hover:opacity-100"
-                  )}
-                >
-                  {logo ? (
-                    <img src={logo} alt={brand} className="h-6 w-auto object-contain" />
-                  ) : (
-                    <span className="text-sm font-black uppercase text-slate-800">{brand}</span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
-      {/* Main Content Layout (Sidebar + Grid) */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-1 flex flex-col lg:flex-row gap-8">
-        
-        {/* MOBILE FILTER TOGGLE & SEARCH */}
-        <div className="flex flex-col sm:flex-row gap-4 lg:hidden">
-          <div className="relative flex-1">
-            <Search className="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
-            <input
-              type="text"
-              placeholder="Search products, brands..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white border border-slate-200 rounded-lg pl-11 pr-4 py-3 text-sm focus:outline-none focus:border-orange-500 shadow-sm"
-            />
-          </div>
-          <button
-            onClick={() => setMobileFiltersOpen(true)}
-            className="bg-slate-900 text-white px-6 py-3 rounded-lg text-sm font-bold flex items-center justify-center gap-2 shadow-md shrink-0"
-          >
-            <FilterIcon className="w-4 h-4" /> Filters
-          </button>
-        </div>
-
-        {/* 4. SEARCH + FILTER BAR (Desktop Sidebar) */}
-        <div className="hidden lg:block w-72 shrink-0">
-          <div className="sticky top-[100px] space-y-8 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-            
-            <div className="relative mb-6">
-              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-              <input
-                type="text"
-                placeholder="Search..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-md pl-9 pr-4 py-2.5 text-sm focus:outline-none focus:border-orange-500 focus:bg-white transition-colors"
-              />
-            </div>
-
-            <div>
-              <h4 className="text-xs font-black uppercase tracking-widest text-slate-900 mb-4 flex items-center justify-between">
-                Active Filters
-                {(selectedBrands.length > 0 || selectedSubcategories.length > 0) && (
-                  <button onClick={() => { setSelectedBrands([]); setSelectedSubcategories([]); }} className="text-[10px] text-orange-600 font-bold normal-case">Clear All</button>
-                )}
-              </h4>
-              {(selectedBrands.length === 0 && selectedSubcategories.length === 0) ? (
-                <p className="text-xs text-slate-400">No active filters.</p>
-              ) : (
-                <div className="flex flex-wrap gap-2">
-                  {selectedSubcategories.map(id => (
-                    <span key={id} className="bg-slate-100 text-slate-700 text-xs px-2 py-1 rounded flex items-center gap-1">
-                      {allSubcategories.find(s => s.id === id)?.label}
-                      <X className="w-3 h-3 cursor-pointer hover:text-red-500" onClick={() => setSelectedSubcategories(selectedSubcategories.filter(s => s !== id))} />
-                    </span>
-                  ))}
-                  {selectedBrands.map(b => (
-                    <span key={b} className="bg-orange-50 text-orange-700 text-xs px-2 py-1 rounded flex items-center gap-1">
-                      {b}
-                      <X className="w-3 h-3 cursor-pointer hover:text-red-500" onClick={() => setSelectedBrands(selectedBrands.filter(brand => brand !== b))} />
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Quick Contact Block in Sidebar */}
-            <div className="bg-slate-900 rounded-xl p-5 text-white mt-8 shadow-lg">
-               <h4 className="font-bold mb-2 flex items-center gap-2 text-sm"><PhoneCall className="w-4 h-4 text-orange-500" /> Contact Sales</h4>
-               <p className="text-xs text-slate-400 mb-4">Need help selecting the right industrial equipment?</p>
-               <a href="tel:+919810156961" className="block text-center bg-orange-600 hover:bg-orange-700 text-white py-2 rounded text-xs font-bold transition-colors">
-                 +91 98101 56961
-               </a>
-            </div>
-
-          </div>
-        </div>
-
-        {/* 5. PRODUCT GRID (Image-First) */}
-        <div className="flex-1">
-          {filteredProducts.length === 0 ? (
-            <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center">
-              <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Search className="w-8 h-8 text-slate-400" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">No products found</h3>
-              <p className="text-slate-500 mb-6">Try adjusting your search or filters to find what you're looking for.</p>
-              <button 
-                onClick={() => {
-                  setSearchQuery("");
-                  setSelectedBrands([]);
-                  setSelectedSubcategories([]);
-                }}
-                className="btn-pill btn-outline"
-              >
-                Clear all filters
-              </button>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProducts.map((product, idx) => {
-                const isTrendi = product.brands.includes("Trendi");
-                
-                return (
-                  <div 
-                    key={idx}
-                    className={cn(
-                      "group bg-white rounded-2xl border transition-all duration-300 hover:-translate-y-1.5 flex flex-col h-full overflow-hidden relative shadow-sm hover:shadow-xl",
-                      isTrendi ? "border-orange-200 hover:border-orange-500" : "border-slate-200 hover:border-slate-400"
-                    )}
-                  >
-                    {/* Image Header */}
-                    <div className="relative h-48 overflow-hidden bg-slate-100">
-                      <img 
-                        src={product.image || product.subcategory.image || "/assets/images/about-main.png"} 
-                        alt={product.title} 
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                      />
-                      {/* Top Badges */}
-                      <div className="absolute top-3 left-3 flex gap-2">
-                        {isTrendi && (
-                          <span className="bg-orange-500 text-white shadow text-[9px] font-black uppercase tracking-wider px-2 py-1 rounded">
-                            OEM Approved
-                          </span>
-                        )}
-                        <span className="bg-slate-900/80 backdrop-blur-sm text-white shadow text-[9px] font-black uppercase tracking-wider px-2 py-1 rounded">
-                          {product.subcategory.label}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Card Body */}
-                    <div className="p-5 flex-1 flex flex-col">
-                      <div className="flex items-center gap-3 mb-3">
-                        {product.brands.map((brand: string) => {
-                          const logo = getBrandLogo(brand);
-                          return logo ? (
-                            <img key={brand} src={logo} alt={brand} className="h-5 w-auto object-contain grayscale group-hover:grayscale-0 transition-all opacity-80 group-hover:opacity-100" />
-                          ) : (
-                            <span key={brand} className="text-[10px] font-black uppercase text-slate-500">{brand}</span>
-                          );
-                        })}
-                      </div>
-
-                      <h3 className="text-base font-bold text-slate-900 mb-4 leading-tight group-hover:text-orange-600 transition-colors line-clamp-2">
-                        {product.title}
-                      </h3>
-                      
-                      {product.features && product.features.length > 0 && (
-                        <ul className="space-y-1.5 mb-6 flex-1">
-                          {product.features.slice(0, 3).map((feat: string, i: number) => (
-                            <li key={i} className="flex items-start gap-2 text-[11px] text-slate-600">
-                              <span className="w-1 h-1 bg-slate-300 rounded-full shrink-0 mt-1.5"></span>
-                              <span className="line-clamp-1">{feat}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-
-                      {/* 6. Hover Interactions / Animated CTAs */}
-                      <div className="grid grid-cols-2 gap-2 mt-auto pt-4 border-t border-slate-100">
-                        <button 
-                          onClick={() => setQuoteDrawerProduct(product)}
-                          className="bg-slate-900 text-white hover:bg-orange-600 text-[10px] font-bold uppercase tracking-wider py-2.5 rounded transition-all shadow-sm group/btn"
-                        >
-                          Get Quote
-                        </button>
-                        <button 
-                          onClick={() => setQuickPreviewProduct(product)}
-                          className="bg-slate-50 text-slate-700 border border-slate-200 hover:bg-slate-100 hover:border-slate-300 text-[10px] font-bold uppercase tracking-wider py-2.5 rounded transition-all flex items-center justify-center gap-1 group/btn2"
-                        >
-                          Quick View <ArrowRight className="w-3 h-3 group-hover/btn2:translate-x-0.5 transition-transform" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* 9. LEAD GENERATION DRAWER (Right Side) */}
-      <QuoteDrawer 
-        isOpen={!!quoteDrawerProduct} 
-        onClose={() => setQuoteDrawerProduct(null)} 
-        product={quoteDrawerProduct} 
-      />
-
-      {/* 7. QUICK PREVIEW MODAL */}
-      <QuickPreviewModal 
-        isOpen={!!quickPreviewProduct}
-        onClose={() => setQuickPreviewProduct(null)}
-        product={quickPreviewProduct}
-        onRequestQuote={() => {
-          setQuoteDrawerProduct(quickPreviewProduct);
-          setQuickPreviewProduct(null);
-        }}
-      />
-
-      {/* MOBILE FILTERS DRAWER */}
-      {mobileFiltersOpen && (
-        <div className="fixed inset-0 z-[60] flex lg:hidden">
-          <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={() => setMobileFiltersOpen(false)}></div>
-          <div className="absolute inset-y-0 right-0 w-4/5 max-w-sm bg-white shadow-2xl flex flex-col animate-slide-left">
-            <div className="p-5 border-b border-slate-100 flex items-center justify-between">
-              <h3 className="text-lg font-bold text-slate-900">Filters</h3>
-              <button onClick={() => setMobileFiltersOpen(false)} className="p-2 bg-slate-50 text-slate-500 rounded-md hover:bg-slate-100">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="p-6 flex-1 overflow-y-auto space-y-8">
-              <div>
-                <h4 className="text-xs font-black uppercase tracking-widest text-slate-900 mb-4">Product Type</h4>
-                <div className="space-y-4">
-                  {allSubcategories.map((sub) => (
-                    <label key={sub.id} className="flex items-center gap-3">
-                      <input
-                        type="checkbox"
-                        checked={selectedSubcategories.includes(sub.id)}
-                        onChange={(e) => {
-                          if (e.target.checked) setSelectedSubcategories([...selectedSubcategories, sub.id]);
-                          else setSelectedSubcategories(selectedSubcategories.filter(id => id !== sub.id));
-                        }}
-                        className="w-5 h-5 border-slate-300 rounded text-orange-500 focus:ring-orange-500"
-                      />
-                      <span className="text-base text-slate-700">{sub.label}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <h4 className="text-xs font-black uppercase tracking-widest text-slate-900 mb-4">Brands</h4>
-                <div className="space-y-4">
-                  {allBrands.map((brand) => (
-                    <label key={brand} className="flex items-center gap-3">
-                      <input
-                        type="checkbox"
-                        checked={selectedBrands.includes(brand)}
-                        onChange={(e) => {
-                          if (e.target.checked) setSelectedBrands([...selectedBrands, brand]);
-                          else setSelectedBrands(selectedBrands.filter(b => b !== brand));
-                        }}
-                        className="w-5 h-5 border-slate-300 rounded text-orange-500 focus:ring-orange-500"
-                      />
-                      <span className="text-base text-slate-700">{brand}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-            </div>
-            <div className="p-5 border-t border-slate-100">
-              <button 
-                onClick={() => setMobileFiltersOpen(false)}
-                className="w-full bg-orange-600 text-white font-bold py-4 rounded-xl shadow-md"
-              >
-                Apply Filters
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-    </div>
-  );
-}
-
-// -----------------------------------------------------------------
-// Quick Preview Modal Component
-// -----------------------------------------------------------------
-function QuickPreviewModal({ isOpen, onClose, product, onRequestQuote }: { isOpen: boolean, onClose: () => void, product: any, onRequestQuote: () => void }) {
-  if (!isOpen || !product) return null;
-
-  return (
-    <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 sm:p-6">
-      <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={onClose}></div>
-      <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-full overflow-hidden flex flex-col md:flex-row animate-fade-in">
-        
-        <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-white/80 backdrop-blur rounded-full text-slate-900 hover:bg-white z-10 shadow-sm">
-          <X className="w-5 h-5" />
-        </button>
-
-        {/* Left: Image Area */}
-        <div className="w-full md:w-1/2 bg-slate-100 relative h-64 md:h-auto">
-          <img src={product.image || product.subcategory.image || "/assets/images/about-main.png"} alt={product.title} className="w-full h-full object-cover" />
-          <div className="absolute bottom-4 left-4 flex gap-2">
-            {product.brands.map((brand: string) => {
-              const logo = getBrandLogo(brand);
-              return logo ? (
-                <img key={brand} src={logo} alt={brand} className="h-8 w-auto object-contain bg-white/80 backdrop-blur-sm p-1 rounded" />
-              ) : null;
-            })}
-          </div>
-        </div>
-
-        {/* Right: Details Area */}
-        <div className="w-full md:w-1/2 p-6 sm:p-8 flex flex-col overflow-y-auto max-h-[80vh] md:max-h-[600px]">
-          <span className="text-orange-500 font-bold uppercase tracking-widest text-[10px] mb-2 block">{product.subcategory.label}</span>
-          <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mb-4 leading-tight">{product.title}</h2>
-          
-          <p className="text-slate-600 text-sm leading-relaxed mb-6">{product.desc}</p>
-          
-          {product.features && (
-            <div className="mb-8">
-              <h4 className="text-xs font-black uppercase tracking-widest text-slate-900 mb-3">Core Specifications</h4>
-              <ul className="space-y-2">
-                {product.features.map((feat: string, i: number) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-slate-700 bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-                    <CheckCircle2 className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
-                    <span>{feat}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          <div className="mt-auto pt-6 border-t border-slate-100 flex flex-col sm:flex-row gap-3">
-            <button 
-              onClick={onRequestQuote}
-              className="flex-1 bg-slate-900 hover:bg-orange-600 text-white font-bold uppercase tracking-widest text-[11px] py-4 rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
-            >
-              Get Quote
-            </button>
-            {product.catalogLink && product.catalogLink !== "#" && (
-              <a 
-                href={product.catalogLink}
-                target="_blank"
-                rel="noreferrer"
-                className="flex-1 bg-white border-2 border-slate-200 text-slate-700 hover:border-slate-400 font-bold uppercase tracking-widest text-[11px] py-4 rounded-xl transition-all flex items-center justify-center gap-2"
-              >
-                Download PDF
-              </a>
-            )}
-          </div>
-        </div>
-
-      </div>
-    </div>
-  );
-}
-
-// -----------------------------------------------------------------
-// Quote Drawer Component
-// -----------------------------------------------------------------
-function QuoteDrawer({ isOpen, onClose, product }: { isOpen: boolean, onClose: () => void, product: any }) {
-  const [formData, setFormData] = useState({ name: "", company: "", phone: "", email: "", requirement: "" });
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  useEffect(() => {
-    if (isOpen) {
-      setFormData({ name: "", company: "", phone: "", email: "", requirement: "" });
-      setStatus("idle");
-      setErrors({});
-    }
-  }, [isOpen]);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const newErrors: Record<string, string> = {};
-    let hasErrors = false;
-
-    if (!formData.name.trim()) { newErrors.name = "Name is required"; hasErrors = true; }
-    if (!formData.phone.trim() || !isValidIndianPhone(formData.phone)) { newErrors.phone = "Valid 10-digit phone required"; hasErrors = true; }
-    if (formData.email && !isValidEmail(formData.email)) { newErrors.email = "Valid email required"; hasErrors = true; }
-
-    setErrors(newErrors);
-    if (hasErrors) return;
-
-    setStatus("submitting");
-    try {
-      await sendLead({
-        inbox: "sales",
-        subject: `Product Inquiry: ${product?.title}`,
-        botcheck: "",
-        fields: {
-          "Customer Name": formData.name,
-          "Company": formData.company || "Not provided",
-          "Phone": formData.phone,
-          "Email": formData.email || "Not provided",
-          "Interested In": product?.title || "General Product",
-          "Brand": product?.brands?.join(", ") || "",
-          "Requirement": formData.requirement || "Please contact me with quote",
-          "Submitted At": nowInIST(),
-          "Source": "Product Catalog Drawer",
-        },
-      });
-      setStatus("success");
-    } catch (err) {
-      console.error(err);
-      setStatus("error");
+  const handleDownloadRequest = (title: string, link: string) => {
+    if (REQUIRE_DETAILS_BEFORE_DOWNLOAD) {
+      setSelectedCatalog({ title, link }); // open the lead-capture modal
+    } else {
+      openCatalog(link); // popup disabled for now → download straight away
     }
   };
 
-  if (!isOpen) return null;
+  return (
+    <div className="flex-1 bg-slate-50 flex flex-col">
+      {/* Header */}
+      <div className="bg-slate-900 text-white py-16 border-b-4 border-orange-500">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-4xl mb-4 font-bold tracking-tight">Premium Industrial Compressors, Pumps & OEM Spares</h1>
+          <p className="text-slate-400 max-w-2xl text-lg">Wide and diverse range of options to optimize your business's fixed costs.</p>
+        </div>
+      </div>
+
+      {/* Category Navigation */}
+      <div className="bg-white border-b border-slate-200 sticky z-40 shadow-sm" style={{ top: "var(--nav-h, 73px)" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex overflow-x-auto no-scrollbar">
+            {categoriesList.map((cat) => {
+              const Icon = cat.icon;
+              const isActive = activeCategoryId === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveCategoryId(cat.id)}
+                  className={cn(
+                    "flex items-center gap-2.5 px-7 py-5 font-bold uppercase tracking-wide text-sm whitespace-nowrap border-b-2 transition-colors",
+                    isActive ? "border-orange-500 text-orange-600" : "border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300"
+                  )}
+                >
+                  <Icon className="w-4 h-4" />
+                  {cat.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 flex-1">
+        <div className="space-y-12">
+          {/* Category Header */}
+          <div className="max-w-3xl mb-8">
+            <h2 className="text-3xl text-slate-900 mb-4 flex items-center gap-3">
+              <activeCategory.icon className="w-8 h-8 text-orange-500" /> {activeCategory.label}
+            </h2>
+            <p className="text-slate-600 text-lg leading-relaxed">
+              {activeCategory.description}
+            </p>
+          </div>
+
+          {/* Subcategories */}
+          <div className="space-y-16">
+            {activeCategory.subcategories.map((subcat) => (
+              <div key={subcat.id} className="space-y-6 pt-4 border-t border-slate-200 first:border-0 first:pt-0">
+                {subcat.label && <h3 className="text-2xl text-slate-800">{subcat.label}</h3>}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+                  {subcat.products.map((product, idx) => (
+                    <ProductCard 
+                      key={idx} 
+                      product={product} 
+                      onDownloadRequest={() => handleDownloadRequest(product.title, product.catalogLink)} 
+                    />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Catalog Download Modal */}
+      {selectedCatalog && (
+        <CatalogDownloadModal 
+          productTitle={selectedCatalog.title}
+          catalogLink={selectedCatalog.link}
+          onClose={() => setSelectedCatalog(null)} 
+        />
+      )}
+    </div>
+  );
+}
+
+// -----------------------------
+// Sub-Components
+// -----------------------------
+
+function ProductCard({ product, onDownloadRequest }: { product: any, onDownloadRequest: () => void }) {
+  return (
+    <div className="bg-white border border-slate-200 rounded-sm p-7 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full">
+      {product.brands && (
+        <div className="flex flex-wrap gap-4 mb-4 items-center">
+          {product.brands.map((b: string) => {
+            const logoUrl = getBrandLogo(b);
+            return (
+              <div key={b} className="flex items-center gap-2">
+                {logoUrl && (
+                  <img 
+                    src={logoUrl} 
+                    alt={b} 
+                    className="h-8 sm:h-10 w-auto object-contain"
+                  />
+                )}
+                <span className="text-xs font-bold tracking-wider text-slate-500 uppercase">
+                  {b}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      )}
+      <h3 className="text-xl text-slate-900 mb-4 font-bold leading-snug">{product.title}</h3>
+      <p className="text-slate-600 text-sm leading-relaxed mb-6">{product.desc}</p>
+      
+      {product.features && product.features.length > 0 && (
+        <ul className="space-y-2 mb-6">
+          {product.features.map((f: string, i: number) => (
+            <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
+              <CheckCircle2 className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
+              <span>{f}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+      
+      <div className="mt-auto pt-4 border-t border-slate-100 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <Link to="/quote" className="text-orange-600 tracking-wider text-xs hover:text-orange-700 transition-colors">
+          Request Quote &rarr;
+        </Link>
+        <button 
+          onClick={onDownloadRequest}
+          className="flex items-center gap-1.5 text-[10px] font-bold tracking-widest uppercase bg-orange-500 text-white px-5 py-2.5 rounded-full shadow hover:bg-orange-600 hover:shadow-md hover:-translate-y-0.5 transition-all"
+        >
+          <Download className="w-3.5 h-3.5" />
+          Catalog
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// -----------------------------
+// Catalog Download Modal Form
+// -----------------------------
+
+function CatalogDownloadModal({ productTitle, catalogLink, onClose }: { productTitle: string, catalogLink: string, onClose: () => void }) {
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", company: "", consentTerms: false, botcheck: "" });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  // The catalog the visitor came for. Resolved once so the auto-open and the
+  // manual fallback button always point at exactly the same destination.
+  const downloadUrl = resolveCatalogUrl(catalogLink);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const newErrors: Record<string, string> = {};
+    let hasErrors = false;
+
+    if (!formData.name.trim()) { newErrors.name = "Required"; hasErrors = true; }
+    
+    if (!formData.email.trim()) { 
+      newErrors.email = "Required"; hasErrors = true; 
+    } else if (!isValidEmail(formData.email)) {
+      newErrors.email = "Invalid email"; hasErrors = true;
+    }
+
+    if (formData.phone.trim() && !isValidIndianPhone(formData.phone)) {
+      newErrors.phone = "Invalid Indian mobile"; hasErrors = true;
+    }
+
+    if (!formData.company.trim()) { newErrors.company = "Required"; hasErrors = true; }
+
+    if (!formData.consentTerms) {
+      newErrors.consentTerms = "You must agree to the Terms of Use and Privacy Policy"; hasErrors = true;
+    }
+
+    setErrors(newErrors);
+
+    if (hasErrors) return;
+
+    // Open the catalog FIRST, while we're still inside the click's synchronous
+    // path — this preserves the user-gesture token so the browser won't treat
+    // the new tab as an unsolicited popup and block it. The lead notification
+    // below is purely best-effort and must never gate the download.
+    window.open(downloadUrl, "_blank", "noopener,noreferrer");
+
+    setIsSubmitting(true);
+
+    // Notifying Machinery Centre is best-effort: if it fails — relay service
+    // down, inbox not activated, visitor offline, request times out — the
+    // customer has ALREADY got their catalog, so we just log and move on.
+    try {
+      // The `fields` keys become the labels in the email, in the order listed.
+      await sendLead({
+        inbox: "product",
+        subject: `New catalog request: ${productTitle} — ${formData.company.trim()}`,
+        replyTo: formData.email.trim(),
+        botcheck: formData.botcheck,
+        fields: {
+          "Product Requested": productTitle,
+          "Customer Name": formData.name.trim(),
+          Company: formData.company.trim(),
+          Email: formData.email.trim(),
+          Phone: formData.phone.trim() || "Not provided",
+          Consent: formData.consentTerms
+            ? "✓ Agreed to Terms of Use & Privacy Policy"
+            : "✗ Not agreed",
+          "Submitted At": nowInIST(),
+        },
+      });
+    } catch (err) {
+      console.error("Catalog lead notification failed — download already delivered:", err);
+    }
+
+    setIsSubmitting(false);
+    setIsSuccess(true);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
+    const val = type === 'checkbox' ? checked : value;
+    setFormData(prev => ({ ...prev, [name]: val }));
+    if (errors[name]) setErrors(prev => ({ ...prev, [name]: "" }));
+  };
 
   return (
-    <div className="fixed inset-0 z-[80] flex justify-end">
-      <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-[2px] transition-opacity animate-fade-in" onClick={onClose} />
-      
-      <div className="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col animate-slide-left z-10">
-        <div className="p-6 bg-slate-900 text-white flex items-center justify-between">
-          <h2 className="text-xl font-bold tracking-tight">Request Quote</h2>
-          <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-lg transition-colors">
-            <X className="w-5 h-5 text-slate-300" />
-          </button>
-        </div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4">
+      <div className="bg-white w-full max-w-md rounded-sm shadow-xl overflow-hidden relative">
+        <button 
+          onClick={onClose}
+          className="absolute top-4 right-4 text-slate-400 hover:text-slate-900 transition-colors"
+        >
+          <X className="w-5 h-5" />
+        </button>
 
-        <div className="p-6 flex-1 overflow-y-auto">
-          {status === "success" ? (
-            <div className="h-full flex flex-col items-center justify-center text-center px-4">
-              <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mb-6">
-                <CheckCircle2 className="w-10 h-10 text-emerald-600" />
-              </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-3">Inquiry Sent!</h3>
-              <p className="text-slate-600 mb-8">Our sales team will review your request for the <strong className="text-slate-900">{product?.title}</strong> and contact you shortly with a formal quote.</p>
-              <button onClick={onClose} className="btn-pill btn-outline w-full">Close Window</button>
+        <div className="p-6 sm:p-8">
+          <div className="mb-6">
+            <h3 className="text-2xl text-slate-900 mb-2">Download Catalog</h3>
+            <p className="text-sm text-slate-500">
+              Please provide your details to download the complete {productTitle} PDF catalog.
+            </p>
+          </div>
+
+          {isSuccess ? (
+            <div className="bg-emerald-50 text-emerald-800 p-4 rounded-sm border border-emerald-100 flex flex-col items-center justify-center py-8">
+              <CheckCircle2 className="w-12 h-12 text-emerald-500 mb-3" />
+              <p className="font-medium text-center">Thank you!</p>
+              <p className="text-sm text-emerald-600 text-center mt-1">Your catalog should have opened in a new tab.</p>
+              <a
+                href={downloadUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-5 inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white tracking-widest text-[10px] uppercase py-3 px-6 rounded-full transition-colors"
+              >
+                <Download className="w-3.5 h-3.5" />
+                Download catalog
+              </a>
+              <p className="text-[10px] text-emerald-700/70 text-center mt-3">Didn't open? Tap the button above.</p>
             </div>
           ) : (
-            <>
-              <div className="mb-8 p-4 bg-slate-50 border border-slate-200 rounded-xl flex gap-4 items-center">
-                <img src={product?.image || product?.subcategory?.image || "/assets/images/about-main.png"} alt="" className="w-16 h-16 rounded-lg object-cover" />
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Honeypot anti-spam field — hidden from real users, bots tend to fill it */}
+              <input
+                type="text"
+                name="botcheck"
+                value={formData.botcheck}
+                onChange={handleChange}
+                className="hidden"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+              />
+              <div>
+                <label className="block text-xs text-slate-700 tracking-wider mb-1">Full Name</label>
+                <input 
+                  name="name"
+                  type="text" 
+                  value={formData.name}
+                  onChange={handleChange}
+                  className={`w-full px-4 py-3 bg-slate-50 border ${errors.name ? 'border-red-400' : 'border-slate-200'} rounded focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`}
+                  placeholder="John Doe"
+                />
+                {errors.name && <p className="text-red-500 text-[10px] mt-1">{errors.name}</p>}
+              </div>
+              <div>
+                <label className="block text-xs text-slate-700 tracking-wider mb-1">Email Address</label>
+                <input 
+                  name="email"
+                  type="email" 
+                  value={formData.email}
+                  onChange={handleChange}
+                  className={`w-full px-4 py-3 bg-slate-50 border ${errors.email ? 'border-red-400' : 'border-slate-200'} rounded focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`}
+                  placeholder="john@company.com"
+                />
+                {errors.email && <p className="text-red-500 text-[10px] mt-1">{errors.email}</p>}
+              </div>
+              <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <span className="text-[10px] font-black uppercase tracking-widest text-orange-600 block mb-1">Selected Product</span>
-                  <h4 className="font-bold text-slate-900 leading-tight text-sm">{product?.title}</h4>
+                  <label className="block text-xs text-slate-700 tracking-wider mb-1">Phone <span className="text-slate-400 font-normal normal-case">(optional)</span></label>
+                  <input 
+                    name="phone"
+                    type="tel" 
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className={`w-full px-4 py-3 bg-slate-50 border ${errors.phone ? 'border-red-400' : 'border-slate-200'} rounded focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`}
+                    placeholder="+91 9800000000"
+                  />
+                  {errors.phone && <p className="text-red-500 text-[10px] mt-1">{errors.phone}</p>}
+                </div>
+                <div>
+                  <label className="block text-xs text-slate-700 tracking-wider mb-1">Company</label>
+                  <input 
+                    name="company"
+                    type="text" 
+                    value={formData.company}
+                    onChange={handleChange}
+                    className={`w-full px-4 py-3 bg-slate-50 border ${errors.company ? 'border-red-400' : 'border-slate-200'} rounded focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors`}
+                    placeholder="Acme Inc."
+                  />
+                  {errors.company && <p className="text-red-500 text-[10px] mt-1">{errors.company}</p>}
+                </div>
+              </div>
+              
+              <div className="space-y-4 pt-4 border-t border-slate-100">
+                <div>
+                  <label className="flex items-center gap-3 cursor-pointer group">
+                    <input 
+                      type="checkbox" 
+                      name="consentTerms"
+                      checked={formData.consentTerms as boolean} 
+                      onChange={handleChange}
+                      className="w-4 h-4 shrink-0 text-orange-600 bg-slate-50 border-slate-300 rounded focus:ring-orange-500 cursor-pointer accent-orange-500"
+                    />
+                    <div className="text-xs text-slate-600 leading-tight">
+                      I have read and agree to the <a href="/terms-of-use" target="_blank" rel="noreferrer" className="text-orange-600 hover:underline">Terms of Use</a> and <a href="/privacy-policy" target="_blank" rel="noreferrer" className="text-orange-600 hover:underline">Privacy Policy</a>. <span className="text-orange-500">*</span>
+                    </div>
+                  </label>
+                  {errors.consentTerms && <p className="text-red-500 text-[10px] ml-7 mt-1">{errors.consentTerms}</p>}
                 </div>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-2">Full Name *</label>
-                  <input
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className={cn("w-full px-4 py-3 bg-white border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-orange-500", errors.name ? "border-red-400" : "border-slate-300")}
-                    placeholder="Enter your name"
-                  />
-                  {errors.name && <p className="text-red-500 text-xs mt-1.5">{errors.name}</p>}
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-2">Company Name</label>
-                  <input
-                    type="text"
-                    value={formData.company}
-                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    className="w-full px-4 py-3 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
-                    placeholder="Optional"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-2">Phone *</label>
-                    <input
-                      type="tel"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className={cn("w-full px-4 py-3 bg-white border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-orange-500", errors.phone ? "border-red-400" : "border-slate-300")}
-                      placeholder="Mobile number"
-                    />
-                    {errors.phone && <p className="text-red-500 text-xs mt-1.5">{errors.phone}</p>}
-                  </div>
-                  <div>
-                    <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-2">Email</label>
-                    <input
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className={cn("w-full px-4 py-3 bg-white border rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-orange-500", errors.email ? "border-red-400" : "border-slate-300")}
-                      placeholder="Optional"
-                    />
-                    {errors.email && <p className="text-red-500 text-xs mt-1.5">{errors.email}</p>}
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-2">Specific Requirements</label>
-                  <textarea
-                    value={formData.requirement}
-                    onChange={(e) => setFormData({ ...formData, requirement: e.target.value })}
-                    className="w-full px-4 py-3 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 resize-none h-24"
-                    placeholder="E.g., Quantity needed, target pressure, application..."
-                  />
-                </div>
-
-                {status === "error" && (
-                  <p className="text-red-500 text-sm p-3 bg-red-50 rounded-lg border border-red-100 text-center">Failed to send request. Please try again.</p>
-                )}
-
+              <div className="pt-2">
                 <button
                   type="submit"
-                  disabled={status === "submitting"}
-                  className="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold uppercase tracking-widest text-[11px] py-4 rounded-xl transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center mt-4"
+                  disabled={isSubmitting}
+                  className="w-full bg-orange-500 hover:bg-orange-600 text-white tracking-widest text-[10px] uppercase py-4 px-6 rounded-full transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  {status === "submitting" ? "Submitting..." : "Send Request"}
+                  {isSubmitting ? "Processing..." : "Get Catalog"}
                 </button>
-              </form>
-            </>
+                <p className="text-[10px] text-slate-400 mt-3 text-center">
+                  By submitting, these details will be sent to Machinery Centre so we can better assist you.
+                </p>
+              </div>
+            </form>
           )}
         </div>
       </div>

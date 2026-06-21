@@ -169,20 +169,6 @@ const catalogData = {
             catalogLink: "https://drive.google.com/uc?export=download&id=1abuKUpjlG9j9qRVYDo3CnzJtEa2xMxRJ"
           },
           {
-            title: "TRIDENT Nitrogen Generator",
-            desc: "Modular nitrogen generator using PSA technology. Delivers uninterrupted nitrogen supply for multiple industries.",
-            brands: ["Trident"],
-            features: ["Purity from 95% to 99.999%", "Microprocessor controller", "Corrosion free modular aluminium construction"],
-            catalogLink: "https://drive.google.com/uc?export=download&id=1nNlJeUun0Zq2_VLr7fFNIKDoTU28uEnY"
-          },
-          {
-            title: "TRIDENT Vortex Filter VXD 2",
-            desc: "Eliminates 100% water in liquid phase from compressed air. Compact, light weight, and uses no electricity.",
-            brands: ["Trident"],
-            features: ["Removes water, oil and solid particles", "No Electricity used", "All aluminium resist oxidation"],
-            catalogLink: "https://drive.google.com/uc?export=download&id=1Gdeuy0sZfvVsvB89To4kVYZod1sjOeCj"
-          },
-          {
             title: "TRIDENT Medical Vacuum Filters High Performance Series",
             desc: "Designed to remove liquid, solid, and bacterial contamination from the suction side of vacuum pumps.",
             brands: ["Trident"],
@@ -195,6 +181,20 @@ const catalogData = {
             brands: ["Trident"],
             features: ["Aluminium alloy housing, hard anodized", "Compatible with autoclave sterilisation", "Borosilicate filter media"],
             catalogLink: "https://drive.google.com/uc?export=download&id=1Yhox1XasGhUigrJ6cnrAKFd0a4nhEPki"
+          },
+          {
+            title: "TRIDENT Nitrogen Generator",
+            desc: "Modular nitrogen generator using PSA technology. Delivers uninterrupted nitrogen supply for multiple industries.",
+            brands: ["Trident"],
+            features: ["Purity from 95% to 99.999%", "Microprocessor controller", "Corrosion free modular aluminium construction"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1nNlJeUun0Zq2_VLr7fFNIKDoTU28uEnY"
+          },
+          {
+            title: "TRIDENT Vortex Filter VXD 2",
+            desc: "Eliminates 100% water in liquid phase from compressed air. Compact, light weight, and uses no electricity.",
+            brands: ["Trident"],
+            features: ["Removes water, oil and solid particles", "No Electricity used", "All aluminium resist oxidation"],
+            catalogLink: "https://drive.google.com/uc?export=download&id=1Gdeuy0sZfvVsvB89To4kVYZod1sjOeCj"
           },
           {
             title: "TRIDENT Carbon Adsorber Tower",

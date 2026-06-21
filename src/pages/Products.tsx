@@ -241,13 +241,6 @@ const catalogData = {
         label: "Gear Pump",
         products: [
           {
-            title: "Rotary Gear Pumps Type 'HGSX'",
-            brands: ["Rotodel"],
-            desc: "High viscosity fluid handling designed to run up to 1440 RPM.",
-            features: ["Used in Food & Pharma", "Smooth, pulsation-free flow", "compact and efficient" ],
-            catalogLink: "https://drive.google.com/uc?export=download&id=17bjoJ1m4XfzzhZwQdpA3J8bgP5_R1ln1"
-          },
-          {
             title: "Rotary Gear Pumps Type 'HGN'",
             desc: "Rotodel Type 'HGN' rotary gear pumps for transferring viscous, lubricating and non-abrasive fluids with smooth, pulsation-free flow.",
             brands: ["Rotodel"],
@@ -257,7 +250,14 @@ const catalogData = {
               "Smooth, pulsation-free flow"
             ],
             catalogLink: "https://drive.google.com/uc?export=download&id=1LCiAcCRJdCNlRRNhtmutsk5clv28rvUS"
-          }
+          },
+          {
+            title: "Rotary Gear Pumps Type 'HGSX'",
+            brands: ["Rotodel"],
+            desc: "High viscosity fluid handling designed to run up to 1440 RPM.",
+            features: ["Used in Food & Pharma", "Smooth, pulsation-free flow", "compact and efficient" ],
+            catalogLink: "https://drive.google.com/uc?export=download&id=17bjoJ1m4XfzzhZwQdpA3J8bgP5_R1ln1"
+          },          
         ]
       },
       

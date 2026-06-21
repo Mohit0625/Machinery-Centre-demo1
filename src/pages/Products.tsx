@@ -234,7 +234,7 @@ const catalogData = {
         label: "Gear Pump",
         products: [
           {
-            title: "Gear Pumps",
+            title: "Rotary Gear Pumps Type 'HGSX'",
             brands: ["Rotodel Gear Pump Type 'HGSX'"],
             desc: "High viscosity fluid handling designed to run up to 1440 RPM.",
             features: ["Used in Food & Pharma", "Smooth, pulsation-free flow", "compact and efficient" ],

@@ -194,7 +194,7 @@ export function Layout() {
                 </div>
 
                 {/* Rest of Nav Links */}
-                {navLinks.slice(1).map((link) => (
+                {navLinks.map((link) => (
                   <Link
                     key={link.name}
                     to={link.path}

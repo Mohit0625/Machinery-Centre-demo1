@@ -82,8 +82,8 @@ export function Layout() {
             </div>
             <div className="hidden sm:flex items-center gap-2 text-slate-400">
               <MapPin className="w-3.5 h-3.5 text-orange-500" />
-              <a href="https://www.google.com/maps/search/?api=1&query=3858,+Shah+Ganj,+G.B.+Road,+Delhi-6" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors cursor-pointer">
-                3858, Shah Ganj, G.B. Road, Delhi-6
+              <a href="https://www.google.com/maps/search/?api=1&query=3858,+Shradhanand+Marg,+Shah+Ganj,+Behind+Hanuman+Mandir,+Delhi-110006" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors cursor-pointer">
+                3858 Shradhanand Marg, Shah Ganj, Behind Hanuman Mandir, Delhi-110006
               </a>
             </div>
           </div>
@@ -349,8 +349,8 @@ export function Layout() {
                   <div className="bg-slate-900 p-2 rounded text-orange-500 shrink-0">
                     <MapPin className="w-4 h-4" />
                   </div>
-                  <a href="https://www.google.com/maps/search/?api=1&query=3858,+Shah+Ganj,+G.B.+Road,+Delhi-6" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:underline transition-colors font-medium pt-1">
-                    3858, Shah Ganj, G.B. Road,<br />Delhi-6
+                  <a href="https://www.google.com/maps/search/?api=1&query=3858,+Shradhanand+Marg,+Shah+Ganj,+Behind+Hanuman+Mandir,+Delhi-110006" target="_blank" rel="noopener noreferrer" className="hover:text-white hover:underline transition-colors font-medium pt-1">
+                    3858 Shradhanand Marg, Shah Ganj,<br />Behind Hanuman Mandir, Delhi-110006
                   </a>
                 </li>
                 <li className="flex items-start gap-4">

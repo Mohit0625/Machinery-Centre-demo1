@@ -11,7 +11,14 @@ import {
   CheckCircle2,
   Cpu,
   Factory,
-  Star
+  Star,
+  Zap,
+  VolumeX,
+  Wrench,
+  Timer,
+  Box,
+  Settings,
+  Briefcase
 } from "lucide-react";
 import { isValidIndianPhone } from "../utils/validation";
 import { useSEO } from "../utils/useSEO";
@@ -441,127 +448,144 @@ export function Home() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-           5. IN-HOUSE INNOVATION — THE TRENDI RANGE
+           5. BRAND SHOWCASE — THE TRENDI RANGE
            ═══════════════════════════════════════════════════════ */}
       <section className="py-20 sm:py-28 bg-slate-900 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-            
-            {/* Left Column */}
-            <div>
-              <div className="flex items-center gap-4 mb-4">
-                {getBrandLogo("Trendi") && (
-                  <img 
-                    src={getBrandLogo("Trendi")} 
-                    alt="Trendi Logo" 
-                    className="h-8 sm:h-10 w-auto object-contain bg-white/5 px-2 py-1 rounded" 
-                  />
-                )}
-                <span className="text-[11px] tracking-[0.3em] text-accent-500 block font-bold uppercase">
-                  In-House Excellence
-                </span>
-              </div>
-              <h2 className="text-4xl sm:text-5xl text-white mb-6 font-black tracking-tight leading-tight">
-                The Trendi Product Range
-              </h2>
-              <p className="text-slate-300 text-lg leading-relaxed mb-10">
-                Advanced engineering with intelligent microprocessor control, low specific power consumption, and low noise design metrics built for peak efficiency.
-              </p>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="border border-white/10 rounded-xl p-5 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors">
-                  <div className="w-10 h-10 bg-accent-500/20 rounded-lg flex items-center justify-center mb-4">
-                    <Cpu className="w-5 h-5 text-accent-400" />
-                  </div>
-                  <h4 className="text-white font-semibold text-sm mb-1">Intelligent Control</h4>
-                  <p className="text-slate-400 text-xs leading-relaxed">Microprocessor-based electronic controllers.</p>
-                </div>
-                
-                <div className="border border-white/10 rounded-xl p-5 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors">
-                  <div className="w-10 h-10 bg-accent-500/20 rounded-lg flex items-center justify-center mb-4">
-                    <Factory className="w-5 h-5 text-accent-400" />
-                  </div>
-                  <h4 className="text-white font-semibold text-sm mb-1">Energy Efficiency</h4>
-                  <p className="text-slate-400 text-xs leading-relaxed">IE3 Electric Motors & Low Specific Power Consumption.</p>
-                </div>
-
-                <div className="border border-white/10 rounded-xl p-5 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors">
-                  <div className="w-10 h-10 bg-accent-500/20 rounded-lg flex items-center justify-center mb-4">
-                    <Droplets className="w-5 h-5 text-accent-400" />
-                  </div>
-                  <h4 className="text-white font-semibold text-sm mb-1">Zero Air Loss</h4>
-                  <p className="text-slate-400 text-xs leading-relaxed">Condensate-sensing technology for maximum efficiency.</p>
-                </div>
-
-                <div className="border border-white/10 rounded-xl p-5 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors">
-                  <div className="w-10 h-10 bg-accent-500/20 rounded-lg flex items-center justify-center mb-4">
-                    <Filter className="w-5 h-5 text-accent-400" />
-                  </div>
-                  <h4 className="text-white font-semibold text-sm mb-1">Advanced Separation</h4>
-                  <p className="text-slate-400 text-xs leading-relaxed">Three-stage Air-Oil separation systems.</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* Card 01 */}
-              <Link to="/products" className="bg-white rounded-2xl p-6 sm:p-8 flex flex-col hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group cursor-pointer block">
-                <span className="text-[10px] tracking-widest text-accent-500 font-bold uppercase mb-2">Advanced Screw Airend</span>
-                <h3 className="text-slate-900 text-xl font-black leading-tight mb-3">Screw Air Compressors</h3>
-                <p className="text-slate-500 text-sm leading-relaxed mb-6 flex-1">
-                  Highlighting Energy Efficient & Base-Mounted Direct Drive Screw models.
-                </p>
-                <span className="text-accent-600 text-xs font-bold flex items-center gap-1 group-hover:text-accent-700 transition-colors">
-                  Explore Models <ArrowRight className="w-3 h-3" />
-                </span>
-              </Link>
-
-              {/* Card 02 */}
-              <Link to="/products" className="bg-white rounded-2xl p-6 sm:p-8 flex flex-col hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group cursor-pointer block">
-                <span className="text-[10px] tracking-widest text-accent-500 font-bold uppercase mb-2">Continuous Duty</span>
-                <h3 className="text-slate-900 text-xl font-black leading-tight mb-3">Reciprocating Compressors</h3>
-                <p className="text-slate-500 text-sm leading-relaxed mb-6 flex-1">
-                  Motor-Driven Two-Stage Air Compressors with durable cast iron construction and 360° cooling.
-                </p>
-                <span className="text-accent-600 text-xs font-bold flex items-center gap-1 group-hover:text-accent-700 transition-colors">
-                  Explore Models <ArrowRight className="w-3 h-3" />
-                </span>
-              </Link>
-
-              {/* Card 03 */}
-              <Link to="/products" className="bg-white rounded-2xl p-6 sm:p-8 flex flex-col hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group cursor-pointer block">
-                <span className="text-[10px] tracking-widest text-accent-500 font-bold uppercase mb-2">Low Pressure Drop</span>
-                <h3 className="text-slate-900 text-xl font-black leading-tight mb-3">Desiccant Air Dryers</h3>
-                <p className="text-slate-500 text-sm leading-relaxed mb-6 flex-1">
-                  Dryspell Series, Core, and Plus heatless compressed air dryers with purge economizers.
-                </p>
-                <span className="text-accent-600 text-xs font-bold flex items-center gap-1 group-hover:text-accent-700 transition-colors">
-                  Explore Dryers <ArrowRight className="w-3 h-3" />
-                </span>
-              </Link>
-
-              {/* Card 04 */}
-              <Link to="/products" className="bg-white rounded-2xl p-6 sm:p-8 flex flex-col hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group cursor-pointer block">
-                <span className="text-[10px] tracking-widest text-accent-500 font-bold uppercase mb-2">Total Cleaning Solutions</span>
-                <h3 className="text-slate-900 text-xl font-black leading-tight mb-3">Specialized Air Treatment</h3>
-                <p className="text-slate-500 text-sm leading-relaxed mb-6 flex-1">
-                  Coldspell refrigeration dryers, automatic drain valves, and Nitrogen/Vortex filtration systems.
-                </p>
-                <span className="text-accent-600 text-xs font-bold flex items-center gap-1 group-hover:text-accent-700 transition-colors">
-                  Explore Filtration <ArrowRight className="w-3 h-3" />
-                </span>
-              </Link>
-            </div>
-            
-          </div>
           
-          {/* Section Footer */}
-          <div className="text-center mt-16 sm:mt-24">
-            <Link to="/trendi" className="inline-block bg-orange-600 text-white hover:bg-orange-700 px-8 py-4 rounded-full text-[11px] font-bold tracking-widest uppercase transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1">
-              Explore the Complete Trendi Range
+          {/* 1. BRAND SHOWCASE */}
+          <div className="text-center max-w-4xl mx-auto mb-16">
+            <div className="inline-flex items-center gap-2 mb-6 bg-slate-800/50 px-4 py-2 rounded-full border border-slate-700">
+              <Star className="w-4 h-4 text-orange-500 fill-current" />
+              <span className="text-[10px] tracking-[0.2em] text-slate-300 font-bold uppercase">Exclusive Partner Brand</span>
+            </div>
+            
+            <div className="flex justify-center mb-8">
+              {getBrandLogo("Trendi") && (
+                <img 
+                  src={getBrandLogo("Trendi")} 
+                  alt="Trendi Logo" 
+                  className="h-24 sm:h-32 w-auto object-contain" 
+                />
+              )}
+            </div>
+            
+            <p className="text-slate-300 text-xl leading-relaxed mb-10 max-w-3xl mx-auto">
+              Advanced engineering solutions designed for industrial efficiency, reliability, and long-term operational performance.
+            </p>
+
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-8 text-sm text-slate-400">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-orange-500" />
+                <span>15+ Product Models</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-orange-500" />
+                <span>4 Core Categories</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-orange-500" />
+                <span>Nationwide Industry Support</span>
+              </div>
+            </div>
+          </div>
+
+          {/* 2. CORE ADVANTAGES */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-20">
+            <div className="bg-slate-800/30 border border-slate-800 rounded-lg p-5 flex flex-col items-center text-center hover:bg-slate-800 transition-colors">
+              <Cpu className="w-6 h-6 text-orange-500 mb-3" />
+              <span className="text-xs font-bold text-white uppercase tracking-wider">Intelligent Controls</span>
+            </div>
+            <div className="bg-slate-800/30 border border-slate-800 rounded-lg p-5 flex flex-col items-center text-center hover:bg-slate-800 transition-colors">
+              <Zap className="w-6 h-6 text-orange-500 mb-3" />
+              <span className="text-xs font-bold text-white uppercase tracking-wider">Energy Efficiency</span>
+            </div>
+            <div className="bg-slate-800/30 border border-slate-800 rounded-lg p-5 flex flex-col items-center text-center hover:bg-slate-800 transition-colors">
+              <VolumeX className="w-6 h-6 text-orange-500 mb-3" />
+              <span className="text-xs font-bold text-white uppercase tracking-wider">Low Noise</span>
+            </div>
+            <div className="bg-slate-800/30 border border-slate-800 rounded-lg p-5 flex flex-col items-center text-center hover:bg-slate-800 transition-colors">
+              <ShieldCheck className="w-6 h-6 text-orange-500 mb-3" />
+              <span className="text-xs font-bold text-white uppercase tracking-wider">Industrial Reliability</span>
+            </div>
+            <div className="bg-slate-800/30 border border-slate-800 rounded-lg p-5 flex flex-col items-center text-center hover:bg-slate-800 transition-colors">
+              <Wrench className="w-6 h-6 text-orange-500 mb-3" />
+              <span className="text-xs font-bold text-white uppercase tracking-wider">Low Maintenance</span>
+            </div>
+            <div className="bg-slate-800/30 border border-slate-800 rounded-lg p-5 flex flex-col items-center text-center hover:bg-slate-800 transition-colors">
+              <Timer className="w-6 h-6 text-orange-500 mb-3" />
+              <span className="text-xs font-bold text-white uppercase tracking-wider">Continuous Duty</span>
+            </div>
+          </div>
+
+          {/* 3. PRODUCT FAMILY EXPLORER */}
+          <div className="mb-16">
+            <h3 className="text-2xl font-black text-white tracking-tight mb-8">Explore Product Families</h3>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              
+              {/* Product Card 1 */}
+              <Link to="/products" className="group flex flex-col bg-slate-800/40 rounded-xl border border-slate-700/60 p-6 sm:p-8 hover:bg-slate-800 hover:border-orange-500 transition-all duration-300 shadow-sm hover:shadow-md">
+                <Cpu className="w-7 h-7 text-slate-400 group-hover:text-orange-500 transition-colors mb-5" />
+                <h4 className="text-white text-xl font-bold tracking-tight mb-1">Screw Air Compressors</h4>
+                <div className="text-[11px] font-bold text-slate-500 tracking-wider uppercase mb-3">8 Models Available</div>
+                <p className="text-slate-400 text-sm leading-relaxed mb-8 flex-1">
+                  Continuous-duty air compression systems.
+                </p>
+                <div className="mt-auto flex items-center text-orange-500 text-xs font-bold uppercase tracking-widest group-hover:text-orange-400 transition-colors">
+                  Explore <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+
+              {/* Product Card 2 */}
+              <Link to="/products" className="group flex flex-col bg-slate-800/40 rounded-xl border border-slate-700/60 p-6 sm:p-8 hover:bg-slate-800 hover:border-orange-500 transition-all duration-300 shadow-sm hover:shadow-md">
+                <Factory className="w-7 h-7 text-slate-400 group-hover:text-orange-500 transition-colors mb-5" />
+                <h4 className="text-white text-xl font-bold tracking-tight mb-1">Reciprocating Compressors</h4>
+                <div className="text-[11px] font-bold text-slate-500 tracking-wider uppercase mb-3">6 Models Available</div>
+                <p className="text-slate-400 text-sm leading-relaxed mb-8 flex-1">
+                  Heavy-duty industrial air solutions.
+                </p>
+                <div className="mt-auto flex items-center text-orange-500 text-xs font-bold uppercase tracking-widest group-hover:text-orange-400 transition-colors">
+                  Explore <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+
+              {/* Product Card 3 */}
+              <Link to="/products" className="group flex flex-col bg-slate-800/40 rounded-xl border border-slate-700/60 p-6 sm:p-8 hover:bg-slate-800 hover:border-orange-500 transition-all duration-300 shadow-sm hover:shadow-md">
+                <Droplets className="w-7 h-7 text-slate-400 group-hover:text-orange-500 transition-colors mb-5" />
+                <h4 className="text-white text-xl font-bold tracking-tight mb-1">Desiccant Air Dryers</h4>
+                <div className="text-[11px] font-bold text-slate-500 tracking-wider uppercase mb-3">5 Models Available</div>
+                <p className="text-slate-400 text-sm leading-relaxed mb-8 flex-1">
+                  Moisture removal for critical applications.
+                </p>
+                <div className="mt-auto flex items-center text-orange-500 text-xs font-bold uppercase tracking-widest group-hover:text-orange-400 transition-colors">
+                  Explore <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+
+              {/* Product Card 4 */}
+              <Link to="/products" className="group flex flex-col bg-slate-800/40 rounded-xl border border-slate-700/60 p-6 sm:p-8 hover:bg-slate-800 hover:border-orange-500 transition-all duration-300 shadow-sm hover:shadow-md">
+                <Filter className="w-7 h-7 text-slate-400 group-hover:text-orange-500 transition-colors mb-5" />
+                <h4 className="text-white text-xl font-bold tracking-tight mb-1">Specialized Air Treatment</h4>
+                <div className="text-[11px] font-bold text-slate-500 tracking-wider uppercase mb-3">4 Categories</div>
+                <p className="text-slate-400 text-sm leading-relaxed mb-8 flex-1">
+                  Filtration and air quality solutions.
+                </p>
+                <div className="mt-auto flex items-center text-orange-500 text-xs font-bold uppercase tracking-widest group-hover:text-orange-400 transition-colors">
+                  Explore <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+
+            </div>
+          </div>
+
+          {/* CATALOGUE CTA */}
+          <div className="text-center mb-12">
+            <Link to="/trendi" className="inline-block bg-orange-600 text-white hover:bg-orange-700 px-10 py-5 rounded-md text-[11px] font-bold tracking-[0.2em] uppercase transition-all shadow-xl hover:shadow-orange-500/20 hover:-translate-y-1">
+              View Full Trendi Catalogue
             </Link>
           </div>
+
         </div>
       </section>
 

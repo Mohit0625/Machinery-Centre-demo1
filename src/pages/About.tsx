@@ -138,8 +138,8 @@ export function About() {
               <div className="space-y-6 text-slate-300">
                 <div>
                   <h4 className="text-xs tracking-widest text-slate-500 mb-1">Address</h4>
-                  <a href="https://www.google.com/maps/search/?api=1&query=3858,+Shah+Ganj,+G.B.+Road,+Delhi-6" target="_blank" rel="noopener noreferrer" className="font-medium hover:text-white hover:underline transition-colors cursor-pointer block">
-                    3858, SHAH GANJ, G.B. ROAD,<br />DELHI-6
+                  <a href="https://www.google.com/maps/search/?api=1&query=3858,+Shradhanand+Marg,+Shah+Ganj,+Behind+Hanuman+Mandir,+Delhi-110006" target="_blank" rel="noopener noreferrer" className="font-medium hover:text-white hover:underline transition-colors cursor-pointer block">
+                    3858 SHRADHANAND MARG, SHAH GANJ,<br />BEHIND HANUMAN MANDIR, DELHI-110006
                   </a>
                 </div>
                 <div>

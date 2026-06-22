@@ -170,7 +170,7 @@ export function PrivacyPolicy() {
               <p className="text-slate-700">Machinery Centre</p>
               <p className="text-slate-700 mt-2">Email: <a href="mailto:machinerycentre@yahoo.com" className="text-orange-600 hover:underline">machinerycentre@yahoo.com</a></p>
               <p className="text-slate-700 mt-2">Phone: +91-9810054137, +91-9891155438</p>
-              <p className="text-slate-700 mt-2">Registered Office Address: 3858, Shah Ganj, G.B. Road, Delhi – 110006, India</p>
+              <p className="text-slate-700 mt-2">Registered Office Address: 3858 Shradhanand Marg, Shah Ganj, Behind Hanuman Mandir, Delhi-110006, India</p>
             </div>
             <p className="text-slate-600 leading-relaxed mt-4">
               The Company shall endeavor to acknowledge and address grievances within the timelines prescribed under applicable law.
@@ -195,8 +195,8 @@ export function PrivacyPolicy() {
             <div className="bg-slate-100 p-6 rounded-sm border border-slate-200 mt-4">
               <h3 className="font-bold text-slate-900 mb-2">Machinery Centre</h3>
               <p className="text-slate-700 font-medium">Corporate Office:</p>
-              <p className="text-slate-700">3858, Shah Ganj, G.B. Road,</p>
-              <p className="text-slate-700">Delhi – 110006, India</p>
+              <p className="text-slate-700">3858 Shradhanand Marg, Shah Ganj, Behind Hanuman Mandir,</p>
+              <p className="text-slate-700">Delhi-110006, India</p>
               <div className="mt-4 space-y-1">
                 <p className="text-slate-700"><span className="font-medium">Telephone:</span> +91-11-41440012</p>
                 <p className="text-slate-700"><span className="font-medium">Mobile:</span> +91-9810054137, +91-9891155438</p>

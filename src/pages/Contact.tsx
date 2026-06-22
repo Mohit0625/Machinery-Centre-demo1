@@ -114,8 +114,8 @@ export function Contact() {
                   </div>
                   <div>
                     <h4 className="text-sm tracking-widest text-slate-500 mb-1">Office Location</h4>
-                    <a href="https://www.google.com/maps/search/?api=1&query=3858,+Shah+Ganj,+G.B.+Road,+Delhi-6" target="_blank" rel="noopener noreferrer" className="text-slate-800 font-medium hover:text-orange-600 hover:underline transition-colors cursor-pointer block">
-                      3858, SHAH GANJ, G.B. ROAD,<br />DELHI-6
+                    <a href="https://www.google.com/maps/search/?api=1&query=3858,+Shradhanand+Marg,+Shah+Ganj,+Behind+Hanuman+Mandir,+Delhi-110006" target="_blank" rel="noopener noreferrer" className="text-slate-800 font-medium hover:text-orange-600 hover:underline transition-colors cursor-pointer block">
+                      3858 SHRADHANAND MARG, SHAH GANJ,<br />BEHIND HANUMAN MANDIR, DELHI-110006
                     </a>
                   </div>
                 </li>

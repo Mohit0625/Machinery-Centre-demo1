@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { Briefcase, Send, CheckCircle, Upload } from "lucide-react";
+import { useState } from "react";
+import { Briefcase, Send, CheckCircle } from "lucide-react";
 import { isValidIndianPhone, isValidEmail } from "../utils/validation";
 import { useSEO } from "../utils/useSEO";
 import { sendLead, nowInIST } from "../utils/leadForm";
@@ -11,14 +11,12 @@ export function Career() {
     email: "", 
     phone: "", 
     about: "", 
-    cvFileName: "",
     consentTerms: false, 
     botcheck: "" 
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useSEO(
     "Careers | Machinery Centre",
@@ -67,7 +65,6 @@ export function Career() {
           Email: formData.email.trim(),
           Phone: formData.phone.trim(),
           "About Applicant": formData.about.trim() || "Not provided",
-          "CV Attached": formData.cvFileName ? `Yes (File: ${formData.cvFileName})` : "No",
           Consent: formData.consentTerms
             ? "✓ Agreed to Terms of Use & Privacy Policy"
             : "✗ Not agreed",
@@ -90,11 +87,7 @@ export function Career() {
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: "" }));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setFormData(prev => ({ ...prev, cvFileName: e.target.files![0].name }));
-    }
-  };
+
 
   return (
     <div className="flex-1 bg-slate-50">
@@ -175,25 +168,7 @@ export function Career() {
                       <textarea name="about" value={formData.about} onChange={handleChange} rows={4} className="w-full bg-slate-50 border border-slate-200 rounded px-4 py-3 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-colors" placeholder="Tell us a little about your background and why you want to join us..." />
                     </div>
 
-                    <div className="space-y-2 md:col-span-2">
-                      <label className="text-sm text-slate-700 block">CV / Resume <span className="text-slate-400 text-xs font-normal">(Optional)</span></label>
-                      <div 
-                        className="w-full border-2 border-dashed border-slate-200 rounded-lg p-6 bg-slate-50 flex flex-col items-center justify-center cursor-pointer hover:bg-slate-100 transition-colors"
-                        onClick={() => fileInputRef.current?.click()}
-                      >
-                        <Upload className="w-8 h-8 text-slate-400 mb-2" />
-                        <span className="text-sm text-slate-600">
-                          {formData.cvFileName ? formData.cvFileName : "Click to attach your CV (PDF, DOCX)"}
-                        </span>
-                        <input 
-                          type="file" 
-                          ref={fileInputRef} 
-                          className="hidden" 
-                          accept=".pdf,.doc,.docx"
-                          onChange={handleFileChange}
-                        />
-                      </div>
-                    </div>
+
                   </div>
 
                   <div className="space-y-2 pt-2">

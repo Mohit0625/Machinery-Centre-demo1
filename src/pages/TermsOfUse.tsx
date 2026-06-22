@@ -52,7 +52,7 @@ export function TermsOfUse() {
           <section id="introduction" className="mb-12 scroll-mt-32">
             <h2 className="text-2xl font-black text-slate-900 mb-4">1. INTRODUCTION</h2>
             <p className="text-slate-600 leading-relaxed mb-4">
-              These Terms and Conditions ("Terms") govern access to and use of the website operated by Machinery Centre, having its corporate office at 3858, Shah Ganj, G.B. Road, Delhi – 110006, India ("Machinery Centre", "Company", "we", "our", or "us").
+              These Terms and Conditions ("Terms") govern access to and use of the website operated by Machinery Centre, having its corporate office at 3858 Shradhanand Marg, Shah Ganj, Behind Hanuman Mandir, Delhi-110006, India ("Machinery Centre", "Company", "we", "our", or "us").
             </p>
             <p className="text-slate-600 leading-relaxed mb-4">
               By accessing, browsing, or using this Website, downloading any catalogue, brochure, technical document, or otherwise interacting with the Website, you acknowledge that you have read, understood, and agreed to be bound by these Terms. If you do not agree with any provision of these Terms, you should immediately discontinue use of the Website.
@@ -231,7 +231,7 @@ export function TermsOfUse() {
             </p>
             <div className="bg-slate-100 p-6 rounded-sm border border-slate-200 mt-4">
               <h3 className="font-bold text-slate-900 mb-2">Machinery Centre</h3>
-              <p className="text-slate-700">3858, Shah Ganj, G.B. Road, Delhi – 110006, India</p>
+              <p className="text-slate-700">3858 Shradhanand Marg, Shah Ganj, Behind Hanuman Mandir, Delhi-110006, India</p>
               <div className="mt-4 space-y-1">
                 <p className="text-slate-700"><span className="font-medium">Telephone:</span> +91-11-41440012</p>
                 <p className="text-slate-700"><span className="font-medium">Mobile:</span> +91-9810054137 / +91-9891155438</p>

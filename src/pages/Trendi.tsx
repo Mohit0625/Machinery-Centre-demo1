@@ -90,7 +90,7 @@ export function Trendi() {
         {/* Background Image */}
         <div className="absolute inset-0">
           <img
-            src="/assets/images/about-main.png"
+            src="/assets/images/about-main.webp"
             alt="Trendi industrial air compressor"
             className="w-full h-full object-cover"
           />
@@ -176,7 +176,7 @@ export function Trendi() {
               </Link>
               <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/3] w-full hidden lg:block">
                 <img
-                  src="/assets/images/hero.png"
+                  src="/assets/images/hero.webp"
                   alt="Trendi Compressors"
                   className="w-full h-full object-cover"
                 />
@@ -229,7 +229,7 @@ export function Trendi() {
               </Link>
               <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/3] w-full hidden lg:block">
                 <img
-                  src="/assets/images/hero-machinery.png"
+                  src="/assets/images/hero-machinery.webp"
                   alt="Trendi Air Treatment"
                   className="w-full h-full object-cover"
                 />

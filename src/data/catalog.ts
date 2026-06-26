@@ -12,7 +12,7 @@ export const catalogData = {
       {
         id: "all-compressors",
         label: "Air Compressors",
-        image: "/assets/images/about-main.png",
+        image: "/assets/images/about-main.webp",
         products: [
           {
             title: "Trendi Energy Efficient Screw Air Compressor",
@@ -20,7 +20,7 @@ export const catalogData = {
             brands: ["Trendi"],
             features: ["Three stage Air Oil Separator", "Compressors with VFD (Optional)", "Low Specific Power Consumption", "IE3 Electric Motors"],
             catalogLink: "https://drive.google.com/uc?export=download&id=1VN7WVekzZYVYHpGATtpQOEQQiaSqvtpp",
-            image: "/assets/images/about-main.png"
+            image: "/assets/images/about-main.webp"
           },
           {
             title: "Trendi Base Mounted Direct Drive Screw Compressors",
@@ -28,7 +28,7 @@ export const catalogData = {
             brands: ["Trendi"],
             features: ["Direct Drive", "Base Mounted", "Low noise design"],
             catalogLink: "https://drive.google.com/uc?export=download&id=1x45zNBjsj9jrgPzVVDyNcgDkvmIx5Kl7",
-            image: "/assets/images/about-main.png"
+            image: "/assets/images/about-main.webp"
           },
           {
             title: "Trendi Motor Driven Two Stage Air Compressor",
@@ -41,7 +41,7 @@ export const catalogData = {
               "Precision-balanced crankshaft"
             ],
             catalogLink: "https://drive.google.com/uc?export=download&id=1V3G7HYCPfRk-0CJBdt7toAmquvRVHE3t",
-            image: "/assets/images/about-main.png"
+            image: "/assets/images/about-main.webp"
           },
           {
             title: "Ingersoll Rand Two Stage Electric Driven Reciprocating Air Compressor",
@@ -54,7 +54,7 @@ export const catalogData = {
               "Automatic start/stop control"
             ],
             catalogLink: "https://drive.google.com/uc?export=download&id=1nZQ7xCTVp73Fyus9UpWcVJdn_YtEJt3E",
-            image: "/assets/images/hero-machinery.png"
+            image: "/assets/images/hero-machinery.webp"
           }
         ]
       }
@@ -68,7 +68,7 @@ export const catalogData = {
       {
         id: "gear-pump",
         label: "Gear Pumps",
-        image: "/assets/images/industry-cement.png",
+        image: "/assets/images/industry-cement.webp",
         products: [
           {
             title: "Gear Pumps",
@@ -76,7 +76,7 @@ export const catalogData = {
             desc: "High viscosity fluid handling designed to run up to 1440 RPM.",
             features: ["Type HGSX", "Type HGHX"],
             catalogLink: "https://drive.google.com/uc?export=download&id=17bjoJ1m4XfzzhZwQdpA3J8bgP5_R1ln1",
-            image: "/assets/images/industry-cement.png"
+            image: "/assets/images/industry-cement.webp"
           },
           {
             title: "Rotary Gear Pumps Type 'HGN'",
@@ -88,14 +88,14 @@ export const catalogData = {
               "Smooth, pulsation-free flow"
             ],
             catalogLink: "https://drive.google.com/uc?export=download&id=1LCiAcCRJdCNlRRNhtmutsk5clv28rvUS",
-            image: "/assets/images/industry-cement.png"
+            image: "/assets/images/industry-cement.webp"
           }
         ]
       },
       {
         id: "metering-pump",
         label: "Metering Pumps",
-        image: "/assets/images/service-milling.png",
+        image: "/assets/images/service-milling.webp",
         products: [
           {
             title: "Metering Pumps",
@@ -107,14 +107,14 @@ export const catalogData = {
               "Chemical-compatible construction"
             ],
             catalogLink: "https://drive.google.com/uc?export=download&id=1J-1j3_cQbZW7RhaQY8N5plq0-sbBjl1F",
-            image: "/assets/images/service-milling.png"
+            image: "/assets/images/service-milling.webp"
           }
         ]
       },
       {
         id: "vacuum-pump",
         label: "Vacuum Pumps",
-        image: "/assets/images/industry-paint.png",
+        image: "/assets/images/industry-paint.webp",
         products: [
           {
             title: "KV/DV VACUUM PUMPS",
@@ -127,7 +127,7 @@ export const catalogData = {
               "Replaceable Wearing Parts"
             ],
             catalogLink: "https://drive.google.com/uc?export=download&id=1QaclCLlzM8B9ZieP083Bxp-8M4_V41Pc",
-            image: "/assets/images/industry-paint.png"
+            image: "/assets/images/industry-paint.webp"
           }
         ]
       }
@@ -141,7 +141,7 @@ export const catalogData = {
       {
         id: "air-dryers",
         label: "Air Dryers",
-        image: "/assets/images/service-laser.png",
+        image: "/assets/images/service-laser.webp",
         products: [
           {
             title: "TRIDENT Dryspell Series",
@@ -149,7 +149,7 @@ export const catalogData = {
             brands: ["Trident"],
             features: ["Noise level < 70 decibels", "Free from corrosion & scale formation", "High strength adsorbent material"],
             catalogLink: "https://drive.google.com/uc?export=download&id=17Km0_hcnxVQ6YcY75JUlFsmiWzbOSWmD",
-            image: "/assets/images/service-laser.png"
+            image: "/assets/images/service-laser.webp"
           },
           {
             title: "TRIDENT Coldspell",
@@ -157,14 +157,14 @@ export const catalogData = {
             brands: ["Trident"],
             features: ["ISO 8573 - 1 : 2010 (E) class -5-", "Anti-recycle feature", "Large condenser"],
             catalogLink: "https://drive.google.com/uc?export=download&id=1W_-wRxgKEuZt5IZHc0WWDGESM2TcmBC-",
-            image: "/assets/images/service-laser.png"
+            image: "/assets/images/service-laser.webp"
           }
         ]
       },
       {
         id: "filtration",
         label: "Filtration Systems",
-        image: "/assets/images/industry-packaging.png",
+        image: "/assets/images/industry-packaging.webp",
         products: [
           {
             title: "TRIDENT Submicron Filters Cleansweep",
@@ -172,7 +172,7 @@ export const catalogData = {
             brands: ["Trident"],
             features: ["Oil Removal (Coalescing)", "Flow from 20 to 1810 m³/hour", "Install anywhere"],
             catalogLink: "https://drive.google.com/uc?export=download&id=1_CM0y0VbRDy1iMxmjLadMl-1EqeA7g1e",
-            image: "/assets/images/industry-packaging.png"
+            image: "/assets/images/industry-packaging.webp"
           },
           {
             title: "TRIDENT Bacteria Filter Series",
@@ -180,7 +180,7 @@ export const catalogData = {
             brands: ["Trident"],
             features: ["Aluminium alloy housing, hard anodized", "Compatible with autoclave sterilisation", "Borosilicate filter media"],
             catalogLink: "https://drive.google.com/uc?export=download&id=1Yhox1XasGhUigrJ6cnrAKFd0a4nhEPki",
-            image: "/assets/images/industry-packaging.png"
+            image: "/assets/images/industry-packaging.webp"
           }
         ]
       }
@@ -194,7 +194,7 @@ export const catalogData = {
       {
         id: "parts-accessories",
         label: "OEM Spares",
-        image: "/assets/images/service-turning.png",
+        image: "/assets/images/service-turning.webp",
         products: [
           {
             title: "Pump Spares",
@@ -207,7 +207,7 @@ export const catalogData = {
               "Fire Fighting & Booster Pump Spares"
             ],
             catalogLink: "https://drive.google.com/uc?export=download&id=1rUveEEGcs_G-Ha8gmeC1tE9UAqGaPODX",
-            image: "/assets/images/service-turning.png"
+            image: "/assets/images/service-turning.webp"
           },
           {
             title: "Compressor & Air Parts",
@@ -220,7 +220,7 @@ export const catalogData = {
               "Rotodel, Indfoss, & Everest Accessories"
             ],
             catalogLink: "https://drive.google.com/uc?export=download&id=1PIawPtp0X-e10yHstbav5lh5A1he4ABQ",
-            image: "/assets/images/service-turning.png"
+            image: "/assets/images/service-turning.webp"
           }
         ]
       }

@@ -38,8 +38,11 @@ const ROUTES = [
 ];
 
 // Per-route <head> preloads for the LCP image (home only — other routes don't use it).
+// Scoped to mobile viewports: preloading the hero is a big win on slow mobile links,
+// but on fast desktop connections it competes with render-critical CSS/JS and HURTS
+// LCP (the image was never the bottleneck there). `media` keeps it mobile-only.
 const PRELOAD = {
-  "/": '<link rel="preload" as="image" href="/assets/images/hero-machinery.png" fetchpriority="high">',
+  "/": '<link rel="preload" as="image" href="/assets/images/hero-machinery.webp" media="(max-width: 820px)" fetchpriority="high">',
 };
 
 const { collectHead, SITE_URL } = await import(SERVER_ENTRY);

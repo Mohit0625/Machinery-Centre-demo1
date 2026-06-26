@@ -93,11 +93,11 @@ const expertiseCards = [
 
 // ── Industry data ─────────────────────────────────────────────
 const industries = [
-  { name: "Packaging", img: "/assets/images/industry-packaging.png" },
-  { name: "Paint", img: "/assets/images/industry-paint.png" },
-  { name: "Cement", img: "/assets/images/industry-cement.png" },
-  { name: "Textile", img: "/assets/images/industry-textile.png" },
-  { name: "Laundry", img: "/assets/images/industry-laundry.png" },
+  { name: "Packaging", img: "/assets/images/industry-packaging.webp" },
+  { name: "Paint", img: "/assets/images/industry-paint.webp" },
+  { name: "Cement", img: "/assets/images/industry-cement.webp" },
+  { name: "Textile", img: "/assets/images/industry-textile.webp" },
+  { name: "Laundry", img: "/assets/images/industry-laundry.webp" },
 ];
 
 // ── Partner brands ────────────────────────────────────────────
@@ -114,10 +114,10 @@ const partners = [
 
 // ── Featured solution categories (Home "Our Solutions" grid) ──
 const solutions = [
-  { name: "Air Compressors", path: "/products/compressors", desc: "Reliable industrial air systems", img: "/assets/images/about-main.png" },
-  { name: "Industrial Pumps", path: "/products/pumps", desc: "High-performance fluid handling", img: "/assets/images/service-milling.png" },
-  { name: "Air Treatment", path: "/products/air-treatment", desc: "Dryers, filters & purifiers", img: "/assets/images/service-laser.png" },
-  { name: "Spares & Accessories", path: "/products/spares", desc: "Genuine OEM parts & oils", img: "/assets/images/service-turning.png" },
+  { name: "Air Compressors", path: "/products/compressors", desc: "Reliable industrial air systems", img: "/assets/images/about-main.webp" },
+  { name: "Industrial Pumps", path: "/products/pumps", desc: "High-performance fluid handling", img: "/assets/images/service-milling.webp" },
+  { name: "Air Treatment", path: "/products/air-treatment", desc: "Dryers, filters & purifiers", img: "/assets/images/service-laser.webp" },
+  { name: "Spares & Accessories", path: "/products/spares", desc: "Genuine OEM parts & oils", img: "/assets/images/service-turning.webp" },
 ];
 
 // ═══════════════════════════════════════════════════════════════
@@ -217,11 +217,10 @@ export function Home() {
         {/* Background */}
         <div className="absolute inset-0">
           <img
-            src="/assets/images/hero-machinery.png"
+            src="/assets/images/hero-machinery.webp"
             alt="Ingersoll-Rand industrial screw air compressor installed in a factory layout"
             className="w-full h-full object-cover"
             fetchPriority="high"
-            decoding="async"
           />
           <div className="absolute inset-0 overlay-dark" />
         </div>
@@ -288,7 +287,7 @@ export function Home() {
             <div className={`relative transition-all duration-1000 ${feature.visible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}>
               <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/5]">
                 <img
-                  src="/assets/images/about-main.png"
+                  src="/assets/images/about-main.webp"
                   alt="Trendi energy-efficient reciprocating compressor for continuous B2B manufacturing"
                   className="w-full h-full object-cover"
                   loading="lazy"
@@ -344,7 +343,7 @@ export function Home() {
         {/* Background */}
         <div className="absolute inset-0">
           <img
-            src="/assets/images/value-bg.png"
+            src="/assets/images/value-bg.webp"
             alt=""
             aria-hidden="true"
             loading="lazy"
@@ -605,7 +604,7 @@ export function Home() {
         {/* Background */}
         <div className="absolute inset-0">
           <img
-            src="/assets/images/quote-bg.png"
+            src="/assets/images/quote-bg.webp"
             alt=""
             aria-hidden="true"
             loading="lazy"

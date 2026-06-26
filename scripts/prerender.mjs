@@ -10,6 +10,7 @@
 import { readFileSync, writeFileSync, mkdirSync, rmSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { pathToFileURL } from "node:url";
+import Beasties from "beasties";
 
 const DIST = "dist";
 const SERVER_ENTRY = pathToFileURL(join(process.cwd(), ".prerender-server", "entry-server.js")).href;
@@ -105,14 +106,26 @@ function pageHtml(route) {
   return h;
 }
 
+const beasties = new Beasties({ path: DIST, publicPath: "/", preload: "swap", pruneSource: false, logLevel: "silent" });
+
 let count = 0;
+let homeInlineKb = 0;
 for (const route of ROUTES) {
-  const out = route === "/" ? join(DIST, "index.html") : join(DIST, route, "index.html");
-  mkdirSync(dirname(out), { recursive: true });
-  writeFileSync(out, pageHtml(route), "utf8");
+  const outFile = route === "/" ? join(DIST, "index.html") : join(DIST, route, "index.html");
+  mkdirSync(dirname(outFile), { recursive: true });
+  let html = pageHtml(route);
+  try {
+    html = await beasties.process(html);
+  } catch (e) {
+    console.warn(`  ! beasties failed for ${route}: ${e.message} (keeping render-blocking CSS)`);
+  }
+  writeFileSync(outFile, html, "utf8");
+  if (route === "/") {
+    homeInlineKb = (html.match(/<style[^>]*>[\s\S]*?<\/style>/g) || []).join("").length / 1024;
+  }
   count++;
-  console.log(`  ✓ ${route} -> ${out}`);
+  console.log(`  ✓ ${route} -> ${outFile}`);
 }
 
 rmSync(".prerender-server", { recursive: true, force: true });
-console.log(`Prerendered ${count} routes (head + JSON-LD baked into static HTML).`);
+console.log(`Prerendered ${count} routes. Home inline critical CSS: ~${homeInlineKb.toFixed(0)} KB (full stylesheet async-loaded).`);

@@ -105,9 +105,9 @@ export function Layout() {
                   className="h-10 md:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                 />
                 <div className="hidden sm:block">
-                  <h1 className={`text-xl md:text-2xl font-sans font-black ${logoColor} uppercase leading-none tracking-tight`}>
+                  <div className={`text-xl md:text-2xl font-sans font-black ${logoColor} uppercase leading-none tracking-tight`}>
                     Machinery Centre
-                  </h1>
+                  </div>
                   <p className={`text-[9px] font-bold ${taglineColor} tracking-[0.25em] uppercase mt-1`}>
                     Compressors & Pumps
                   </p>
@@ -281,9 +281,9 @@ export function Layout() {
                     className="h-16 w-auto object-contain"
                   />
                   <div>
-                    <h1 className="text-2xl font-sans font-black text-white uppercase leading-none tracking-tight">
+                    <div className="text-2xl font-sans font-black text-white uppercase leading-none tracking-tight">
                       Machinery Centre
-                    </h1>
+                    </div>
                     <p className="text-[9px] font-bold text-orange-500 tracking-[0.25em] uppercase mt-1">
                       Compressors & Pumps
                     </p>

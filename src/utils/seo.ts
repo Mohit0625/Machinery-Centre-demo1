@@ -37,6 +37,34 @@ export const BUSINESS = {
 
 type JsonLd = Record<string, unknown>;
 
+export interface SsrHead {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogType: string;
+  ogImage: string;
+  noindex: boolean;
+  jsonLd: JsonLd[];
+}
+export const ssrHead: SsrHead = {
+  title: "",
+  description: "",
+  canonical: undefined,
+  ogType: "website",
+  ogImage: BUSINESS.logo,
+  noindex: false,
+  jsonLd: [],
+};
+export function resetSsrHead(): void {
+  ssrHead.title = "";
+  ssrHead.description = "";
+  ssrHead.canonical = undefined;
+  ssrHead.ogType = "website";
+  ssrHead.ogImage = BUSINESS.logo;
+  ssrHead.noindex = false;
+  ssrHead.jsonLd = [];
+}
+
 function getOrigin(): string {
   if (typeof window !== "undefined" && window.location && window.location.origin) {
     return window.location.origin;
@@ -182,6 +210,10 @@ export function blogPostingSchema(p: {
  * index.html. The durable fix is prerendering/SSG — see docs/Machinery-Centre-SEO-Strategy.md §02.
  */
 export function useJsonLd(blocks: JsonLd | JsonLd[] | null | undefined): void {
+  // Build-time prerender: record into the SSR head collector (no-op in browser).
+  if (typeof window === "undefined" && blocks) {
+    ssrHead.jsonLd.push(...(Array.isArray(blocks) ? blocks : [blocks]));
+  }
   const json = blocks ? JSON.stringify(Array.isArray(blocks) ? blocks : [blocks]) : "";
   useEffect(() => {
     if (!json) return;

@@ -220,6 +220,8 @@ export function Home() {
             src="/assets/images/hero-machinery.png"
             alt="Ingersoll-Rand industrial screw air compressor installed in a factory layout"
             className="w-full h-full object-cover"
+            fetchPriority="high"
+            decoding="async"
           />
           <div className="absolute inset-0 overlay-dark" />
         </div>
@@ -289,6 +291,8 @@ export function Home() {
                   src="/assets/images/about-main.png"
                   alt="Trendi energy-efficient reciprocating compressor for continuous B2B manufacturing"
                   className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
               {/* Floating badge card */}
@@ -342,6 +346,9 @@ export function Home() {
           <img
             src="/assets/images/value-bg.png"
             alt=""
+            aria-hidden="true"
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover blur-sm scale-105"
           />
           <div className="absolute inset-0 bg-slate-900/80" />
@@ -424,6 +431,8 @@ export function Home() {
                     <img
                       src={s.img}
                       alt={s.name}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover transition-transform duration-[1100ms] ease-out group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/25 to-transparent transition-colors duration-500 group-hover:from-slate-950"></div>
@@ -598,6 +607,9 @@ export function Home() {
           <img
             src="/assets/images/quote-bg.png"
             alt=""
+            aria-hidden="true"
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/85 to-slate-900/70" />
@@ -786,7 +798,7 @@ export function Home() {
                 style={{ transitionDelay: `${i * 100 + 200}ms` }}
               >
                 <div className="industry-card h-full cursor-default">
-                  <img src={industry.img} alt={industry.name} />
+                  <img src={industry.img} alt={industry.name} loading="lazy" decoding="async" />
                   <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 z-10">
                     <h3 className="text-white text-sm sm:text-base tracking-wide">
                       {industry.name}

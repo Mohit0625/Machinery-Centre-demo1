@@ -17,27 +17,33 @@ import { PrivacyPolicy } from "./pages/PrivacyPolicy";
 import { TermsOfUse } from "./pages/TermsOfUse";
 import { Trendi } from "./pages/Trendi";
 
+export function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route path="products" element={<Products />} />
+        <Route path="products/:category" element={<Products />} />
+        <Route path="trendi" element={<Trendi />} />
+        <Route path="careers" element={<Career />} />
+        <Route path="blog" element={<Blog />} />
+        <Route path="blog/:slug" element={<BlogPost />} />
+
+        <Route path="quote" element={<Quote />} />
+        <Route path="contact" element={<Contact />} />
+        <Route path="feedback" element={<Feedback />} />
+        <Route path="privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="terms-of-use" element={<TermsOfUse />} />
+      </Route>
+    </Routes>
+  );
+}
+
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="about" element={<About />} />
-          <Route path="products" element={<Products />} />
-          <Route path="products/:category" element={<Products />} />
-          <Route path="trendi" element={<Trendi />} />
-          <Route path="careers" element={<Career />} />
-          <Route path="blog" element={<Blog />} />
-          <Route path="blog/:slug" element={<BlogPost />} />
-
-          <Route path="quote" element={<Quote />} />
-          <Route path="contact" element={<Contact />} />
-          <Route path="feedback" element={<Feedback />} />
-          <Route path="privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="terms-of-use" element={<TermsOfUse />} />
-        </Route>
-      </Routes>
+      <AppRoutes />
     </BrowserRouter>
   );
 }

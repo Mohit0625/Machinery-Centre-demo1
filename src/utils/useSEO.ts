@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BUSINESS, absoluteUrl } from './seo';
+import { BUSINESS, absoluteUrl, ssrHead } from './seo';
 
 export interface SEOOptions {
   /** Canonical path (e.g. "/products/pumps") or absolute URL. Defaults to the current path. */
@@ -41,6 +41,16 @@ function upsertLink(rel: string, href: string) {
  */
 export function useSEO(title: string, description: string, options: SEOOptions = {}) {
   const { canonical, ogType = 'website', ogImage = BUSINESS.logo, noindex = false } = options;
+
+  // Build-time prerender: record into the SSR head collector (no-op in browser).
+  if (typeof window === 'undefined') {
+    ssrHead.title = title;
+    ssrHead.description = description;
+    ssrHead.canonical = canonical;
+    ssrHead.ogType = ogType;
+    ssrHead.ogImage = ogImage;
+    ssrHead.noindex = noindex;
+  }
 
   useEffect(() => {
     const path = canonical ?? (typeof window !== 'undefined' ? window.location.pathname : '/');

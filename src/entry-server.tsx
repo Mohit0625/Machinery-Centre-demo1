@@ -1,10 +1,10 @@
 /**
  * Build-time SSR entry used only by scripts/prerender.mjs.
- * renderToString runs every page's useSEO()/useJsonLd() calls, which (on the
- * server) populate the shared `ssrHead` collector. We return that head so the
- * prerender can bake per-route <title>/meta/canonical/OG + JSON-LD into static
- * HTML. The rendered body markup is intentionally discarded — we keep the
- * shipped pages as a client-rendered SPA so runtime performance is unchanged.
+ * renderToString produces the page body AND (via each page's useSEO()/useJsonLd()
+ * calls populating the shared `ssrHead` collector) the per-route head. The
+ * prerender bakes both into static HTML so the above-the-fold content (the hero,
+ * the LCP element) paints from HTML before the JS bundle executes — the client
+ * then hydrates the same markup (see main.tsx).
  */
 import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router";
@@ -13,13 +13,12 @@ import { ssrHead, resetSsrHead, SITE_URL } from "./utils/seo";
 
 export { SITE_URL };
 
-export function collectHead(url: string) {
+export function render(url: string) {
   resetSsrHead();
-  // Render purely to trigger the per-page useSEO()/useJsonLd() head collection.
-  renderToString(
+  const html = renderToString(
     <StaticRouter location={url}>
       <AppRoutes />
     </StaticRouter>
   );
-  return { ...ssrHead, jsonLd: [...ssrHead.jsonLd] };
+  return { html, head: { ...ssrHead, jsonLd: [...ssrHead.jsonLd] } };
 }

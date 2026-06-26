@@ -1,11 +1,9 @@
 /**
  * Build-time prerender: bakes per-route <title>, meta description, canonical,
- * Open Graph/Twitter tags and JSON-LD into a static HTML file per route, so
- * non-JS crawlers (AI answer engines) and social unfurlers see correct, route-
- * specific metadata + structured data instead of the SPA's home-page defaults.
- *
- * The page BODY is left as the empty <div id="root"> — the app stays a
- * client-rendered SPA, so runtime performance is unchanged.
+ * Open Graph/Twitter tags, JSON-LD AND the rendered page body into a static HTML
+ * file per route. Crawlers + social unfurlers get correct metadata, and the
+ * above-the-fold content (the hero / LCP element) paints from HTML before the JS
+ * bundle executes — the client hydrates the same markup (see src/main.tsx).
  *
  * Runs after `vite build` (client) and `vite build --ssr ... --outDir .prerender-server`.
  */
@@ -45,7 +43,7 @@ const PRELOAD = {
   "/": '<link rel="preload" as="image" href="/assets/images/hero-machinery.webp" media="(max-width: 820px)" fetchpriority="high">',
 };
 
-const { collectHead, SITE_URL } = await import(SERVER_ENTRY);
+const { render, SITE_URL } = await import(SERVER_ENTRY);
 
 const template = readFileSync(join(DIST, "index.html"), "utf8");
 const SITE = String(SITE_URL || "https://www.machinerycentre.in").replace(/\/+$/, "");
@@ -65,10 +63,13 @@ const abs = (p) => {
 
 function pageHtml(route) {
   let head = null;
+  let body = "";
   try {
-    head = collectHead(route);
+    const r = render(route);
+    head = r.head;
+    body = r.html;
   } catch (e) {
-    console.warn(`  ! collectHead failed for ${route}: ${e.message} — writing template head`);
+    console.warn(`  ! render failed for ${route}: ${e.message} — writing template head`);
   }
   if (!head || !head.title) return template;
 
@@ -98,6 +99,8 @@ function pageHtml(route) {
   if (ld) h = h.replace("</head>", () => `    ${ld}\n  </head>`);
 
   if (PRELOAD[route]) h = h.replace("</head>", () => `    ${PRELOAD[route]}\n  </head>`);
+
+  if (body) h = h.replace('<div id="root"></div>', () => `<div id="root">${body}</div>`);
 
   return h;
 }

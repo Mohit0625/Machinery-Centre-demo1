@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
 import { useSEO } from "../utils/useSEO";
+import { useJsonLd, breadcrumbSchema } from "../utils/seo";
 import { FileText, Calendar } from "lucide-react";
 
 export function TermsOfUse() {
-  useSEO("Terms of Use | Machinery Centre", "Read the terms and conditions governing the use of Machinery Centre's website, product catalogues, and B2B quotation services.");
+  useSEO("Terms of Use & Conditions | Machinery Centre Delhi", "Read the terms & conditions governing use of the Machinery Centre website, product catalogues, quotations and B2B sales & service across Delhi NCR, India.", { canonical: "/terms-of-use" });
+  useJsonLd(breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Terms of Use", path: "/terms-of-use" }]));
 
   return (
     <div className="flex-1 bg-slate-50 flex flex-col">

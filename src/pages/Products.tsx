@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Wind, Droplets, Filter, CheckCircle2, Download, X, Cpu } from "lucide-react";
 import { isValidEmail, isValidIndianPhone } from "../utils/validation";
 import { useSEO } from "../utils/useSEO";
+import { useJsonLd, breadcrumbSchema, productListSchema } from "../utils/seo";
 import { getBrandLogo } from "../utils/logos";
 import { sendLead, nowInIST } from "../utils/leadForm";
 import { clsx } from "clsx";
@@ -305,6 +306,40 @@ const categoriesList = Object.entries(catalogData).map(([id, data]) => ({
   ...data
 }));
 
+// Per-category SEO + H1 copy (see docs/Machinery-Centre-SEO-Strategy.md §04).
+const CATEGORY_SEO: Record<string, { title: string; description: string; h1: string; label: string }> = {
+  compressors: {
+    title: "Air Compressor Dealer in Delhi NCR | Machinery Centre",
+    description: "Authorized air compressor dealer in Delhi NCR. Buy Ingersoll Rand & Trendi screw and reciprocating compressors with VFD, IE3 motors, spares & service.",
+    h1: "Air Compressor Dealer in Delhi NCR — Screw & Reciprocating Compressors",
+    label: "Air Compressors",
+  },
+  "air-treatment": {
+    title: "Compressed Air Dryer & Filter Supplier | Delhi NCR",
+    description: "Trident desiccant & refrigerated air dryers, coalescing filters, drain valves and PSA nitrogen generators. Compressed air treatment supplier in Delhi NCR.",
+    h1: "Compressed Air Treatment Equipment Supplier in Delhi NCR",
+    label: "Air Treatment",
+  },
+  pumps: {
+    title: "Industrial Pump Dealer in Delhi | Machinery Centre",
+    description: "Industrial pump dealer & stockist in Delhi NCR for Kirloskar, Rotodel & Crompton Greaves. Rotary gear, metering & vacuum pumps with genuine spares.",
+    h1: "Industrial Pump Dealer & Stockist in Delhi NCR",
+    label: "Industrial Pumps",
+  },
+  spares: {
+    title: "Compressor & Pump Spares Dealer in Delhi | M.Centre",
+    description: "Genuine OEM spares for Ingersoll Rand, Kirloskar & Crompton pumps and compressors. Air-oil separators, filters, service kits supplied across Delhi NCR.",
+    h1: "Compressor & Pump Spare Parts in Delhi NCR",
+    label: "Spares & OEM Parts",
+  },
+};
+
+const HUB_SEO = {
+  title: "Compressors & Pumps Dealer in Delhi | Machinery Centre",
+  description: "Machinery Centre is a Delhi-based dealer of air compressors, industrial pumps, air treatment and OEM spares. Ingersoll Rand, Trident, Kirloskar & Trendi.",
+  h1: "Air Compressors, Pumps & Air Treatment Dealer in Delhi NCR",
+};
+
 // -----------------------------
 // Main Components
 // -----------------------------
@@ -322,10 +357,27 @@ function openCatalog(catalogLink: string) {
 const REQUIRE_DETAILS_BEFORE_DOWNLOAD: boolean = false;
 
 export function Products() {
-  useSEO("Industrial Air Compressors, Pumps & Air Treatment | Machinery Centre", "Browse our extensive catalog of industrial air compressors, pumps, and specialized air treatment equipment. Authorized B2B dealers for premium OEM brands.");
-  
-  const [activeCategoryId, setActiveCategoryId] = useState(categoriesList[0].id);
+  const navigate = useNavigate();
+  const { category } = useParams();
+  const isValidCategory = !!category && category in catalogData;
+  const isHub = !category;
+  const activeCategoryId = isValidCategory ? (category as string) : categoriesList[0].id;
   const activeCategory = catalogData[activeCategoryId as keyof typeof catalogData];
+
+  const seo = isHub ? HUB_SEO : (CATEGORY_SEO[activeCategoryId] ?? HUB_SEO);
+  useSEO(seo.title, seo.description, { canonical: isHub ? "/products" : `/products/${activeCategoryId}` });
+
+  const crumbs = isHub
+    ? [{ name: "Home", path: "/" }, { name: "Products", path: "/products" }]
+    : [
+        { name: "Home", path: "/" },
+        { name: "Products", path: "/products" },
+        { name: CATEGORY_SEO[activeCategoryId]?.label ?? activeCategory.label, path: `/products/${activeCategoryId}` },
+      ];
+  const productNodes = activeCategory.subcategories
+    .flatMap((s) => s.products)
+    .map((p: any) => ({ name: p.title, description: p.desc, brand: p.brands?.[0], category: activeCategory.label }));
+  useJsonLd([breadcrumbSchema(crumbs), productListSchema(seo.h1, productNodes)]);
 
   // State for Catalog Download Modal
   const [selectedCatalog, setSelectedCatalog] = useState<{ title: string, link: string } | null>(null);
@@ -343,8 +395,8 @@ export function Products() {
       {/* Header */}
       <div className="bg-slate-900 text-white py-16 border-b-4 border-orange-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl mb-4 font-bold tracking-tight">Premium Industrial Compressors, Pumps & OEM Spares</h1>
-          <p className="text-slate-400 max-w-2xl text-lg">Wide and diverse range of options to optimize your business's fixed costs.</p>
+          <h1 className="text-4xl mb-4 font-bold tracking-tight">{seo.h1}</h1>
+          <p className="text-slate-400 max-w-2xl text-lg">{isHub ? "Browse air compressors, industrial pumps, compressed-air treatment and genuine OEM spares — supplied and serviced across Delhi NCR since 1987." : activeCategory.description}</p>
         </div>
       </div>
 
@@ -358,7 +410,7 @@ export function Products() {
               return (
                 <button
                   key={cat.id}
-                  onClick={() => setActiveCategoryId(cat.id)}
+                  onClick={() => navigate(`/products/${cat.id}`)}
                   className={cn(
                     "flex items-center gap-2.5 px-7 py-5 font-bold uppercase tracking-wide text-sm whitespace-nowrap border-b-2 transition-colors",
                     isActive ? "border-orange-500 text-orange-600" : "border-transparent text-slate-500 hover:text-slate-900 hover:border-slate-300"

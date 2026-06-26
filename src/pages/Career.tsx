@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Briefcase, Send, CheckCircle } from "lucide-react";
 import { isValidIndianPhone, isValidEmail } from "../utils/validation";
 import { useSEO } from "../utils/useSEO";
+import { useJsonLd, breadcrumbSchema } from "../utils/seo";
 import { sendLead, nowInIST } from "../utils/leadForm";
 
 export function Career() {
@@ -19,9 +20,11 @@ export function Career() {
   const [submitError, setSubmitError] = useState("");
 
   useSEO(
-    "Careers | Machinery Centre",
-    "Join the Machinery Centre team. We are always looking for passionate and driven individuals to help us build the future of industrial solutions."
+    "Careers at Machinery Centre | Jobs in Delhi NCR India",
+    "Build a career at Machinery Centre, a Delhi-based compressor and pump dealer since 1987. Apply for sales, service engineer and support roles in Delhi NCR.",
+    { canonical: "/careers" }
   );
+  useJsonLd(breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Careers", path: "/careers" }]));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,7 +98,7 @@ export function Career() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-black mb-4 tracking-tight">Careers</h1>
           <p className="text-slate-400 max-w-2xl text-lg">
-            Join the Machinery Centre team and be a part of our 25+ years legacy of serving the Indian industry.
+            Join the Machinery Centre team and be part of our legacy of serving Indian industry since 1987.
           </p>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { Building2, History, Target, Users } from "lucide-react";
 import { motion } from "motion/react";
 import { useSEO } from "../utils/useSEO";
+import { useJsonLd, breadcrumbSchema } from "../utils/seo";
 
 const owners = [
   {
@@ -18,7 +19,8 @@ const owners = [
 ];
 
 export function About() {
-  useSEO("About Machinery Centre | Industrial Equipment Suppliers Since 1987", "Established in 1987 under Gulson Engineering, Machinery Centre is a trusted B2B supplier of industrial machinery, air compressors, and pumps across India.");
+  useSEO("Machinery Centre | Compressor & Pump Dealer, Delhi", "Machinery Centre is a Delhi-based air compressor and pump dealer since 1987 — authorized for Ingersoll Rand & Trident, with genuine spares and service.", { canonical: "/about" });
+  useJsonLd(breadcrumbSchema([{ name: "Home", path: "/" }, { name: "About", path: "/about" }]));
 
   const yearsOfLegacy = new Date().getFullYear() - 1987;
 
@@ -27,7 +29,7 @@ export function About() {
       {/* Page Header */}
       <div className="bg-slate-900 text-white py-16 border-b-4 border-orange-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-black mb-4 tracking-tight">About</h1>
+          <h1 className="text-4xl font-black mb-4 tracking-tight">About Machinery Centre — Compressor &amp; Pump Dealer in Delhi Since 1987</h1>
           <p className="text-slate-400 max-w-2xl text-lg">A legacy of trust, expertise, and commitment to the Indian industrial sector.</p>
         </div>
       </div>

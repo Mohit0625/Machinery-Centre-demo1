@@ -2,6 +2,7 @@ import { useState } from "react";
 import { MessageSquare, CheckCircle } from "lucide-react";
 import { isValidEmail } from "../utils/validation";
 import { useSEO } from "../utils/useSEO";
+import { useJsonLd, breadcrumbSchema } from "../utils/seo";
 import { sendLead, nowInIST } from "../utils/leadForm";
 
 export function Feedback() {
@@ -11,7 +12,8 @@ export function Feedback() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
 
-  useSEO("Feedback & Grievance | Machinery Centre", "Share your feedback and grievances with Machinery Centre. Your input helps us modernize our services and enables a better system of trust and reliability.");
+  useSEO("Customer Feedback & Grievance | Machinery Centre Delhi", "Share your feedback or raise a grievance with Machinery Centre, Delhi. Help us improve our compressor, pump and after-sales service across Delhi NCR.", { canonical: "/feedback" });
+  useJsonLd(breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Feedback", path: "/feedback" }]));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

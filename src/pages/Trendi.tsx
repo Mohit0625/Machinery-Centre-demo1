@@ -1,4 +1,5 @@
 import { useSEO } from "../utils/useSEO";
+import { useJsonLd, breadcrumbSchema } from "../utils/seo";
 import { motion } from "framer-motion";
 import { 
   ArrowRight, 
@@ -15,7 +16,8 @@ import {
 import { Link } from "react-router-dom";
 
 export function Trendi() {
-  useSEO("The Trendi Range | Industrial Air Compressors & Treatment", "Discover the complete Trendi range of energy-efficient screw air compressors, reciprocating compressors, and advanced compressed air treatment solutions.");
+  useSEO("Trendi Air Compressors & Air Treatment | Machinery Centre", "Trendi is Machinery Centre's own range of energy-efficient screw & reciprocating air compressors and air treatment, supplied across Delhi NCR & India.", { canonical: "/trendi" });
+  useJsonLd(breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Trendi", path: "/trendi" }]));
 
   const features = [
     {

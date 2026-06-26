@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Send, FileText, CheckCircle } from "lucide-react";
 import { isValidIndianPhone } from "../utils/validation";
 import { sendLead, nowInIST } from "../utils/leadForm";
+import { useSEO } from "../utils/useSEO";
+import { useJsonLd, breadcrumbSchema } from "../utils/seo";
 export function Quote() {
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
@@ -13,6 +15,9 @@ export function Quote() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
+
+  useSEO("Request a Quote | Air Compressors & Pumps | Delhi NCR", "Request a price quote for industrial air compressors, pumps, air dryers and OEM spares. Machinery Centre supplies Delhi NCR & pan-India since 1987 — fast reply.", { canonical: "/quote" });
+  useJsonLd(breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Request a Quote", path: "/quote" }]));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -96,7 +101,7 @@ export function Quote() {
           <div className="w-16 h-16 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mx-auto mb-6">
             <FileText className="w-8 h-8" />
           </div>
-          <h1 className="text-4xl text-slate-900 mb-4">Request a Quote</h1>
+          <h1 className="text-4xl text-slate-900 mb-4">Request a Quote for Air Compressors, Pumps &amp; Spares</h1>
           <p className="text-slate-600 text-lg max-w-2xl mx-auto">
             Please place your order query here and we will get back to you with the details. Fill your details correctly for further processing.
           </p>

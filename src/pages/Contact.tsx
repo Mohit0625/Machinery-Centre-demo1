@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 
 import { isValidIndianPhone, isValidEmail } from "../utils/validation";
 import { useSEO } from "../utils/useSEO";
+import { useJsonLd, breadcrumbSchema } from "../utils/seo";
 import { sendLead, nowInIST } from "../utils/leadForm";
 
 export function Contact() {
@@ -16,9 +17,11 @@ export function Contact() {
   const [submitError, setSubmitError] = useState("");
 
   useSEO(
-    isRepairQuery ? "Industrial Machinery Repair & OEM Spares | Machinery Centre" : "Contact Machinery Centre | Industrial Equipment Suppliers",
-    isRepairQuery ? "Expert industrial machinery repair and maintenance services. We provide genuine OEM spares for packaging, cement, and paint industry compressors and pumps." : "Get in touch with Machinery Centre. We are here to assist you with inquiries, sales, and support for all your industrial pump and compressor needs."
+    isRepairQuery ? "Air Compressor & Pump Repair & AMC in Delhi NCR" : "Contact Machinery Centre | Compressor & Pump Dealer Delhi",
+    isRepairQuery ? "Expert air compressor & pump repair, AMC and genuine OEM spares in Delhi NCR. Fast on-site service for packaging, cement, paint and textile plants." : "Contact Machinery Centre, an air compressor & pump dealer in Old Delhi. Call 011-41440012 or WhatsApp for sales, spares, repair & AMC across Delhi NCR.",
+    { canonical: "/contact" }
   );
+  useJsonLd(breadcrumbSchema([{ name: "Home", path: "/" }, { name: isRepairQuery ? "Repair & Service" : "Contact", path: "/contact" }]));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -92,7 +95,7 @@ export function Contact() {
       <div className="bg-slate-900 text-white py-16 border-b-4 border-orange-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl font-black mb-4 tracking-tight">
-            {isRepairQuery ? "Industrial Machinery Repair & Maintenance Services" : "Contact"}
+            {isRepairQuery ? "Air Compressor & Pump Repair & Maintenance Services" : "Contact Machinery Centre — Air Compressor & Industrial Pump Dealer in Delhi"}
           </h1>
           <p className="text-slate-400 max-w-2xl text-lg">
             {isRepairQuery ? "Expert service, routine maintenance, and genuine OEM spares for your equipment." : "We are here to assist you with any inquiries, sales, or support."}

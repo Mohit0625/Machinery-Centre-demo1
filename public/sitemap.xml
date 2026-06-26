@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Machinery Centre sitemap. Replace https://www.machinerycentre.in with the real production domain. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://www.machinerycentre.in/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://www.machinerycentre.in/products</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.machinerycentre.in/products/compressors</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.machinerycentre.in/products/pumps</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.machinerycentre.in/products/air-treatment</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.machinerycentre.in/products/spares</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.machinerycentre.in/trendi</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.machinerycentre.in/about</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.machinerycentre.in/contact</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.machinerycentre.in/quote</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.machinerycentre.in/blog</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.machinerycentre.in/blog/essential-maintenance-tips-for-air-compressors</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.machinerycentre.in/blog/choosing-the-right-pump-for-your-industry</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.machinerycentre.in/blog/importance-of-energy-efficient-equipment</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.machinerycentre.in/careers</loc><changefreq>monthly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://www.machinerycentre.in/feedback</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://www.machinerycentre.in/privacy-policy</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://www.machinerycentre.in/terms-of-use</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
+</urlset>

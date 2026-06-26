@@ -86,7 +86,7 @@ function Counter({ end, suffix = "", label }: { end: number; suffix?: string; la
 // ── Expertise cards ───────────────────────────────────────────
 const expertiseCards = [
   { icon: Wind, title: "Air Compressors", desc: "Ingersoll-Rand, Sonee Air Compressors, and Trident. Wide range of options to optimize your fixed costs.", color: "from-orange-500/20 to-red-500/20" },
-  { icon: Filter, title: "Compressed Air Filtration", desc: "Ensure 100% clean, dry, oil-free compressed air to safeguard your valuable pneumatic equipment.", color: "from-blue-500/20 to-cyan-500/20" },
+  { icon: Filter, title: "Compressed Air Filtration", desc: "Clean, dry, oil-free compressed air to the ISO 8573-1 class you need, safeguarding your valuable pneumatic equipment.", color: "from-blue-500/20 to-cyan-500/20" },
   { icon: Droplets, title: "Industrial Pumps", desc: "Boiler feed, Chemical, Centrifugal, Fire Fighting and more. Stockist for Crompton Greaves, Kirloskar.", color: "from-teal-500/20 to-emerald-500/20" },
   { icon: ShieldCheck, title: "Repairs & Spares", desc: "Complete treatment solutions, piping, hosing, and prompt after-sales service with utmost urgency.", color: "from-purple-500/20 to-indigo-500/20" },
 ];
@@ -132,7 +132,7 @@ export function Home() {
   const industrySection = useInView(0.1);
   const trustSection = useInView(0.1);
 
-  useSEO("Industrial Air Compressors & Pumps | Authorized Dealer | Machinery Centre", "Machinery Centre is a leading authorized dealer of industrial air compressors, pumps, and OEM spares for 35+ years. Explore Ingersoll-Rand, Kirloskar & our Trendi range.");
+  useSEO("Air Compressor & Pump Dealer in Delhi | Machinery Centre", "Machinery Centre is a Delhi-based air compressor and pump dealer since 1987. Authorized for Ingersoll-Rand & Trident, with genuine spares and service.", { canonical: "/" });
 
   const [quoteForm, setQuoteForm] = useState({ firstName: "", phone: "", item: "", quantity: "", consentTerms: false, botcheck: "" });
   const [quoteErrors, setQuoteErrors] = useState<Record<string, string>>({});
@@ -240,9 +240,9 @@ export function Home() {
             <h1
               className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase text-white leading-[1.05] mb-8 transition-all duration-700 delay-100 ${hero.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
             >
-              Complete Industrial<br />
+              Air Compressor &<br />
               <span className="text-white">
-                Air Compressors<br />& Pump Solutions
+                Industrial Pump<br />Dealer in Delhi
               </span>
             </h1>
 
@@ -623,7 +623,7 @@ export function Home() {
               </div>
               <div className="flex items-center gap-4 text-slate-400 text-sm mt-3">
                 <CheckCircle2 className="w-5 h-5 text-accent-500" />
-                <span>Competitive pricing guaranteed</span>
+                <span>Competitive, transparent pricing</span>
               </div>
               <div className="flex items-center gap-4 text-slate-400 text-sm mt-3">
                 <CheckCircle2 className="w-5 h-5 text-accent-500" />

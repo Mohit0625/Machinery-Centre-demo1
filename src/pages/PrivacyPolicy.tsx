@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
 import { useSEO } from "../utils/useSEO";
+import { useJsonLd, breadcrumbSchema } from "../utils/seo";
 import { ShieldCheck, Calendar } from "lucide-react";
 
 export function PrivacyPolicy() {
-  useSEO("Privacy Policy | Machinery Centre", "Learn how Machinery Centre collects, uses, and protects your personal data in compliance with the DPDP Act, 2023.");
+  useSEO("Privacy Policy | Machinery Centre Delhi (DPDP 2023)", "How Machinery Centre, a Delhi-based air compressor and pump dealer, collects, uses and protects your personal data under India's DPDP Act, 2023.", { canonical: "/privacy-policy" });
+  useJsonLd(breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Privacy Policy", path: "/privacy-policy" }]));
 
   return (
     <div className="flex-1 bg-slate-50 flex flex-col">

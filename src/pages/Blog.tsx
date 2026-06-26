@@ -2,9 +2,11 @@ import { Link } from "react-router-dom";
 import { BookOpen, Calendar, ArrowRight } from "lucide-react";
 import { blogs } from "../data/blogs";
 import { useSEO } from "../utils/useSEO";
+import { useJsonLd, breadcrumbSchema } from "../utils/seo";
 
 export function Blog() {
-  useSEO("Blog & Insights | Machinery Centre", "Read our latest articles on industrial machinery, compressor maintenance, and pump selection.");
+  useSEO("Air Compressor & Pump Buying Guides | Machinery Centre", "Expert guides on air compressor maintenance, pump selection, dew point and energy-efficient compressed air systems from Machinery Centre, Delhi NCR since 1987.", { canonical: "/blog" });
+  useJsonLd(breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Blog", path: "/blog" }]));
 
   return (
     <div className="flex-1 bg-slate-50 flex flex-col">
@@ -13,7 +15,7 @@ export function Blog() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-4 mb-4">
             <BookOpen className="w-8 h-8 text-orange-500" />
-            <h1 className="text-4xl font-black tracking-tight">Blog & Insights</h1>
+            <h1 className="text-4xl font-black tracking-tight">Compressed Air &amp; Pump Knowledge Hub</h1>
           </div>
           <p className="text-slate-400 max-w-2xl text-lg">
             Stay updated with the latest industry news, maintenance tips, and expert insights on compressors and pumps.

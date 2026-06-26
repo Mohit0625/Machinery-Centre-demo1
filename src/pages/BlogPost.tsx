@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Calendar, User, Tag } from "lucide-react";
 import { blogs } from "../data/blogs";
 import { useSEO } from "../utils/useSEO";
+import { useJsonLd, breadcrumbSchema, blogPostingSchema } from "../utils/seo";
 
 export function BlogPost() {
   const { slug } = useParams();
@@ -9,7 +10,26 @@ export function BlogPost() {
 
   useSEO(
     blog ? `${blog.title} | Machinery Centre Blog` : "Blog Post Not Found | Machinery Centre",
-    blog ? blog.excerpt : "The requested blog post could not be found."
+    blog ? blog.excerpt : "The requested blog post could not be found.",
+    blog ? { canonical: `/blog/${blog.slug}`, ogType: "article", ogImage: blog.imageUrl } : { noindex: true }
+  );
+  useJsonLd(
+    blog
+      ? [
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Blog", path: "/blog" },
+            { name: blog.title, path: `/blog/${blog.slug}` },
+          ]),
+          blogPostingSchema({
+            title: blog.title,
+            description: blog.excerpt,
+            image: blog.imageUrl,
+            author: blog.author,
+            path: `/blog/${blog.slug}`,
+          }),
+        ]
+      : null
   );
 
   if (!blog) {

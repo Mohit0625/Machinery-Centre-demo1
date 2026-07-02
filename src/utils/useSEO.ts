@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { BUSINESS, absoluteUrl, ssrHead } from './seo';
+import type { ArticleMeta } from './seo';
 
 export interface SEOOptions {
   /** Canonical path (e.g. "/products/pumps") or absolute URL. Defaults to the current path. */
@@ -10,6 +11,10 @@ export interface SEOOptions {
   ogImage?: string;
   /** When true, emits robots "noindex, follow". */
   noindex?: boolean;
+  /** Comma-separated keywords for the <meta name="keywords"> tag. */
+  keywords?: string;
+  /** Open Graph article:* metadata (blog posts / articles). */
+  article?: ArticleMeta;
 }
 
 function upsertMeta(attr: 'name' | 'property', key: string, content: string) {
@@ -40,7 +45,7 @@ function upsertLink(rel: string, href: string) {
  * object as the third argument for canonical/OG/noindex control.
  */
 export function useSEO(title: string, description: string, options: SEOOptions = {}) {
-  const { canonical, ogType = 'website', ogImage = BUSINESS.logo, noindex = false } = options;
+  const { canonical, ogType = 'website', ogImage = BUSINESS.logo, noindex = false, keywords, article } = options;
 
   // Build-time prerender: record into the SSR head collector (no-op in browser).
   if (typeof window === 'undefined') {
@@ -50,7 +55,11 @@ export function useSEO(title: string, description: string, options: SEOOptions =
     ssrHead.ogType = ogType;
     ssrHead.ogImage = ogImage;
     ssrHead.noindex = noindex;
+    ssrHead.keywords = keywords;
+    ssrHead.article = article;
   }
+
+  const articleKey = article ? JSON.stringify(article) : '';
 
   useEffect(() => {
     const path = canonical ?? (typeof window !== 'undefined' ? window.location.pathname : '/');
@@ -75,5 +84,29 @@ export function useSEO(title: string, description: string, options: SEOOptions =
     upsertMeta('name', 'twitter:title', title);
     upsertMeta('name', 'twitter:description', description);
     upsertMeta('name', 'twitter:image', ogImage);
-  }, [title, description, canonical, ogType, ogImage, noindex]);
+
+    document
+      .querySelectorAll('meta[data-seo-dynamic], meta[name="keywords"], meta[property^="article:"]')
+      .forEach((n) => n.remove());
+    const addDynamic = (attr: 'name' | 'property', key: string, content?: string) => {
+      if (!content) return;
+      const el = document.createElement('meta');
+      el.setAttribute(attr, key);
+      el.setAttribute('content', content);
+      el.setAttribute('data-seo-dynamic', '');
+      document.head.appendChild(el);
+    };
+    if (keywords) addDynamic('name', 'keywords', keywords);
+    if (article) {
+      addDynamic('property', 'article:published_time', article.publishedTime);
+      addDynamic('property', 'article:modified_time', article.modifiedTime);
+      addDynamic('property', 'article:author', article.author);
+      addDynamic('property', 'article:section', article.section);
+      (article.tags ?? []).forEach((t) => addDynamic('property', 'article:tag', t));
+    }
+
+    return () => {
+      document.querySelectorAll('meta[data-seo-dynamic]').forEach((n) => n.remove());
+    };
+  }, [title, description, canonical, ogType, ogImage, noindex, keywords, articleKey]);
 }

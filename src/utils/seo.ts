@@ -1,19 +1,6 @@
 import { useEffect } from "react";
 
-/**
- * Central SEO configuration and structured-data (JSON-LD) builders.
- *
- * ⚠️ SITE_URL is the production domain and is currently a PLACEHOLDER.
- * Replace it with the real domain before launch — and also update:
- *   - public/sitemap.xml
- *   - public/robots.txt  (the Sitemap: line)
- *   - index.html         (canonical, og:url and the static JSON-LD @id/url fields)
- *
- * Runtime canonical / Open Graph / JSON-LD URLs are derived from
- * window.location.origin so they automatically match whatever host the app is
- * served from; SITE_URL is only the fallback when window is unavailable.
- */
-export const SITE_URL = "https://www.machinerycentre.in"; // TODO: replace with the real production domain
+export const SITE_URL = "https://www.machinerycentre.in";
 
 export const BUSINESS = {
   name: "Machinery Centre",
@@ -37,6 +24,15 @@ export const BUSINESS = {
 
 type JsonLd = Record<string, unknown>;
 
+/** Open Graph `article:*` metadata for blog posts / articles. */
+export interface ArticleMeta {
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
+  section?: string;
+  tags?: string[];
+}
+
 export interface SsrHead {
   title: string;
   description: string;
@@ -45,6 +41,8 @@ export interface SsrHead {
   ogImage: string;
   noindex: boolean;
   jsonLd: JsonLd[];
+  keywords?: string;
+  article?: ArticleMeta;
 }
 export const ssrHead: SsrHead = {
   title: "",
@@ -54,6 +52,8 @@ export const ssrHead: SsrHead = {
   ogImage: BUSINESS.logo,
   noindex: false,
   jsonLd: [],
+  keywords: undefined,
+  article: undefined,
 };
 export function resetSsrHead(): void {
   ssrHead.title = "";
@@ -63,6 +63,8 @@ export function resetSsrHead(): void {
   ssrHead.ogImage = BUSINESS.logo;
   ssrHead.noindex = false;
   ssrHead.jsonLd = [];
+  ssrHead.keywords = undefined;
+  ssrHead.article = undefined;
 }
 
 function getOrigin(): string {
@@ -77,6 +79,24 @@ export function absoluteUrl(path = "/"): string {
   if (/^https?:\/\//i.test(path)) return path;
   const base = getOrigin().replace(/\/+$/, "");
   return base + (path.startsWith("/") ? path : "/" + path);
+}
+
+const MONTHS: Record<string, string> = {
+  january: "01", february: "02", march: "03", april: "04", may: "05", june: "06",
+  july: "07", august: "08", september: "09", october: "10", november: "11", december: "12",
+};
+
+/**
+ * Convert a human display date like "May 12, 2026" to an ISO date "2026-05-12".
+ * Returns "" if the string can't be parsed. Built from the string parts (not
+ * `new Date()`) to avoid timezone shifts that can move the date by a day.
+ */
+export function toISODate(display: string): string {
+  const m = /^([A-Za-z]+)\s+(\d{1,2}),\s*(\d{4})$/.exec((display || "").trim());
+  if (!m) return "";
+  const mm = MONTHS[m[1].toLowerCase()];
+  if (!mm) return "";
+  return `${m[3]}-${mm}-${m[2].padStart(2, "0")}`;
 }
 
 export function organizationSchema(): JsonLd {
@@ -180,7 +200,11 @@ export function blogPostingSchema(p: {
   description: string;
   image: string;
   author: string;
+  authorType?: "Person" | "Organization";
   datePublished?: string;
+  dateModified?: string;
+  keywords?: string;
+  articleSection?: string;
   path: string;
 }): JsonLd {
   return {
@@ -189,13 +213,16 @@ export function blogPostingSchema(p: {
     headline: p.title,
     description: p.description,
     image: p.image,
-    author: { "@type": "Organization", name: p.author },
+    author: { "@type": p.authorType ?? "Organization", name: p.author },
     publisher: {
       "@type": "Organization",
       name: BUSINESS.name,
       logo: { "@type": "ImageObject", url: BUSINESS.logo },
     },
     ...(p.datePublished ? { datePublished: p.datePublished } : {}),
+    ...(p.dateModified ? { dateModified: p.dateModified } : {}),
+    ...(p.keywords ? { keywords: p.keywords } : {}),
+    ...(p.articleSection ? { articleSection: p.articleSection } : {}),
     mainEntityOfPage: absoluteUrl(p.path),
   };
 }

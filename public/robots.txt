@@ -1,5 +1,4 @@
 # Machinery Centre — robots.txt
-# NOTE: replace the domain in the Sitemap line below with the real production domain.
 
 User-agent: *
 Allow: /

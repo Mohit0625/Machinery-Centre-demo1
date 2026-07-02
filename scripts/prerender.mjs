@@ -25,9 +25,18 @@ const ROUTES = [
   "/products/spares",
   "/trendi",
   "/blog",
+  "/blog/trendi-two-stage-air-compressor",
   "/blog/essential-maintenance-tips-for-air-compressors",
   "/blog/choosing-the-right-pump-for-your-industry",
   "/blog/importance-of-energy-efficient-equipment",
+  "/blog/psa-nitrogen-generators-for-laser-cutting",
+  "/blog/pressure-dew-point-desiccant-vs-refrigerant-dryers",
+  "/blog/energy-saving-tips-for-industrial-compressors",
+  "/blog/how-to-size-an-air-receiver-tank",
+  "/blog/why-compressed-air-filtration-is-necessary",
+  "/blog/how-to-size-compressed-air-pipeline",
+  "/blog/vfd-vs-fixed-speed-air-compressor",
+  "/blog/calculate-pump-motor-horsepower-from-duty-point",
   "/quote",
   "/contact",
   "/careers",
@@ -93,6 +102,20 @@ function pageHtml(route) {
   set(/(<meta name="twitter:title" content=")[^"]*(")/, esc(head.title));
   set(/(<meta name="twitter:description" content=")[^"]*(")/, esc(head.description));
   set(/(<meta name="twitter:image" content=")[^"]*(")/, esc(head.ogImage));
+
+  // Page-specific keywords + Open Graph article:* tags (not in the base template,
+  // so they're injected here). Only emitted when the route provides them (blog posts).
+  const extra = [];
+  if (head.keywords) extra.push(`<meta name="keywords" content="${esc(head.keywords)}">`);
+  const a = head.article;
+  if (a) {
+    if (a.publishedTime) extra.push(`<meta property="article:published_time" content="${esc(a.publishedTime)}">`);
+    if (a.modifiedTime) extra.push(`<meta property="article:modified_time" content="${esc(a.modifiedTime)}">`);
+    if (a.author) extra.push(`<meta property="article:author" content="${esc(a.author)}">`);
+    if (a.section) extra.push(`<meta property="article:section" content="${esc(a.section)}">`);
+    for (const tag of a.tags || []) extra.push(`<meta property="article:tag" content="${esc(tag)}">`);
+  }
+  if (extra.length) h = h.replace("</head>", () => `    ${extra.join("\n    ")}\n  </head>`);
 
   const ld = (head.jsonLd || [])
     .map((o) => `<script type="application/ld+json" data-seo>${JSON.stringify(o)}</script>`)

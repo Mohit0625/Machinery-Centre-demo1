@@ -7,3 +7,6 @@ coverage/
 CONTENT_SHEET.md
 
 .env.local
+
+docs/*.md
+docs/*.docx
